@@ -82,6 +82,8 @@ class AuthActivity : AppCompatActivity() {
     }
 
 
+
+
     private fun goToMain() {
        val intent = Intent(applicationContext, MainActivity::class.java)
            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)//TODO("Костыль, убрать при первой возможности")
