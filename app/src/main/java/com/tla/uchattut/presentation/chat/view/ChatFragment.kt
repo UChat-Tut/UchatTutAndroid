@@ -1,4 +1,4 @@
-package com.tla.uchattut.ui.chat
+package com.tla.uchattut.presentation.chat.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.tla.uchattut.R
+import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 
 class ChatFragment : Fragment() {
 

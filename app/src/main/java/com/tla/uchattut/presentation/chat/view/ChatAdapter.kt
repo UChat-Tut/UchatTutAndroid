@@ -1,4 +1,4 @@
-package com.tla.uchattut.ui.chat
+package com.tla.uchattut.presentation.chat.view
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.tla.uchattut.R
-import com.tla.uchattut.networking.ChatDialog
+import com.tla.uchattut.presentation.networking.ChatDialog
 
 class ChatAdapter internal constructor(context: Context)
     : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>(){

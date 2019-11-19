@@ -1,4 +1,4 @@
-package com.tla.uchattut.networking
+package com.tla.uchattut.presentation.networking
 
 
 //Not final version, far from it

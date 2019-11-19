@@ -1,8 +1,7 @@
-package com.tla.uchattut.ui
+package com.tla.uchattut.presentation
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -18,14 +17,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var navController: NavController
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
-
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -38,16 +34,14 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-
+        nav_view.setupWithNavController(navController)
     }
 
     override fun onStart() {
         super.onStart()
         val user = auth.currentUser
 
-        if(user == null){
+        if (user == null) {
             navController.navigate(R.id.authActivity)
         }
         progressBar.visibility = View.GONE

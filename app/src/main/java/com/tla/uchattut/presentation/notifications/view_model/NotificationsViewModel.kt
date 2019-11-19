@@ -1,4 +1,4 @@
-package com.tla.uchattut.ui.notifications
+package com.tla.uchattut.presentation.notifications.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

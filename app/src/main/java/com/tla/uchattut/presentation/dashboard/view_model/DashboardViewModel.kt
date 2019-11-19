@@ -1,4 +1,4 @@
-package com.tla.uchattut.ui.dashboard
+package com.tla.uchattut.presentation.dashboard.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.tla.uchattut.ui.dashboard
+package com.tla.uchattut.presentation.dashboard.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.tla.uchattut.R
+import com.tla.uchattut.presentation.dashboard.view_model.DashboardViewModel
 
 class DashboardFragment : Fragment() {
 
