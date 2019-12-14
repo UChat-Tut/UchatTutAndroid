@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
+import com.tla.uchattut.presentation.resources.AndroidResourceManager
+import com.tla.uchattut.presentation.viewModel
 
 class ChatFragment : Fragment() {
 
@@ -18,8 +20,8 @@ class ChatFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        chatViewModel =
-            ViewModelProviders.of(this).get(ChatViewModel::class.java)
+        val context = activity!!.applicationContext
+        chatViewModel = viewModel { ChatViewModel(AndroidResourceManager(context))}
         val root = inflater.inflate(R.layout.fragment_chat, container, false)
 
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_chat">
+    app:startDestination="@id/navigation_main">
 
     <fragment
         android:id="@+id/navigation_chat"
@@ -22,8 +22,12 @@
         android:name="com.tla.uchattut.presentation.notifications.view.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
-    <activity
-        android:id="@+id/authActivity"
-        android:name="com.tla.uchattut.presentation.auth.view.AuthActivity"
-        android:label="AuthActivity" />
+    <fragment
+        android:id="@+id/navigation_main"
+        android:name="com.tla.uchattut.presentation.MainFragment"
+        android:label="MainFragment" />
+    <fragment
+        android:id="@+id/navigation_auth"
+        android:name="com.tla.uchattut.presentation.auth.view.AuthFragment"
+        android:label="AuthFragment" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.tla.uchattut.presentation.auth.view_model
 
 import android.app.Activity
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -32,10 +33,12 @@ class AuthViewModel(
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
+                    Log.w("auth", "Success")
                     val message = resourceManager.getString(R.string.success_sign_in)
                     toastLiveData.postValue(message)
                     screenLiveData.postValue(Screen.MAIN)
                 } else {
+                    Log.w("auth", "Failed")
                     val message = resourceManager.getString(R.string.success_sign_in)
                     toastLiveData.postValue(message)
                 }
