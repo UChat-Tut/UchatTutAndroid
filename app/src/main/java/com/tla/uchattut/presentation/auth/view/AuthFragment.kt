@@ -1,14 +1,11 @@
 package com.tla.uchattut.presentation.auth.view
 
 import android.os.Bundle
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -20,6 +17,7 @@ import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import com.tla.uchattut.presentation.resources.AndroidResourceManager
 import com.tla.uchattut.presentation.viewModel
 import kotlinx.android.synthetic.main.activity_auth.*
+import kotlinx.android.synthetic.main.activity_auth.view.*
 
 class AuthFragment : Fragment(), View.OnClickListener {
 
@@ -39,7 +37,8 @@ class AuthFragment : Fragment(), View.OnClickListener {
         authViewModel = viewModel {AuthViewModel(AndroidResourceManager(context))}
         root = inflater.inflate(R.layout.activity_auth,container,false)
 
-        initViewsAndListeners()//Don't know if it is a good idea, may be need to make 2 separate methods
+        root.button_sign_in.setOnClickListener(this)
+        root.button_sign_up.setOnClickListener(this)
 
         authViewModel.screenLiveData.observe(this, Observer { screen ->
             if (screen == Screen.MAIN) {
@@ -65,9 +64,9 @@ class AuthFragment : Fragment(), View.OnClickListener {
         }
 
             when(v) {
-                buttonSignUp -> authViewModel.createUserWithEmailAndPassword(
+                root.button_sign_up -> authViewModel.createUserWithEmailAndPassword(
                     activity as FragmentActivity, email, password)
-                buttonSignIn -> authViewModel.signIn(
+                root.button_sign_in -> authViewModel.signIn(
                     activity as FragmentActivity, email, password)
 
 
@@ -82,10 +81,4 @@ class AuthFragment : Fragment(), View.OnClickListener {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun initViewsAndListeners(){
-        buttonSignUp = root.findViewById(R.id.button_sign_up)
-        buttonSignIn = root.findViewById(R.id.button_sign_in)
-        buttonSignUp.setOnClickListener(this)
-        buttonSignIn.setOnClickListener(this)
-    }
 }
