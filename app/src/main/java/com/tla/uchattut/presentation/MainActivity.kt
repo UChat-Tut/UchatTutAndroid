@@ -28,8 +28,10 @@ class MainActivity : AppCompatActivity() {
         val user = auth.currentUser
 
         if (user == null) {
+            navController.popBackStack()
             navController.navigate(R.id.navigation_auth)
         }
         progressBar.visibility = View.GONE
     }
+
 }

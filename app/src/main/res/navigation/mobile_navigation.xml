@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/navigation_main">
 
     <fragment
         android:id="@+id/navigation_main"
         android:name="com.tla.uchattut.presentation.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment">
+        <action
+            android:id="@+id/action_navigation_main_to_navigation_auth"
+            app:destination="@id/navigation_auth"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_auth"
         android:name="com.tla.uchattut.presentation.auth.view.AuthFragment"
-        android:label="AuthFragment" />
+        android:label="AuthFragment"
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_navigation_auth_to_navigation_sign_in2"
+            app:destination="@id/navigation_sign_in" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_sign_in"
+        android:name="com.tla.uchattut.presentation.auth.view.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in"/>
+
 </navigation>

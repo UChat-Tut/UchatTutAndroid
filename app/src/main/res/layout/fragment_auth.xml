@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_auth_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:text="Зарегистрироваться"
+        android:textColor="@color/chariotRequiem"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/tv_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_field"
+        android:backgroundTint="@android:color/white"
+        android:elevation="1dp"
+        android:gravity="start|center_vertical"
+        android:hint="Фамилия Имя Отчество"
+        android:drawableStart="@drawable/ic_user"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp" />
+
+    <EditText
+        android:id="@+id/tv_email_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_field"
+        android:backgroundTint="@android:color/white"
+        android:elevation="1dp"
+        android:gravity="start|center_vertical"
+        android:hint="Электронная почта"
+        android:inputType="textEmailAddress"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp" />
+
+    <EditText
+        android:id="@+id/tv_pass_input"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_field"
+        android:backgroundTint="@android:color/white"
+        android:elevation="1dp"
+        android:gravity="start|center_vertical"
+        android:hint="Пароль"
+        android:inputType="textPassword"
+        android:drawableStart="@drawable/ic_password"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp" />
+
+    <EditText
+        android:id="@+id/tv_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_field"
+        android:backgroundTint="@android:color/white"
+        android:elevation="1dp"
+        android:gravity="start|center_vertical"
+        android:hint="Подтвердите пароль"
+        android:drawableStart="@drawable/ic_password"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp" />
+
+    <Button
+        android:id="@+id/button_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_button"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Регистрация"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_framed_button"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Войти"
+        android:textColor="@color/colorAccent" />
+</LinearLayout>

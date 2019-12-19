@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
@@ -25,10 +26,11 @@ class MainFragment: Fragment() {
     ): View? {
         val context = activity?.applicationContext
         val root = inflater.inflate(R.layout.fragment_main,container,false)
+        val toolbar = root.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         navController = findNavController(root.findViewById(R.id.bottom_nav_host_fragment))
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_chat,
@@ -48,4 +50,8 @@ class MainFragment: Fragment() {
 
         return root
     }
+
+
+
+
 }
