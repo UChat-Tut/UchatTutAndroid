@@ -27,7 +27,7 @@ class SignInFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        authViewModel = viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
+        authViewModel = viewModel{ AuthViewModel(AndroidResourceManager(context!!)) }
         root = inflater.inflate(R.layout.fragment_sign_in,container,false)
 
         authViewModel.screenLiveData.observe(this, Observer { screen ->
@@ -43,9 +43,13 @@ class SignInFragment: Fragment() {
         root.button_sign_in.setOnClickListener {
             val email = tv_email_input.text?.toString()
             val password = tv_pass_input.text?.toString()
-            if(email.isNullOrEmpty()||password.isNullOrEmpty()) {
-                makeText("Не все поля введены")//Make it string resource later
-            } else authViewModel.signIn(activity as FragmentActivity,email, password)
+            when {
+                email.isNullOrEmpty()
+                        || password.isNullOrEmpty() ->
+                    tv_email_input.error = "Не все поля введены"
+                password.length < 6 -> tv_pass_input.error = "Возможно, вы неправильно ввели пароль"
+                else -> authViewModel.signIn(activity as FragmentActivity,email, password)
+            }
         }
 
 

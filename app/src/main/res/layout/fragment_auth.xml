@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="vertical"
         android:gravity="center_horizontal"
@@ -51,7 +51,8 @@
             android:inputType="textEmailAddress"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="8dp"
-            android:paddingStart="16dp" />
+            android:paddingStart="16dp"
+            app:errorEnabled="true"/>
 
         <EditText
             android:id="@+id/tv_pass_input"
@@ -68,7 +69,8 @@
             android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="8dp"
-            android:paddingStart="16dp" />
+            android:paddingStart="16dp"
+            app:errorEnabled="true"/>
 
         <EditText
             android:id="@+id/tv_confirm_password"
@@ -84,7 +86,8 @@
             android:hint="Подтвердите пароль"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="8dp"
-            android:paddingStart="16dp" />
+            android:paddingStart="16dp"
+            app:errorEnabled="true"/>
 
         <Button
             android:id="@+id/button_sign_up"

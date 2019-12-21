@@ -28,20 +28,29 @@ class AuthFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        authViewModel = viewModel {AuthViewModel(AndroidResourceManager(context!!))}
-        root = inflater.inflate(R.layout.fragment_auth,container,false)
+        authViewModel = viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
+        root = inflater.inflate(R.layout.fragment_auth, container, false)
 
-        root.button_sign_in.setOnClickListener{
+        root.button_sign_in.setOnClickListener {
             navigateToSignIn()
         }
-        root.button_sign_up.setOnClickListener{
+        root.button_sign_up.setOnClickListener {//Can be later added regex email confirmation
+            val fullName = tv_name_input.text?.toString()
             val email = tv_email_input.text?.toString()
             val password = tv_pass_input.text?.toString()
-            if(email.isNullOrEmpty()||password.isNullOrEmpty()) {
-                makeText("Не все поля введены")//Make it string resource later
-            } else authViewModel.createUserWithEmailAndPassword(
-                activity as FragmentActivity, email, password
-            )
+            val passwordConfirmation = tv_confirm_password.text?.toString()
+            when {
+                areFieldsBlank(fullName, email, password, passwordConfirmation) -> {
+                    makeText("Не все поля введены")//Make it string resource later
+                }
+                password!!.length < 6 ->
+                    tv_pass_input.error = "Пароль должен быть больше 6 символов"
+                password != passwordConfirmation ->
+                    tv_confirm_password.error = "Пароли не совпадают"
+                else -> authViewModel.createUserWithEmailAndPassword(
+                    activity as FragmentActivity, email!!, password
+                )
+            }
         }
 
         authViewModel.screenLiveData.observe(this, Observer { screen ->
@@ -62,12 +71,25 @@ class AuthFragment : Fragment() {
         findNavController().navigate(R.id.navigation_main)
     }
 
-    private fun navigateToSignIn(){
+    private fun navigateToSignIn() {
         findNavController().navigate(R.id.navigation_sign_in)
     }
 
-    private fun makeText(message: String){
+    private fun makeText(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
+    private fun areFieldsBlank(
+        fullName: String?,
+        email: String?,
+        password: String?,
+        passwordConfirmation: String?
+    )
+            : Boolean {
+        return email.isNullOrEmpty()
+                || password.isNullOrEmpty()
+                || passwordConfirmation.isNullOrEmpty()
+                || fullName.isNullOrEmpty()
+
+    }
 }

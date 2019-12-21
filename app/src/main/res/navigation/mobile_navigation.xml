@@ -9,13 +9,7 @@
     <fragment
         android:id="@+id/navigation_main"
         android:name="com.tla.uchattut.presentation.MainFragment"
-        android:label="MainFragment">
-        <action
-            android:id="@+id/action_navigation_main_to_navigation_auth"
-            app:destination="@id/navigation_auth"
-            app:launchSingleTop="false"
-            app:popUpToInclusive="false" />
-    </fragment>
+        android:label="MainFragment"/>
 
     <fragment
         android:id="@+id/navigation_auth"
