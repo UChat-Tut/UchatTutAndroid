@@ -10,37 +10,30 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation.Screen
 import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
-import com.tla.uchattut.presentation.resources.AndroidResourceManager
-import com.tla.uchattut.presentation.viewModel
+import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
+import com.tla.uchattut.presentation._common.viewModel
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import kotlinx.android.synthetic.main.fragment_sign_in.view.*
 
 class SignInFragment: Fragment() {
 
-    private lateinit var root: View
-    private lateinit var authViewModel: AuthViewModel
+    private val authViewModel by lazy {
+        viewModel{ AuthViewModel(AndroidResourceManager(context!!)) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        authViewModel = viewModel{ AuthViewModel(AndroidResourceManager(context!!)) }
-        root = inflater.inflate(R.layout.fragment_sign_in,container,false)
+        return inflater.inflate(R.layout.fragment_sign_in,container,false)
+    }
 
-        authViewModel.screenLiveData.observe(this, Observer { screen ->
-            if(screen == Screen.MAIN){
-                navigateToMain()
-            }
-        })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        authViewModel.toastLiveData.observe(this, Observer { message ->
-            makeText(message)
-        })
-
-        root.button_sign_in.setOnClickListener {
+        button_sign_in.setOnClickListener {
             val email = tv_email_input.text?.toString()
             val password = tv_pass_input.text?.toString()
             when {
@@ -52,8 +45,13 @@ class SignInFragment: Fragment() {
             }
         }
 
+        authViewModel.isAuthenticatedLiveData.observe(this, Observer { isAuthenticated ->
+            if(isAuthenticated){ navigateToMain() }
+        })
 
-        return root
+        authViewModel.toastLiveData.observe(this, Observer { message ->
+            makeText(message)
+        })
     }
 
     private fun navigateToMain(){

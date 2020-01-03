@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_main"
-        android:name="com.tla.uchattut.presentation.MainFragment"
+        android:name="com.tla.uchattut.presentation.main.MainFragment"
         android:label="MainFragment"/>
 
     <fragment

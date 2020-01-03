@@ -10,31 +10,33 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation.Screen
+import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
+import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
-import com.tla.uchattut.presentation.resources.AndroidResourceManager
-import com.tla.uchattut.presentation.viewModel
 import kotlinx.android.synthetic.main.fragment_auth.*
-import kotlinx.android.synthetic.main.fragment_auth.view.*
 
 class AuthFragment : Fragment() {
 
-    private lateinit var authViewModel: AuthViewModel
-
-    private lateinit var root: View
+    private val authViewModel: AuthViewModel by lazy {
+        viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        authViewModel = viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
-        root = inflater.inflate(R.layout.fragment_auth, container, false)
+        return inflater.inflate(R.layout.fragment_auth, container, false)
+    }
 
-        root.button_sign_in.setOnClickListener {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        button_sign_in.setOnClickListener {
             navigateToSignIn()
         }
-        root.button_sign_up.setOnClickListener {//Can be later added regex email confirmation
+        button_sign_up.setOnClickListener {
+            //Can be later added regex email confirmation
             val fullName = tv_name_input.text?.toString()
             val email = tv_email_input.text?.toString()
             val password = tv_pass_input.text?.toString()
@@ -53,8 +55,8 @@ class AuthFragment : Fragment() {
             }
         }
 
-        authViewModel.screenLiveData.observe(this, Observer { screen ->
-            if (screen == Screen.MAIN) {
+        authViewModel.isAuthenticatedLiveData.observe(this, Observer { isAuthenticated ->
+            if (isAuthenticated) {
                 navigateToMain()
             }
         })
@@ -62,10 +64,7 @@ class AuthFragment : Fragment() {
         authViewModel.toastLiveData.observe(this, Observer { message ->
             makeText(message)
         })
-
-        return root
     }
-
 
     private fun navigateToMain() {
         findNavController().navigate(R.id.navigation_main)
@@ -84,12 +83,10 @@ class AuthFragment : Fragment() {
         email: String?,
         password: String?,
         passwordConfirmation: String?
-    )
-            : Boolean {
+    ) : Boolean {
         return email.isNullOrEmpty()
                 || password.isNullOrEmpty()
                 || passwordConfirmation.isNullOrEmpty()
                 || fullName.isNullOrEmpty()
-
     }
 }

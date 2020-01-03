@@ -1,13 +1,14 @@
-package com.tla.uchattut.presentation
+package com.tla.uchattut.presentation._common
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 inline fun <reified T : ViewModel> Fragment.viewModel(crossinline f: () -> T): T {
-    return ViewModelProviders.of(this, factory(f)).get(T::class.java)
+    return ViewModelProviders.of(this,
+        factory(f)
+    ).get(T::class.java)
 }
 
 @Suppress("UNCHECKED_CAST")
