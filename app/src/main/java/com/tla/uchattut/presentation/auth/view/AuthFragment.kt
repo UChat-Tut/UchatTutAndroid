@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -15,13 +16,12 @@ import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import com.tla.uchattut.presentation.resources.AndroidResourceManager
 import com.tla.uchattut.presentation.viewModel
 import kotlinx.android.synthetic.main.fragment_auth.*
-import kotlinx.android.synthetic.main.fragment_auth.view.*
+
 
 class AuthFragment : Fragment() {
 
     private lateinit var authViewModel: AuthViewModel
-
-    private lateinit var root: View
+    private var progressBar: ProgressBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,12 +29,35 @@ class AuthFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         authViewModel = viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
-        root = inflater.inflate(R.layout.fragment_auth, container, false)
 
-        root.button_sign_in.setOnClickListener {
+        authViewModel.screenLiveData.observe(this, Observer { screen ->
+            if (screen == Screen.MAIN) {
+                navigateToMain()
+            }
+        })
+
+
+        authViewModel.toastLiveData.observe(this, Observer { message ->
+            makeText(message)
+        })
+
+        return inflater.inflate(R.layout.fragment_auth, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        progressBar = activity?.findViewById(R.id.progressBar)
+
+        authViewModel.visibilityLiveData.observe(this, Observer { visibility ->
+            progressBar?.visibility = visibility
+        })
+
+        button_sign_in.setOnClickListener {
             navigateToSignIn()
         }
-        root.button_sign_up.setOnClickListener {//Can be later added regex email confirmation
+
+        button_sign_up.setOnClickListener {//Can be later added regex email confirmation
             val fullName = tv_name_input.text?.toString()
             val email = tv_email_input.text?.toString()
             val password = tv_pass_input.text?.toString()
@@ -53,19 +76,7 @@ class AuthFragment : Fragment() {
             }
         }
 
-        authViewModel.screenLiveData.observe(this, Observer { screen ->
-            if (screen == Screen.MAIN) {
-                navigateToMain()
-            }
-        })
-
-        authViewModel.toastLiveData.observe(this, Observer { message ->
-            makeText(message)
-        })
-
-        return root
     }
-
 
     private fun navigateToMain() {
         findNavController().navigate(R.id.navigation_main)

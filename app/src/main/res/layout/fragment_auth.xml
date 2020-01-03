@@ -84,6 +84,7 @@
             android:elevation="1dp"
             android:gravity="start|center_vertical"
             android:hint="Подтвердите пароль"
+            android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="8dp"
             android:paddingStart="16dp"
