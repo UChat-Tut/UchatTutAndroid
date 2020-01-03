@@ -10,16 +10,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
 import com.tla.uchattut.presentation._common.viewModel
+import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import kotlinx.android.synthetic.main.fragment_sign_in.view.*
 
-class SignInFragment: Fragment() {
+class SignInFragment : Fragment() {
 
     private val authViewModel by lazy {
-        viewModel{ AuthViewModel(AndroidResourceManager(context!!)) }
+        viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
     }
 
     override fun onCreateView(
@@ -27,7 +26,7 @@ class SignInFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_sign_in,container,false)
+        return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,24 +40,30 @@ class SignInFragment: Fragment() {
                         || password.isNullOrEmpty() ->
                     tv_email_input.error = "Не все поля введены"
                 password.length < 6 -> tv_pass_input.error = "Возможно, вы неправильно ввели пароль"
-                else -> authViewModel.signIn(activity as FragmentActivity,email, password)
+                else -> authViewModel.signIn(activity as FragmentActivity, email, password)
             }
         }
 
         authViewModel.isAuthenticatedLiveData.observe(this, Observer { isAuthenticated ->
-            if(isAuthenticated){ navigateToMain() }
+            if (isAuthenticated) {
+                navigateToMain()
+            }
         })
 
         authViewModel.toastLiveData.observe(this, Observer { message ->
             makeText(message)
         })
+
+        authViewModel.visibilityLiveData.observe(this, Observer { visibility ->
+            progressBar?.visibility = visibility
+        })
     }
 
-    private fun navigateToMain(){
+    private fun navigateToMain() {
         findNavController().navigate(R.id.navigation_main)
     }
 
-    private fun makeText(message: String){
-        Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+    private fun makeText(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

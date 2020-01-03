@@ -14,12 +14,15 @@ import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth.*
+import android.widget.ProgressBar
+
 
 class AuthFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by lazy {
         viewModel { AuthViewModel(AndroidResourceManager(context!!)) }
     }
+    private var progressBar: ProgressBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +57,12 @@ class AuthFragment : Fragment() {
                 )
             }
         }
+
+        progressBar = activity?.findViewById(R.id.progressBar)
+
+        authViewModel.visibilityLiveData.observe(this, Observer { visibility ->
+            progressBar?.visibility = visibility
+        })
 
         authViewModel.isAuthenticatedLiveData.observe(this, Observer { isAuthenticated ->
             if (isAuthenticated) {
