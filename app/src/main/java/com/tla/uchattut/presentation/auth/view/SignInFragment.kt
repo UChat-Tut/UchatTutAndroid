@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -21,6 +22,7 @@ class SignInFragment: Fragment() {
 
     private lateinit var root: View
     private lateinit var authViewModel: AuthViewModel
+    private var progressBar: ProgressBar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +31,7 @@ class SignInFragment: Fragment() {
     ): View? {
         authViewModel = viewModel{ AuthViewModel(AndroidResourceManager(context!!)) }
         root = inflater.inflate(R.layout.fragment_sign_in,container,false)
+        progressBar = activity?.findViewById(R.id.progressBar)
 
         authViewModel.screenLiveData.observe(this, Observer { screen ->
             if(screen == Screen.MAIN){
@@ -38,6 +41,10 @@ class SignInFragment: Fragment() {
 
         authViewModel.toastLiveData.observe(this, Observer { message ->
             makeText(message)
+        })
+
+        authViewModel.visibilityLiveData.observe(this, Observer { visibility ->
+            progressBar?.visibility = visibility
         })
 
         root.button_sign_in.setOnClickListener {
