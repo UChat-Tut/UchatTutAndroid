@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.notifications.view_model.NotificationsViewModel

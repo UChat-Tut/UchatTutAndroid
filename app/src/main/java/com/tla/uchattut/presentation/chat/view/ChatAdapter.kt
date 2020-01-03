@@ -12,11 +12,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation.chat.view.model.MessageModel
 
-class ChatAdapter internal constructor(context: Context) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>(){
+class ChatAdapter internal constructor(context: Context) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var dialogs = emptyList<MessageModel>()
 
-    inner class ChatViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val userName: TextView = itemView.findViewById(R.id.dialogs_user_name)
         private val lastMessage: TextView = itemView.findViewById(R.id.last_message)
         private val userImage: ImageView = itemView.findViewById(R.id.dialogs_user_image)
@@ -37,7 +37,7 @@ class ChatAdapter internal constructor(context: Context) : RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
-        val itemView = inflater.inflate(R.layout.chat_item,parent,false)
+        val itemView = inflater.inflate(R.layout.chat_item, parent, false)
         return ChatViewHolder(itemView)
     }
 
@@ -45,7 +45,7 @@ class ChatAdapter internal constructor(context: Context) : RecyclerView.Adapter<
         holder.bind(dialogs[position])
     }
 
-    internal fun setDialogs(dialogs: List<MessageModel>){
+    internal fun setDialogs(dialogs: List<MessageModel>) {
         this.dialogs = dialogs
         notifyDataSetChanged()
     }

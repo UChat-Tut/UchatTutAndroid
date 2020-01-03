@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.google.firebase.auth.FirebaseAuth
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.domain.auth.AuthInteractor
@@ -31,5 +30,4 @@ class MainActivity : AppCompatActivity() {
         }
         progressBar.visibility = View.GONE
     }
-
 }
