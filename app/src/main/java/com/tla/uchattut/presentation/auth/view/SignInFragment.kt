@@ -13,6 +13,7 @@ import com.tla.uchattut.R
 import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 
 class SignInFragment : Fragment() {
