@@ -1,6 +1,6 @@
 package com.tla.uchattut.data.repositories.chatlist.models
 
-data class ChatListRepoModel (
+data class ChatRepoModel (
     val id: Int = 0,
     val imageUrl: String? = null,
     val interlocutorName: String = "",

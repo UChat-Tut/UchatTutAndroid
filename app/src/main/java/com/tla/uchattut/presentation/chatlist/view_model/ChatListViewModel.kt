@@ -3,13 +3,13 @@ package com.tla.uchattut.presentation.chatlist.view_model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tla.uchattut.data.repositories.chatlist.FakeChatListRepository
-import com.tla.uchattut.data.repositories.chatlist.models.ChatListRepoModel
+import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 import com.tla.uchattut.domain.chatlist.ChatListInteractor
 
 class ChatListViewModel : ViewModel() {
     private val chatListInteractor = ChatListInteractor(FakeChatListRepository())
 
-    val chatList: MutableLiveData<List<ChatListRepoModel>> = MutableLiveData()
+    val chatList: MutableLiveData<List<ChatRepoModel>> = MutableLiveData()
     val state: MutableLiveData<State> = MutableLiveData(State.EMPTY)
 
     fun requestChatList() {

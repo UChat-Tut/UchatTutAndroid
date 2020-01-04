@@ -1,33 +1,33 @@
 package com.tla.uchattut.data.repositories.chatlist
 
-import com.tla.uchattut.data.repositories.chatlist.models.ChatListRepoModel
+import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 import com.tla.uchattut.domain.chatlist.ChatListRepository
 
 class FakeChatListRepository : ChatListRepository {
-    override fun getChatList(): List<ChatListRepoModel> {
+    override fun getChatList(): List<ChatRepoModel> {
         return listOf(
-            ChatListRepoModel(
+            ChatRepoModel(
                 imageUrl = null,
                 interlocutorName = "Дмитрий",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1
             ),
-            ChatListRepoModel(
+            ChatRepoModel(
                 imageUrl = null,
                 interlocutorName = "Дмитрий",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1
             ),
-            ChatListRepoModel(
+            ChatRepoModel(
                 imageUrl = null,
                 interlocutorName = "Дмитрий",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1
             ),
-            ChatListRepoModel(
+            ChatRepoModel(
                 imageUrl = null,
                 interlocutorName = "Дмитрий",
                 lastMessage = "Привет",

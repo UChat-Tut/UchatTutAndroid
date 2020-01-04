@@ -10,7 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.chatlist.models.ChatListRepoModel
+import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chatlist.view_model.ChatListViewModel
 import kotlinx.android.synthetic.main.fragment_chat_list.*
@@ -47,7 +47,7 @@ class ChatListFragment : Fragment() {
         chatListRecyclerView.layoutManager = LinearLayoutManager(context!!)
         chatListRecyclerView.adapter = chatListAdapter
 
-        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<ChatListRepoModel>> {
+        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<ChatRepoModel>> {
             chatListAdapter.setChatsList(it)
         })
 

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.chatlist.models.ChatListRepoModel
+import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_chat_list.*
 
@@ -14,7 +14,7 @@ class ChatListRecyclerAdapter(
     private val onItemClick: (id: Int) -> Unit = {}
 ) : RecyclerView.Adapter<ChatListRecyclerAdapter.ViewHolder>() {
 
-    private val chatsList = arrayListOf<ChatListRepoModel>()
+    private val chatsList = arrayListOf<ChatRepoModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -30,7 +30,7 @@ class ChatListRecyclerAdapter(
         holder.bind(chatsList[position])
     }
 
-    fun setChatsList(chats: List<ChatListRepoModel>) {
+    fun setChatsList(chats: List<ChatRepoModel>) {
         chatsList.clear()
         chatsList.addAll(chats)
         notifyDataSetChanged()
@@ -40,7 +40,7 @@ class ChatListRecyclerAdapter(
         override val containerView: View,
         private val onItemClick: (id: Int) -> Unit
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(model: ChatListRepoModel) {
+        fun bind(model: ChatRepoModel) {
             containerView.setOnClickListener { onItemClick(model.id) }
             usernameTextView.text = model.interlocutorName
             lastMessageTextView.text = model.lastMessage
