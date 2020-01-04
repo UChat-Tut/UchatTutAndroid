@@ -6,4 +6,5 @@
     <string name="fail_auth">AuthFailed</string>
     <string name="success_sign_in">Sign In Success</string>
     <string name="fail_sign_in">Sign In Failed</string>
+    <string name="dialogs">Dialogs</string>
 </resources>
