@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation"
+    android:id="@+id/main_nav"
     app:startDestination="@id/navigation_chat">
 
     <fragment
@@ -22,24 +22,6 @@
         android:name="com.tla.uchattut.presentation.chatlist.view.ChatListFragment"
         android:label="@string/dialogs"
         tools:layout="@layout/fragment_chat_list">
-        <action
-            android:id="@+id/action_navigation_chat_to_chatFragment"
-            app:destination="@id/chatFragment" >
-            <argument
-                android:name="id"
-                app:argType="integer"
-                android:defaultValue="0" />
-        </action>
-    </fragment>
-    <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.tla.uchattut.presentation.chat.view.ChatFragment"
-        android:label="ChatFragment"
-        tools:layout="@layout/fragment_chat">
-        <argument
-            android:name="id"
-            app:argType="integer"
-            android:defaultValue="0" />
     </fragment>
 
 </navigation>

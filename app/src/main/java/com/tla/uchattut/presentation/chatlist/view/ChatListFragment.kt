@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 import com.tla.uchattut.presentation._common.viewModel
@@ -17,7 +18,8 @@ import kotlinx.android.synthetic.main.fragment_chat_list.*
 
 class ChatListFragment : Fragment() {
 
-    private lateinit var navController: NavController
+    //private lateinit var navController: NavController
+    private lateinit var mainNavController: NavController
     private val viewModel by lazy {
         viewModel { ChatListViewModel() }
     }
@@ -35,7 +37,8 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = findNavController()
+        //navController = findNavController()
+        mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
         chatListAdapter = ChatListRecyclerAdapter { id ->
             openChat(id)
@@ -58,8 +61,8 @@ class ChatListFragment : Fragment() {
     }
 
     private fun openChat(id: Int) {
-        val action = ChatListFragmentDirections.actionNavigationChatToChatFragment(id = id)
-        navController.navigate(action)
+        val action = MobileNavDirections.actionToChatFragment(id = id)
+        mainNavController.navigate(action)
     }
 
     private fun updateState(state: ChatListViewModel.State) =
