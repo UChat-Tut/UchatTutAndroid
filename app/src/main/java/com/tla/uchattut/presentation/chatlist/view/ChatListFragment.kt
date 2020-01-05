@@ -44,7 +44,7 @@ class ChatListFragment : Fragment() {
             openChat(id)
         }
 
-        val dividerDrawable = resources.getDrawable(R.drawable.divider_chat_list, activity!!.theme)
+        val dividerDrawable = resources.getDrawable(R.drawable.divider_horizontal, activity!!.theme)
         chatListRecyclerView.layoutManager = LinearLayoutManager(context!!)
         chatListRecyclerView.adapter = chatListAdapter
         chatListRecyclerView.addItemDecoration(DividerItemDecoration(dividerDrawable))
