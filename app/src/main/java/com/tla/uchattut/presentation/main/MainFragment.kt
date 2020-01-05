@@ -37,7 +37,9 @@ class MainFragment : Fragment() {
             setOf(
                 R.id.navigation_chat,
                 R.id.navigation_library,
-                R.id.navigation_schedule
+                R.id.navigation_schedule,
+                R.id.navigation_tasks,
+                R.id.navigation_profile
             )
         )
         setupActionBarWithNavController(
