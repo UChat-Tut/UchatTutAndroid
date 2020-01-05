@@ -1,8 +1,7 @@
 package com.tla.uchattut.domain.chatlist
 
-import androidx.lifecycle.LiveData
-import com.tla.uchattut.data.repositories.chatlist.models.ChatListRepoModel
+import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 
 interface ChatListRepository {
-    fun getChatList(): List<ChatListRepoModel>
+    fun getChatList(): List<ChatRepoModel>
 }

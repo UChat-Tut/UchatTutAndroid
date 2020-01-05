@@ -7,28 +7,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.chatlist.models.ChatListRepoModel
+import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chatlist.view_model.ChatListViewModel
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 
 class ChatListFragment : Fragment() {
 
-    private lateinit var navController: NavController
+    //private lateinit var navController: NavController
+    private lateinit var mainNavController: NavController
     private val viewModel by lazy {
         viewModel { ChatListViewModel() }
     }
 
     private lateinit var chatListAdapter: ChatListRecyclerAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        navController = findNavController()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,24 +37,32 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //navController = findNavController()
+        mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
+
         chatListAdapter = ChatListRecyclerAdapter { id ->
             openChat(id)
         }
+
+        val dividerDrawable = resources.getDrawable(R.drawable.divider_chat_list, activity!!.theme)
         chatListRecyclerView.layoutManager = LinearLayoutManager(context!!)
         chatListRecyclerView.adapter = chatListAdapter
+        chatListRecyclerView.addItemDecoration(DividerItemDecoration(dividerDrawable))
 
-        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<ChatListRepoModel>> {
+        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<ChatRepoModel>> {
             chatListAdapter.setChatsList(it)
         })
 
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             updateState(state)
         })
+
+        viewModel.requestChatList()
     }
 
     private fun openChat(id: Int) {
-        val action = ChatListFragmentDirections.actionNavigationChatToChatFragment(id = id)
-        navController.navigate(action)
+        val action = MobileNavDirections.actionToChatFragment(id = id)
+        mainNavController.navigate(action)
     }
 
     private fun updateState(state: ChatListViewModel.State) =
@@ -79,9 +83,4 @@ class ChatListFragment : Fragment() {
                 emptyLayout.visibility = View.VISIBLE
             }
         }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.requestChatList()
-    }
 }

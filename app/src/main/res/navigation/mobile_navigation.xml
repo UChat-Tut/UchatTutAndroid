@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
+    android:id="@+id/mobile_nav"
     app:startDestination="@id/navigation_main">
 
     <fragment
@@ -25,5 +25,25 @@
         android:name="com.tla.uchattut.presentation.auth.view.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in"/>
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.tla.uchattut.presentation.chat.view.ChatFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_to_chatFragment"
+        app:destination="@id/chatFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </action>
 
 </navigation>
