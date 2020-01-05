@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
-import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation._common.viewModel
+import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
+import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.synthetic.main.fragment_chat.*
 
 class ChatFragment : Fragment() {
@@ -19,6 +20,7 @@ class ChatFragment : Fragment() {
     private val viewModel: ChatViewModel by lazy {
         viewModel { ChatViewModel() }
     }
+    private val args: ChatFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,13 +41,15 @@ class ChatFragment : Fragment() {
             updateState(it)
         })
 
-        viewModel.messageList.observe(viewLifecycleOwner, Observer<List<MessageRepoModel>> {
+        viewModel.messageList.observe(viewLifecycleOwner, Observer<List<MessagePresentationModel>> {
             chatRecyclerAdapter.setMessages(it)
         })
+
+        viewModel.requestMessages(args.id)
     }
 
     private fun updateState(state: ChatViewModel.State) =
-        when(state) {
+        when (state) {
             ChatViewModel.State.EMPTY -> {
                 contentLayout.visibility = View.GONE
                 loadingLayout.visibility = View.GONE

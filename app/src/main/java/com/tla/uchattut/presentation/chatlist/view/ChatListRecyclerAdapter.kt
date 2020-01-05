@@ -44,7 +44,7 @@ class ChatListRecyclerAdapter(
             containerView.setOnClickListener { onItemClick(model.id) }
             usernameTextView.text = model.interlocutorName
             lastMessageTextView.text = model.lastMessage
-            timeTextView.text = model.lastMessageTime
+            sendTimeTextView.text = model.lastMessageTime
 
             if (model.unreadMessageCount != null) {
                 unreadCountTextView.visibility = View.GONE

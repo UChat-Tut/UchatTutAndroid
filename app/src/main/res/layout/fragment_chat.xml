@@ -15,8 +15,11 @@
             android:id="@+id/chatRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             tools:layout_editor_absoluteX="1dp"
-            tools:listitem="@layout/item_send_message"/>
+            tools:listitem="@layout/item_message_send" />
     </FrameLayout>
 
     <LinearLayout

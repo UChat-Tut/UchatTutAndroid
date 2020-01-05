@@ -1,9 +1,9 @@
 package com.tla.uchattut.domain.auth
 
-import com.tla.uchattut.data.repositories.auth.AuthRepository
+import com.tla.uchattut.data.repositories.auth.UserRepository
 
 class AuthInteractor(
-    private val authRepository: AuthRepository
+    private val authRepository: UserRepository
 ) {
 
     fun isAuthenticatedUser(): Boolean =

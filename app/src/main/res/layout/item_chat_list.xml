@@ -29,7 +29,7 @@
         tools:text="Райан Гослинг"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/timeTextView"
+        app:layout_constraintEnd_toStartOf="@+id/sendTimeTextView"
         app:layout_constraintStart_toEndOf="@+id/avatarImageView"
         app:layout_constraintTop_toTopOf="@+id/avatarImageView" />
 
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
 
     <TextView
-        android:id="@+id/timeTextView"
+        android:id="@+id/sendTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -71,6 +71,6 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/sendTimeTextView"
         tools:text="2" />
 </androidx.constraintlayout.widget.ConstraintLayout>
