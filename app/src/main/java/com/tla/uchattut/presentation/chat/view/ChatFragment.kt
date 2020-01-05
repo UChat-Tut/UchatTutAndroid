@@ -1,10 +1,10 @@
 package com.tla.uchattut.presentation.chat.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.text.Editable
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -44,10 +44,27 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupActionBar()
+
+        editText.addTextChangedListener { text ->
+            if (text?.isNotBlank() == true) {
+                sendImageView.setImageResource(R.drawable.ic_send_active)
+            } else {
+                sendImageView.setImageResource(R.drawable.ic_send_passive)
+            }
+        }
+
+        sendImageView.setOnClickListener {
+            if (editText.text.isNullOrBlank()) return@setOnClickListener
+            sendMessage(editText.text)
+        }
+
         navController = findNavController()
 
         chatRecyclerAdapter = ChatRecyclerAdapter()
-        chatRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        chatRecyclerView.layoutManager = LinearLayoutManager(view.context).apply {
+            stackFromEnd = true
+        }
         chatRecyclerView.adapter = chatRecyclerAdapter
 
         viewModel.state.observe(viewLifecycleOwner, Observer<ChatViewModel.State> {
@@ -59,6 +76,19 @@ class ChatFragment : Fragment() {
         })
 
         viewModel.requestMessages(args.id)
+    }
+
+    private fun setupActionBar() {
+        (activity as AppCompatActivity).setSupportActionBar(chatToolbar)
+        (activity as AppCompatActivity).supportActionBar?.run {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+        }
+    }
+
+    private fun sendMessage(text: Editable) {
+        viewModel.sendMessage(text.toString())
+        text.clear()
     }
 
     private fun updateState(state: ChatViewModel.State) =
@@ -79,6 +109,11 @@ class ChatFragment : Fragment() {
                 emptyLayout.visibility = View.GONE
             }
         }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.profile, menu)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

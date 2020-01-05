@@ -26,6 +26,10 @@ class ChatViewModel: ViewModel() {
         }
     }
 
+    fun sendMessage(text: String) {
+
+    }
+
     enum class State {
         LOADING, EMPTY, CONTENT
     }
