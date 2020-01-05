@@ -1,13 +1,13 @@
 package com.tla.uchattut.presentation.auth.view_model
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation.Screen
-import com.tla.uchattut.presentation.resources.ResourceManager
+import com.tla.uchattut.presentation._common.resources.ResourceManager
 
 
 class AuthViewModel(
@@ -15,7 +15,7 @@ class AuthViewModel(
 ) : ViewModel() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    val screenLiveData = MutableLiveData<Screen>()
+    val isAuthenticatedLiveData = MutableLiveData<Boolean>()
     val toastLiveData = MutableLiveData<String>()
     val visibilityLiveData = MutableLiveData<Int>()
 
@@ -24,6 +24,7 @@ class AuthViewModel(
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
+                    isAuthenticatedLiveData.postValue(true)
                     sendEmail()
                 } else {
                     val message = resourceManager.getString(R.string.fail_auth)
@@ -42,7 +43,7 @@ class AuthViewModel(
                     val message = resourceManager.getString(R.string.success_sign_in)
                     toastLiveData.postValue(message)
                     if(auth.currentUser!!.isEmailVerified){
-                        screenLiveData.postValue(Screen.MAIN)
+                        isAuthenticatedLiveData.postValue(true)
                         visibilityLiveData.postValue(View.GONE)
                     } else {
                         toastLiveData.postValue("Email не подтвержден")
@@ -58,7 +59,7 @@ class AuthViewModel(
 
 
     private fun sendEmail(){
-        auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{task->
+        auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task->
             if(task.isSuccessful) {
                 visibilityLiveData.postValue(View.GONE)
                 toastLiveData.postValue("Вам отправлено письмо на электронную почту")

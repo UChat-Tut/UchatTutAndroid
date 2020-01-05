@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.resources
+package com.tla.uchattut.presentation._common.resources
 
 import android.content.Context
 import androidx.annotation.StringRes
