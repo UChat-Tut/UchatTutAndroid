@@ -43,7 +43,7 @@ class ChatRecyclerAdapter : RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder>
     }
 
     override fun getItemViewType(position: Int): Int =
-        when(messages[position].type) {
+        when (messages[position].type) {
             MessagePresentationModel.Type.DATE -> ViewType.DATE
             MessagePresentationModel.Type.OUT -> ViewType.SEND
             MessagePresentationModel.Type.IN -> ViewType.RECEIVE
@@ -94,7 +94,6 @@ class ChatRecyclerAdapter : RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder>
                 } else {
                     receiveCornerImageView.visibility = View.GONE
                 }
-
             }
         }
     }
