@@ -16,7 +16,6 @@ import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_auth.*
 import android.widget.ProgressBar
 
-
 class AuthFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by lazy {
@@ -39,14 +38,14 @@ class AuthFragment : Fragment() {
             navigateToSignIn()
         }
         button_sign_up.setOnClickListener {
-            //Can be later added regex email confirmation
+            // Can be later added regex email confirmation
             val fullName = tv_name_input.text?.toString()
             val email = tv_email_input.text?.toString()
             val password = tv_pass_input.text?.toString()
             val passwordConfirmation = tv_confirm_password.text?.toString()
             when {
                 areFieldsBlank(fullName, email, password, passwordConfirmation) -> {
-                    makeText("Не все поля введены")//Make it string resource later
+                    makeText("Не все поля введены") // Make it string resource later
                 }
                 password!!.length < 6 ->
                     tv_pass_input.error = "Пароль должен быть больше 6 символов"
@@ -92,10 +91,10 @@ class AuthFragment : Fragment() {
         email: String?,
         password: String?,
         passwordConfirmation: String?
-    ) : Boolean {
-        return email.isNullOrEmpty()
-                || password.isNullOrEmpty()
-                || passwordConfirmation.isNullOrEmpty()
-                || fullName.isNullOrEmpty()
+    ): Boolean {
+        return email.isNullOrEmpty() ||
+                password.isNullOrEmpty() ||
+                passwordConfirmation.isNullOrEmpty() ||
+                fullName.isNullOrEmpty()
     }
 }

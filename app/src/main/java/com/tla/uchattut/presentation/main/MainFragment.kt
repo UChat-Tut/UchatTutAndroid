@@ -1,6 +1,5 @@
 package com.tla.uchattut.presentation.main
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.tla.uchattut.R
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment: Fragment() {
+class MainFragment : Fragment() {
 
     private lateinit var navController: NavController
 
@@ -24,7 +23,7 @@ class MainFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main,container,false)
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
