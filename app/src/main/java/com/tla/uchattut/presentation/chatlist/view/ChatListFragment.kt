@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_chat_list.*
 
 class ChatListFragment : Fragment() {
 
-    //private lateinit var navController: NavController
+    // private lateinit var navController: NavController
     private lateinit var mainNavController: NavController
     private val viewModel by lazy {
         viewModel { ChatListViewModel() }
@@ -37,7 +37,7 @@ class ChatListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //navController = findNavController()
+        // navController = findNavController()
         mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
         chatListAdapter = ChatListRecyclerAdapter { id ->

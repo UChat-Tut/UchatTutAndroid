@@ -17,7 +17,6 @@ import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.synthetic.main.fragment_chat.*
 
-
 class ChatFragment : Fragment() {
 
     private lateinit var chatRecyclerAdapter: ChatRecyclerAdapter

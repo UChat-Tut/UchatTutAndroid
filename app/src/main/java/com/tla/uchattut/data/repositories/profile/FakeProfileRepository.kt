@@ -11,5 +11,4 @@ class FakeProfileRepository : ProfileRepository {
         phone = "+7(985)523-23-45",
         address = "ул. Шмякина, д.23"
     )
-
 }

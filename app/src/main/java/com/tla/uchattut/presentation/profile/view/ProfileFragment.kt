@@ -45,7 +45,5 @@ class ProfileFragment : Fragment() {
         Glide.with(this)
             .load(profile.photoUrl)
             .into(avatarImageView)
-
-
     }
 }
