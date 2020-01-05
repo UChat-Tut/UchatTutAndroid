@@ -7,21 +7,34 @@
     app:startDestination="@id/navigation_chat">
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.tla.uchattut.presentation.dashboard.view.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.tla.uchattut.presentation.notifications.view.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/navigation_chat"
         android:name="com.tla.uchattut.presentation.chatlist.view.ChatListFragment"
         android:label="@string/dialogs"
         tools:layout="@layout/fragment_chat_list">
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.tla.uchattut.presentation.profile.view.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/navigation_tasks"
+        android:name="com.tla.uchattut.presentation.tasks.view.TasksFragment"
+        android:label="TasksFragment"
+        tools:layout="@layout/fragment_tasks"/>
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.tla.uchattut.presentation.schedule.view.ScheduleFragment"
+        android:label="ScheduleFragment"
+        tools:layout="@layout/fragment_schedule"/>
+
+    <fragment
+        android:id="@+id/navigation_library"
+        android:name="com.tla.uchattut.presentation.library.view.LibraryFragment"
+        android:label="LibraryFragment"
+        tools:layout="@layout/fragment_library"/>
 
 </navigation>

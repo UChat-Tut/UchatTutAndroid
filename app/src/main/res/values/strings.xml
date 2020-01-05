@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">UchatTut</string>
-    <string name="title_chat">Chat</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="nav_title_chat">Chat</string>
+    <string name="nav_title_library">Library</string>
+    <string name="nav_title_schedule">Schedule</string>
+    <string name="nav_title_tasks">Tasks</string>
+    <string name="nav_title_profile">Profile</string>
     <string name="fail_auth">AuthFailed</string>
     <string name="success_sign_in">Sign In Success</string>
     <string name="fail_sign_in">Sign In Failed</string>
