@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation._common.addBackNavigtionCallback
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
@@ -46,10 +45,6 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = findNavController()
-
-        addBackNavigtionCallback {
-            navController.popBackStack(R.id.navigation_chat, false)
-        }
 
         chatRecyclerAdapter = ChatRecyclerAdapter()
         chatRecyclerView.layoutManager = LinearLayoutManager(view.context)
