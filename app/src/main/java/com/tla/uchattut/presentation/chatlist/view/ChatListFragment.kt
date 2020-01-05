@@ -24,12 +24,6 @@ class ChatListFragment : Fragment() {
 
     private lateinit var chatListAdapter: ChatListRecyclerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        navController = findNavController()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +34,8 @@ class ChatListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = findNavController()
 
         chatListAdapter = ChatListRecyclerAdapter { id ->
             openChat(id)

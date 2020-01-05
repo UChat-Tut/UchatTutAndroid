@@ -2,17 +2,23 @@ package com.tla.uchattut.presentation.chat.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
+import com.tla.uchattut.presentation._common.addBackNavigtionCallback
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.synthetic.main.fragment_chat.*
+
 
 class ChatFragment : Fragment() {
 
@@ -21,6 +27,13 @@ class ChatFragment : Fragment() {
         viewModel { ChatViewModel() }
     }
     private val args: ChatFragmentArgs by navArgs()
+    private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +45,12 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        navController = findNavController()
+
+        addBackNavigtionCallback {
+            navController.popBackStack(R.id.navigation_chat, false)
+        }
 
         chatRecyclerAdapter = ChatRecyclerAdapter()
         chatRecyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -66,4 +85,12 @@ class ChatFragment : Fragment() {
                 emptyLayout.visibility = View.GONE
             }
         }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> activity?.onBackPressed()
+            else -> return false
+        }
+        return true
+    }
 }
