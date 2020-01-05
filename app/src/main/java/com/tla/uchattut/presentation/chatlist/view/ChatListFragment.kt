@@ -50,6 +50,8 @@ class ChatListFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             updateState(state)
         })
+
+        viewModel.requestChatList()
     }
 
     private fun openChat(id: Int) {
@@ -75,9 +77,4 @@ class ChatListFragment : Fragment() {
                 emptyLayout.visibility = View.VISIBLE
             }
         }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.requestChatList()
-    }
 }
