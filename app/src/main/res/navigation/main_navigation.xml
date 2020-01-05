@@ -7,16 +7,17 @@
     app:startDestination="@id/navigation_chat">
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_library"
         android:name="com.tla.uchattut.presentation.dashboard.view.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_schedule"
         android:name="com.tla.uchattut.presentation.notifications.view.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    
     <fragment
         android:id="@+id/navigation_chat"
         android:name="com.tla.uchattut.presentation.chatlist.view.ChatListFragment"
