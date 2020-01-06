@@ -8,28 +8,28 @@ class FakeChatListRepository : ChatListRepository {
         return listOf(
             ChatRepoModel(
                 imageUrl = "https://cdn2.iconfinder.com/data/icons/circle-avatars-1/128/050_girl_avatar_profile_woman_suit_student_officer-512.png",
-                interlocutorName = "Дмитрий",
+                interlocutorName = "Дмитрий1",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1
             ),
             ChatRepoModel(
                 imageUrl = "https://cdn2.iconfinder.com/data/icons/circle-avatars-1/128/050_girl_avatar_profile_woman_suit_student_officer-512.png",
-                interlocutorName = "Дмитрий",
+                interlocutorName = "Дмитрий2",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1
             ),
             ChatRepoModel(
                 imageUrl = "https://cdn2.iconfinder.com/data/icons/circle-avatars-1/128/050_girl_avatar_profile_woman_suit_student_officer-512.png",
-                interlocutorName = "Дмитрий",
+                interlocutorName = "Дмитрий3",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1
             ),
             ChatRepoModel(
                 imageUrl = "https://cdn2.iconfinder.com/data/icons/circle-avatars-1/128/050_girl_avatar_profile_woman_suit_student_officer-512.png",
-                interlocutorName = "Дмитрий",
+                interlocutorName = "Дмитрий4",
                 lastMessage = "Привет",
                 lastMessageTime = "12:10",
                 unreadMessageCount = 1

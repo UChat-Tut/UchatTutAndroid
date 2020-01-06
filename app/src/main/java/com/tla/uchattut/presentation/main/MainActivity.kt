@@ -1,12 +1,8 @@
 package com.tla.uchattut.presentation.main
 
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController

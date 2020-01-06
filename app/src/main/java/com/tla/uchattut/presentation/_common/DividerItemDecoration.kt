@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.chatlist.view
+package com.tla.uchattut.presentation._common
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable

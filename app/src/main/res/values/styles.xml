@@ -6,6 +6,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- ActionMode -->
+        <item name="actionModeStyle">@style/AppActionMode</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeCloseDrawable">@drawable/ic_back_arrow</item>
+        <item name="actionMenuTextColor">@android:color/black</item>
+    </style>
+
+    <style name="AppActionMode" parent="Base.Widget.AppCompat.ActionMode">
+        <item name="background">?attr/actionModeBackground</item>
+        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
+        <item name="height">?attr/actionBarSize</item>
     </style>
 
 </resources>
