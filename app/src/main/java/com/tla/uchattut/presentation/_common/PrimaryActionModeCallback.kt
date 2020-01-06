@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.chatlist.view
+package com.tla.uchattut.presentation._common
 
 import android.view.ActionMode
 import android.view.Menu
@@ -7,7 +7,7 @@ import android.view.View
 import androidx.annotation.MenuRes
 
 class PrimaryActionModeCallback(
-    private val onActionItemClickListener: OnActionItemClickListener? = null,
+    private val onActionItemClickListener: OnActionModeClickListener? = null,
     private val finishCallback: () -> Unit
 ) : ActionMode.Callback {
 
@@ -35,7 +35,7 @@ class PrimaryActionModeCallback(
     }
 
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-        onActionItemClickListener?.onActionItemClick(item)
+        onActionItemClickListener?.onMenuItemSelected(item)
         mode.finish()
         return true
     }
@@ -62,7 +62,9 @@ class PrimaryActionModeCallback(
     fun isNotActive(): Boolean =
         !isActive()
 
-    interface OnActionItemClickListener {
-        fun onActionItemClick(item: MenuItem)
+    interface OnActionModeClickListener {
+        fun onMenuItemSelected(item: MenuItem)
+        fun selectItem(view: View)
+        fun unSelectItem(view: View)
     }
 }

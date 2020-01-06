@@ -1,7 +1,6 @@
 package com.tla.uchattut.presentation.chatlist.view
 
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -10,18 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
+import com.tla.uchattut.presentation._common.ActionModeSelectItemsDelegate
+import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_chat_list.*
 import java.util.*
 
 class ChatListRecyclerAdapter(
     private val onItemClick: (id: Int) -> Unit = {},
-    onActionItemClickListener: PrimaryActionModeCallback.OnActionItemClickListener
+    onActionItemClickListener: PrimaryActionModeCallback.OnActionModeClickListener
 ) : RecyclerView.Adapter<ChatListRecyclerAdapter.ViewHolder>(), Filterable {
 
     private val chatsList = arrayListOf<ChatRepoModel>()
     private val chatsFilteredList = arrayListOf<ChatRepoModel>()
-    private val actionModeDelegate = ActionModeSelectItemsDelegate<ChatRepoModel>(onActionItemClickListener)
+    private val actionModeDelegate =
+        ActionModeSelectItemsDelegate<ChatRepoModel>(onActionItemClickListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =

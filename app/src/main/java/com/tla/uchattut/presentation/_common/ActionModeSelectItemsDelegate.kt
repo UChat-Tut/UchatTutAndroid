@@ -1,18 +1,19 @@
-package com.tla.uchattut.presentation.chatlist.view
+package com.tla.uchattut.presentation._common
 
 import android.view.View
 import androidx.annotation.MenuRes
 
 class ActionModeSelectItemsDelegate<E>(
-    onActionItemClickListener: PrimaryActionModeCallback.OnActionItemClickListener
+    private val onActionItemClickListener: PrimaryActionModeCallback.OnActionModeClickListener
 ) {
 
     private val selectedItems = mutableListOf<E>()
     private val selectedViews = mutableListOf<View>()
-    private val actionModeCallback = PrimaryActionModeCallback(
-        onActionItemClickListener = onActionItemClickListener,
-        finishCallback = this::unSelectAll
-    )
+    private val actionModeCallback =
+        PrimaryActionModeCallback(
+            onActionItemClickListener = onActionItemClickListener,
+            finishCallback = this::unSelectAll
+        )
 
     fun startActionMode(
         view: View,
@@ -25,7 +26,7 @@ class ActionModeSelectItemsDelegate<E>(
         actionModeCallback.startActionMode(view, menuResId, title, subtitle)
     }
 
-    fun finishActionMode() {
+    private fun finishActionMode() {
         actionModeCallback.finishActionMode()
     }
 
@@ -46,7 +47,7 @@ class ActionModeSelectItemsDelegate<E>(
     }
 
     private fun selectItem(view: View, item: E) {
-        view.isActivated = true
+        onActionItemClickListener.selectItem(view)
         selectedViews.add(view)
         selectedItems.add(item)
     }
@@ -55,7 +56,7 @@ class ActionModeSelectItemsDelegate<E>(
         actionModeCallback.isActive()
 
     private fun unSelectItem(view: View, item: E) {
-        view.isActivated = false
+        onActionItemClickListener.unSelectItem(view)
         selectedViews.remove(view)
         selectedItems.remove(item)
     }
@@ -63,7 +64,7 @@ class ActionModeSelectItemsDelegate<E>(
     private fun unSelectAll() {
         selectedItems.clear()
         selectedViews.forEach {
-            it.isActivated = false
+            onActionItemClickListener.unSelectItem(it)
         }
         selectedViews.clear()
     }
