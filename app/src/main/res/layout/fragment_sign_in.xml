@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_sign_in_title"
+        android:id="@+id/signInTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -18,7 +18,7 @@
         android:textColor="@color/chariotRequiem"
         android:textSize="30sp" />
     <EditText
-        android:id="@+id/tv_email_input"
+        android:id="@+id/emailTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
@@ -35,7 +35,7 @@
         android:inputType="textEmailAddress"
         app:errorEnabled="true"/>
     <EditText
-        android:id="@+id/tv_pass_input"
+        android:id="@+id/passwordTextView"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
@@ -52,7 +52,7 @@
         android:inputType="textPassword"
         app:errorEnabled="true"/>
     <Button
-        android:id="@+id/button_sign_in"
+        android:id="@+id/signInButton"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"

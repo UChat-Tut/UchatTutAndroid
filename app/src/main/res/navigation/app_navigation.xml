@@ -9,20 +9,18 @@
     <fragment
         android:id="@+id/navigation_main"
         android:name="com.tla.uchattut.presentation.main.MainFragment"
-        android:label="MainFragment"/>
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main"/>
 
     <fragment
-        android:id="@+id/navigation_auth"
-        android:name="com.tla.uchattut.presentation.auth.view.AuthFragment"
+        android:id="@+id/signUpFragment"
+        android:name="com.tla.uchattut.presentation.auth.sign_up.view.SignUpFragment"
         android:label="AuthFragment"
-        tools:layout="@layout/fragment_auth">
-        <action
-            android:id="@+id/action_navigation_auth_to_navigation_sign_in2"
-            app:destination="@id/navigation_sign_in" />
+        tools:layout="@layout/fragment_sign_up">
     </fragment>
     <fragment
-        android:id="@+id/navigation_sign_in"
-        android:name="com.tla.uchattut.presentation.auth.view.SignInFragment"
+        android:id="@+id/signInFragment"
+        android:name="com.tla.uchattut.presentation.auth.sign_in.view.SignInFragment"
         android:label="SignInFragment"
         tools:layout="@layout/fragment_sign_in"/>
 
@@ -44,6 +42,19 @@
             android:name="id"
             app:argType="integer"
             android:defaultValue="0" />
+    </action>
+
+    <action
+        android:id="@+id/action_to_signInFragment"
+        app:destination="@id/signInFragment" >
+    </action>
+
+    <action
+        android:id="@+id/action_to_signUpFragment"
+        app:destination="@id/signUpFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/mobile_nav"
+        app:popUpToInclusive="true">
     </action>
 
 </navigation>
