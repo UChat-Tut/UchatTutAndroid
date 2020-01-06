@@ -48,9 +48,10 @@ class ChatListFragment : Fragment() {
 
         mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
-        chatListAdapter = ChatListRecyclerAdapter { id ->
-            openChat(id)
-        }
+        chatListAdapter = ChatListRecyclerAdapter(
+            onItemClick = { id -> openChat(id) },
+            onActionItemClickListener = onActionItemClickListener
+        )
 
         val dividerDrawable = resources.getDrawable(R.drawable.divider_horizontal, activity!!.theme)
         chatListRecyclerView.layoutManager = LinearLayoutManager(context!!)
@@ -121,7 +122,7 @@ class ChatListFragment : Fragment() {
         })
 
         val addActionView: ImageButton = menu.findItem(R.id.actionAdd).actionView as ImageButton
-        val addDialogMenu = createAddDialogPopupMenu(addActionView, ::onAddDialogClickListener)
+        val addDialogMenu = createAddDialogPopupMenu(addActionView, this::onAddDialogClickListener)
         addActionView.run {
             setBackgroundColor(Color.TRANSPARENT)
             setImageResource(R.drawable.ic_add)
@@ -154,7 +155,16 @@ class ChatListFragment : Fragment() {
 
     private fun onAddDialogClickListener(menuItem: MenuItem) {
         when(menuItem.itemId) {
-            R.id.actionAdd -> addDialog()
+            R.id.newMessageItem -> addDialog()
+        }
+    }
+
+    private val onActionItemClickListener = object : PrimaryActionModeCallback.OnActionItemClickListener {
+        override fun onActionItemClick(item: MenuItem) {
+            when (item.itemId) {
+                R.id.deleteItem -> toast("Удаление")
+                R.id.muteItem -> toast("Отключены оповещания")
+            }
         }
     }
 

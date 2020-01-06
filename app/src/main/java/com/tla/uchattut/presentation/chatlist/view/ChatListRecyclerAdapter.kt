@@ -1,6 +1,7 @@
 package com.tla.uchattut.presentation.chatlist.view
 
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
@@ -14,16 +15,18 @@ import kotlinx.android.synthetic.main.item_chat_list.*
 import java.util.*
 
 class ChatListRecyclerAdapter(
-    private val onItemClick: (id: Int) -> Unit = {}
+    private val onItemClick: (id: Int) -> Unit = {},
+    onActionItemClickListener: PrimaryActionModeCallback.OnActionItemClickListener
 ) : RecyclerView.Adapter<ChatListRecyclerAdapter.ViewHolder>(), Filterable {
 
     private val chatsList = arrayListOf<ChatRepoModel>()
     private val chatsFilteredList = arrayListOf<ChatRepoModel>()
+    private val actionModeDelegate = ActionModeSelectItemsDelegate<ChatRepoModel>(onActionItemClickListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_chat_list, parent, false)
-        return ViewHolder(view, onItemClick)
+        return ViewHolder(view, onItemClick, actionModeDelegate)
     }
 
     override fun getItemCount(): Int {
@@ -43,10 +46,22 @@ class ChatListRecyclerAdapter(
 
     class ViewHolder(
         override val containerView: View,
-        private val onItemClick: (id: Int) -> Unit
+        private val onItemClick: (id: Int) -> Unit,
+        private val actionModeDelegate: ActionModeSelectItemsDelegate<ChatRepoModel>
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(model: ChatRepoModel) {
-            containerView.setOnClickListener { onItemClick(model.id) }
+            containerView.setOnClickListener {
+                if (actionModeDelegate.isActive()) {
+                    actionModeDelegate.clickItem(rootItem, model)
+                } else {
+                    onItemClick(model.id)
+                }
+            }
+            containerView.setOnLongClickListener {
+                actionModeDelegate.startActionMode(containerView, R.menu.chat_list_action_mode)
+                actionModeDelegate.clickItem(rootItem, model)
+                true
+            }
             usernameTextView.text = model.interlocutorName
             lastMessageTextView.text = model.lastMessage
             sendTimeTextView.text = model.lastMessageTime
