@@ -1,12 +1,12 @@
 package com.tla.uchattut.domain.chat
 
-import com.tla.uchattut.data.repositories.auth.UserRepository
+import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 
 class ChatInteractor(
     private val chatRepository: ChatRepository,
-    private val userRepository: UserRepository
+    private val userRepository: AuthRepository
 ) {
     fun getAllMessages(): List<MessagePresentationModel> =
         chatRepository.getAllMessages().map {
