@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_chat"
-        android:name="com.tla.uchattut.presentation.chatlist.view.ChatListFragment"
+        android:name="com.tla.uchattut.presentation.dialogues.view.DialoguesFragment"
         android:label="@string/nav_title_chat"
         tools:layout="@layout/fragment_chat_list">
     </fragment>

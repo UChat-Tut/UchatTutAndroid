@@ -1,6 +1,7 @@
 package com.tla.uchattut.data.repositories.chat
 
 import com.tla.uchattut.data.repositories.auth.AuthRepository
+import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
 import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
 import com.tla.uchattut.domain.chat.ChatRepository
 
@@ -8,7 +9,7 @@ class FakeChatRepository(
     private val authRepository: AuthRepository
 ) : ChatRepository {
 
-    override fun getAllMessages(): List<MessageRepoModel> = listOf(
+    override suspend fun getChat(dialogueId: Int): ChatRepoModel = ChatRepoModel(listOf(
         MessageRepoModel(
             id = 0,
             senderId = authRepository.getCurrentUserId(),
@@ -45,7 +46,7 @@ class FakeChatRepository(
             text = "Оплатил",
             time = "10:10"
         )
-    )
+    ))
 
     override fun removeMessages(messages: List<MessageRepoModel>) {
     }

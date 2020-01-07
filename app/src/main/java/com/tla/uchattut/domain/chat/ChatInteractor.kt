@@ -2,15 +2,17 @@ package com.tla.uchattut.domain.chat
 
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
+import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
-import java.lang.StringBuilder
 
 class ChatInteractor(
     private val chatRepository: ChatRepository,
     private val userRepository: AuthRepository
 ) {
-    fun getAllMessages(): List<MessagePresentationModel> =
-        chatRepository.getAllMessages().map {
+    suspend fun getChat(dialogueId: Int): ChatPresentationModel {
+        val chatRepoModel = chatRepository.getChat(dialogueId)
+
+        val messages = chatRepoModel.messages.map {
             MessagePresentationModel(
                 type = spotMessageType(it),
                 id = it.id,
@@ -19,6 +21,9 @@ class ChatInteractor(
                 time = it.time
             )
         }.markLastInBlockMessages()
+
+        return ChatPresentationModel(messages)
+    }
 
     private fun List<MessagePresentationModel>.markLastInBlockMessages(): List<MessagePresentationModel> {
         for (i in 0 until size) {

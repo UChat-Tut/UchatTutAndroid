@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.chatlist.view
+package com.tla.uchattut.presentation.dialogues.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,23 +8,23 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
+import com.tla.uchattut.data.repositories.dialogues.models.DialoguesRepoModel
 import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
 import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_chat_list.*
 import java.util.*
 
-class ChatListRecyclerAdapter(
+class DialoguesRecyclerAdapter(
     private val onItemClick: (id: Int) -> Unit = {},
     onMenuClickListener: PrimaryActionModeCallback.OnActionModeMenuClickListener
-) : RecyclerView.Adapter<ChatListRecyclerAdapter.ViewHolder>(), Filterable {
+) : RecyclerView.Adapter<DialoguesRecyclerAdapter.ViewHolder>(), Filterable {
 
-    private val chatsList = arrayListOf<ChatRepoModel>()
-    private val chatsFilteredList = arrayListOf<ChatRepoModel>()
+    private val chatsList = arrayListOf<DialoguesRepoModel>()
+    private val chatsFilteredList = arrayListOf<DialoguesRepoModel>()
 
     private val actionModeDelegate =
-        ActionModeSelectedItemsDelegate<ChatRepoModel>(onMenuClickListener)
+        ActionModeSelectedItemsDelegate<DialoguesRepoModel>(onMenuClickListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -40,7 +40,7 @@ class ChatListRecyclerAdapter(
         holder.bind(chatsFilteredList[position])
     }
 
-    fun setChats(chats: List<ChatRepoModel>) {
+    fun setChats(chats: List<DialoguesRepoModel>) {
         setChatsList(chats)
         setFilteredChatsList(chats)
 
@@ -50,7 +50,7 @@ class ChatListRecyclerAdapter(
     class ViewHolder(
         override val containerView: View,
         private val onItemClick: (id: Int) -> Unit,
-        private val actionModeDelegate: ActionModeSelectedItemsDelegate<ChatRepoModel>
+        private val actionModeDelegate: ActionModeSelectedItemsDelegate<DialoguesRepoModel>
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         init {
@@ -69,13 +69,13 @@ class ChatListRecyclerAdapter(
             )
         }
 
-        fun bind(model: ChatRepoModel) {
+        fun bind(model: DialoguesRepoModel) {
 
             containerView.setOnClickListener {
                 if (actionModeDelegate.isActive()) {
                     actionModeDelegate.clickItem(rootItem, model)
                 } else {
-                    onItemClick(model.id)
+                    onItemClick(model.id!!)
                 }
             }
             containerView.setOnLongClickListener {
@@ -83,9 +83,9 @@ class ChatListRecyclerAdapter(
                 actionModeDelegate.clickItem(rootItem, model)
                 true
             }
-            usernameTextView.text = model.interlocutorName
-            lastMessageTextView.text = model.lastMessage
-            sendTimeTextView.text = model.lastMessageTime
+            usernameTextView.text = model.name
+            lastMessageTextView.text = model.lastMessage?.message ?: ""
+            sendTimeTextView.text = model.lastMessage?.time ?: ""
 
             if (model.unreadMessageCount != null) {
                 unreadCountTextView.visibility = View.GONE
@@ -102,14 +102,14 @@ class ChatListRecyclerAdapter(
 
     private val listFilter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList = mutableListOf<ChatRepoModel>()
+            val filteredList = mutableListOf<DialoguesRepoModel>()
             if (constraint == null || constraint.isEmpty()) {
                 filteredList.addAll(chatsList)
             } else {
                 val filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim()
                 val filteredPatternList = chatsList.filter {
-                    it.interlocutorName.toLowerCase(Locale.getDefault()).trim()
-                        .contains(filterPattern)
+                    it.name?.toLowerCase(Locale.getDefault())?.trim()
+                        ?.contains(filterPattern) == true
                 }
                 filteredList.addAll(filteredPatternList)
             }
@@ -119,18 +119,18 @@ class ChatListRecyclerAdapter(
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            setFilteredChatsList(results!!.values as List<ChatRepoModel>)
+            setFilteredChatsList(results!!.values as List<DialoguesRepoModel>)
 
             notifyDataSetChanged()
         }
     }
 
-    private fun setChatsList(chats: List<ChatRepoModel>) {
+    private fun setChatsList(chats: List<DialoguesRepoModel>) {
         chatsList.clear()
         chatsList.addAll(chats)
     }
 
-    private fun setFilteredChatsList(chats: List<ChatRepoModel>) {
+    private fun setFilteredChatsList(chats: List<DialoguesRepoModel>) {
         chatsFilteredList.clear()
         chatsFilteredList.addAll(chats)
     }
