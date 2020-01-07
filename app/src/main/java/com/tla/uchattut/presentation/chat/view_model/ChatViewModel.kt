@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
+import com.tla.uchattut.data.repositories.chat.FakeChatRepository
 import com.tla.uchattut.domain.chat.ChatInteractor
 import com.tla.uchattut.presentation._common.saveTextToClipboard
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class ChatViewModel : ViewModel() {
     private val chatInteractor =
-        ChatInteractor(ChatRepositoryImpl(), AuthRepository())
+        ChatInteractor(FakeChatRepository(AuthRepository()), AuthRepository())
 
     private val chatLiveData = MutableLiveData<ChatPresentationModel>()
     val state = MutableLiveData<State>()

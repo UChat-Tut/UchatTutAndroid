@@ -9,7 +9,7 @@ import com.tla.uchattut.domain.dialogues.DialoguesInteractor
 import kotlinx.coroutines.Dispatchers
 
 class DialoguesViewModel : ViewModel() {
-    private val chatListInteractor = DialoguesInteractor(DialoguesRepositoryImpl())
+    private val chatListInteractor = DialoguesInteractor(FakeDialoguesRepository())
 
     val state: MutableLiveData<State> = MutableLiveData(State.CONTENT)
 
