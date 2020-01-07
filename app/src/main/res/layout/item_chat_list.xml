@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatarImageView"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -26,14 +26,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="100dp"
         android:maxLines="1"
-        tools:text="Райан Гослинг"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@+id/sendTimeTextView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/avatarImageView"
-        app:layout_constraintTop_toTopOf="@+id/avatarImageView" />
+        app:layout_constraintTop_toTopOf="@+id/avatarImageView"
+        tools:text="Райан Гослинг" />
 
     <TextView
         android:id="@+id/lastMessageTextView"
@@ -52,13 +52,17 @@
 
     <TextView
         android:id="@+id/sendTimeTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
-        tools:text="11:50"
+        android:gravity="end"
+        android:maxLength="30"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/usernameTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="11:50" />
 
     <TextView
         android:id="@+id/unreadCountTextView"
@@ -66,6 +70,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@drawable/shape_red_round_rect"
+        android:maxEms="6"
+        android:maxLength="6"
+        android:maxLines="1"
         android:paddingStart="8dp"
         android:paddingTop="2dp"
         android:paddingEnd="8dp"
@@ -74,5 +81,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sendTimeTextView"
-        tools:text="2" />
+        tools:text="akjdf;ajfal;kjfalskjfa;lsfkjaslfjal;kjsf" />
 </androidx.constraintlayout.widget.ConstraintLayout>

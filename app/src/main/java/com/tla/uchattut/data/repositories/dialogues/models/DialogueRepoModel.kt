@@ -2,7 +2,7 @@ package com.tla.uchattut.data.repositories.dialogues.models
 
 import com.google.gson.annotations.SerializedName
 
-data class DialoguesRepoModel (
+data class DialogueRepoModel (
     @SerializedName("id")
     val id: Int?,
 
@@ -10,13 +10,13 @@ data class DialoguesRepoModel (
     val name: String?,
 
     @SerializedName("last_message")
-    val lastMessage: LastMessageModels?,
+    val lastMessage: LastMessageModel?,
 
     val imageUrl: String?,
 
-    val unreadMessageCount: Int?
+    var unreadMessageCount: Int?
 ) {
-    data class LastMessageModels(
+    data class LastMessageModel(
         @SerializedName("sender")
         val sender: Int?,
 

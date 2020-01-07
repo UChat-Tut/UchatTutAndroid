@@ -8,23 +8,20 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.dialogues.models.DialoguesRepoModel
+import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
 import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
-import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_chat_list.*
 import java.util.*
 
 class DialoguesRecyclerAdapter(
     private val onItemClick: (id: Int) -> Unit = {},
-    onMenuClickListener: PrimaryActionModeCallback.OnActionModeMenuClickListener
+    private val actionModeDelegate: ActionModeSelectedItemsDelegate<DialogueRepoModel>
 ) : RecyclerView.Adapter<DialoguesRecyclerAdapter.ViewHolder>(), Filterable {
 
-    private val chatsList = arrayListOf<DialoguesRepoModel>()
-    private val chatsFilteredList = arrayListOf<DialoguesRepoModel>()
+    private val chatsList = arrayListOf<DialogueRepoModel>()
+    private val chatsFilteredList = arrayListOf<DialogueRepoModel>()
 
-    private val actionModeDelegate =
-        ActionModeSelectedItemsDelegate<DialoguesRepoModel>(onMenuClickListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -40,7 +37,7 @@ class DialoguesRecyclerAdapter(
         holder.bind(chatsFilteredList[position])
     }
 
-    fun setChats(chats: List<DialoguesRepoModel>) {
+    fun setChats(chats: List<DialogueRepoModel>) {
         setChatsList(chats)
         setFilteredChatsList(chats)
 
@@ -50,7 +47,7 @@ class DialoguesRecyclerAdapter(
     class ViewHolder(
         override val containerView: View,
         private val onItemClick: (id: Int) -> Unit,
-        private val actionModeDelegate: ActionModeSelectedItemsDelegate<DialoguesRepoModel>
+        private val actionModeDelegate: ActionModeSelectedItemsDelegate<DialogueRepoModel>
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         init {
@@ -69,7 +66,7 @@ class DialoguesRecyclerAdapter(
             )
         }
 
-        fun bind(model: DialoguesRepoModel) {
+        fun bind(model: DialogueRepoModel) {
 
             containerView.setOnClickListener {
                 if (actionModeDelegate.isActive()) {
@@ -87,8 +84,8 @@ class DialoguesRecyclerAdapter(
             lastMessageTextView.text = model.lastMessage?.message ?: ""
             sendTimeTextView.text = model.lastMessage?.time ?: ""
 
-            if (model.unreadMessageCount != null) {
-                unreadCountTextView.visibility = View.GONE
+            if (model.unreadMessageCount != null && model.unreadMessageCount!! > 0) {
+                unreadCountTextView.visibility = View.VISIBLE
                 unreadCountTextView.text = model.unreadMessageCount.toString()
             } else {
                 unreadCountTextView.visibility = View.GONE
@@ -102,7 +99,7 @@ class DialoguesRecyclerAdapter(
 
     private val listFilter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList = mutableListOf<DialoguesRepoModel>()
+            val filteredList = mutableListOf<DialogueRepoModel>()
             if (constraint == null || constraint.isEmpty()) {
                 filteredList.addAll(chatsList)
             } else {
@@ -119,18 +116,18 @@ class DialoguesRecyclerAdapter(
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            setFilteredChatsList(results!!.values as List<DialoguesRepoModel>)
+            setFilteredChatsList(results!!.values as List<DialogueRepoModel>)
 
             notifyDataSetChanged()
         }
     }
 
-    private fun setChatsList(chats: List<DialoguesRepoModel>) {
+    private fun setChatsList(chats: List<DialogueRepoModel>) {
         chatsList.clear()
         chatsList.addAll(chats)
     }
 
-    private fun setFilteredChatsList(chats: List<DialoguesRepoModel>) {
+    private fun setFilteredChatsList(chats: List<DialogueRepoModel>) {
         chatsFilteredList.clear()
         chatsFilteredList.addAll(chats)
     }

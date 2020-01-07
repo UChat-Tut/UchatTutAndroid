@@ -14,11 +14,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.dialogues.models.DialoguesRepoModel
-import com.tla.uchattut.presentation._common.DividerItemDecoration
-import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
-import com.tla.uchattut.presentation._common.toast
-import com.tla.uchattut.presentation._common.viewModel
+import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
+import com.tla.uchattut.presentation._common.*
 import com.tla.uchattut.presentation.dialogues.view_model.DialoguesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 
@@ -30,6 +27,19 @@ class DialoguesFragment : Fragment() {
     }
 
     private lateinit var chatListAdapter: DialoguesRecyclerAdapter
+
+    private val onActionItemClickListener =
+        object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
+            override fun onMenuItemSelected(item: MenuItem) {
+                when (item.itemId) {
+                    R.id.muteItem -> onMuteItemClick()
+                    R.id.deleteItem -> onDeleteItemClick()
+                }
+            }
+        }
+
+    private val actionModeDelegate =
+        ActionModeSelectedItemsDelegate<DialogueRepoModel>(onActionItemClickListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +61,7 @@ class DialoguesFragment : Fragment() {
 
         chatListAdapter = DialoguesRecyclerAdapter(
             onItemClick = { id -> openChat(id) },
-            onMenuClickListener = onActionItemClickListener
+            actionModeDelegate = actionModeDelegate
         )
 
         val dividerDrawable = resources.getDrawable(R.drawable.divider_horizontal, activity!!.theme)
@@ -63,15 +73,13 @@ class DialoguesFragment : Fragment() {
             )
         )
 
-        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<DialoguesRepoModel>> {
+        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<DialogueRepoModel>> {
             chatListAdapter.setChats(it)
         })
 
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             updateState(state)
         })
-
-        // viewModel.requestChatList()
     }
 
     private fun openChat(id: Int) {
@@ -163,13 +171,14 @@ class DialoguesFragment : Fragment() {
         }
     }
 
-    private val onActionItemClickListener = object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
-        override fun onMenuItemSelected(item: MenuItem) {
-            when (item.itemId) {
-                R.id.deleteItem -> toast("Удаление")
-                R.id.muteItem -> toast("Отключены оповещания")
-            }
-        }
+    private fun onMuteItemClick() {
+        toast("Отключены оповещания")
+        actionModeDelegate.finishActionMode()
+    }
+
+    private fun onDeleteItemClick() {
+        toast("Удаление")
+        actionModeDelegate.finishActionMode()
     }
 
     private fun addDialog() {
