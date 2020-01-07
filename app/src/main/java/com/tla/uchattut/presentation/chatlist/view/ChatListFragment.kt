@@ -51,7 +51,7 @@ class ChatListFragment : Fragment() {
 
         chatListAdapter = ChatListRecyclerAdapter(
             onItemClick = { id -> openChat(id) },
-            onActionItemClickListener = onActionItemClickListener
+            onMenuClickListener = onActionItemClickListener
         )
 
         val dividerDrawable = resources.getDrawable(R.drawable.divider_horizontal, activity!!.theme)
@@ -163,20 +163,12 @@ class ChatListFragment : Fragment() {
         }
     }
 
-    private val onActionItemClickListener = object : PrimaryActionModeCallback.OnActionModeClickListener {
+    private val onActionItemClickListener = object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
         override fun onMenuItemSelected(item: MenuItem) {
             when (item.itemId) {
                 R.id.deleteItem -> toast("Удаление")
                 R.id.muteItem -> toast("Отключены оповещания")
             }
-        }
-
-        override fun selectItem(view: View) {
-            view.isActivated = true
-        }
-
-        override fun unSelectItem(view: View) {
-            view.isActivated = false
         }
     }
 

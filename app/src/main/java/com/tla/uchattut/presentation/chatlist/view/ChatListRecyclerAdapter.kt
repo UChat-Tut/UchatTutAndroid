@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
-import com.tla.uchattut.presentation._common.ActionModeSelectItemsDelegate
+import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
 import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_chat_list.*
@@ -17,13 +17,14 @@ import java.util.*
 
 class ChatListRecyclerAdapter(
     private val onItemClick: (id: Int) -> Unit = {},
-    onActionItemClickListener: PrimaryActionModeCallback.OnActionModeClickListener
+    onMenuClickListener: PrimaryActionModeCallback.OnActionModeMenuClickListener
 ) : RecyclerView.Adapter<ChatListRecyclerAdapter.ViewHolder>(), Filterable {
 
     private val chatsList = arrayListOf<ChatRepoModel>()
     private val chatsFilteredList = arrayListOf<ChatRepoModel>()
+
     private val actionModeDelegate =
-        ActionModeSelectItemsDelegate<ChatRepoModel>(onActionItemClickListener)
+        ActionModeSelectedItemsDelegate<ChatRepoModel>(onMenuClickListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -49,9 +50,27 @@ class ChatListRecyclerAdapter(
     class ViewHolder(
         override val containerView: View,
         private val onItemClick: (id: Int) -> Unit,
-        private val actionModeDelegate: ActionModeSelectItemsDelegate<ChatRepoModel>
+        private val actionModeDelegate: ActionModeSelectedItemsDelegate<ChatRepoModel>
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        init {
+            val rootView = containerView.rootView
+            actionModeDelegate.addActionModeClickListener(
+                rootView,
+                object : ActionModeSelectedItemsDelegate.OnActionModeClickListener {
+                    override fun selectItem() {
+                        rootView.isActivated = true
+                    }
+
+                    override fun unSelectItem() {
+                        rootView.isActivated = false
+                    }
+                }
+            )
+        }
+
         fun bind(model: ChatRepoModel) {
+
             containerView.setOnClickListener {
                 if (actionModeDelegate.isActive()) {
                     actionModeDelegate.clickItem(rootItem, model)
@@ -89,7 +108,8 @@ class ChatListRecyclerAdapter(
             } else {
                 val filterPattern = constraint.toString().toLowerCase(Locale.getDefault()).trim()
                 val filteredPatternList = chatsList.filter {
-                    it.interlocutorName.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
+                    it.interlocutorName.toLowerCase(Locale.getDefault()).trim()
+                        .contains(filterPattern)
                 }
                 filteredList.addAll(filteredPatternList)
             }
