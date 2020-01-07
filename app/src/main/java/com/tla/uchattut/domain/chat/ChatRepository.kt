@@ -4,4 +4,6 @@ import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
 
 interface ChatRepository {
     fun getAllMessages(): List<MessageRepoModel>
+
+    fun removeMessages(messages: List<MessageRepoModel>)
 }

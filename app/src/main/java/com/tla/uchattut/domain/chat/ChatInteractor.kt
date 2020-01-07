@@ -3,6 +3,7 @@ package com.tla.uchattut.domain.chat
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
+import java.lang.StringBuilder
 
 class ChatInteractor(
     private val chatRepository: ChatRepository,
@@ -34,4 +35,31 @@ class ChatInteractor(
             userRepository.getCurrentUserId() -> MessagePresentationModel.Type.OUT
             else -> MessagePresentationModel.Type.IN
         }
+
+    fun removeMessages(messages: List<MessagePresentationModel>) {
+        val repoMessages = messages.map {
+            MessageRepoModel(
+                id = it.id,
+                senderId = it.senderId,
+                text = it.text,
+                time = it.time
+            )
+        }
+        chatRepository.removeMessages(repoMessages)
+    }
+
+    fun extractTextFromMessages(messages: List<MessagePresentationModel>): String {
+
+        var currentUserId = ""
+        val stringBuilder = StringBuilder()
+
+        messages.forEach {
+            if (it.senderId != currentUserId) {
+                stringBuilder.append("${it.senderId}:\n")
+                currentUserId = it.senderId!!
+            }
+            stringBuilder.append("${it.text}\n\n")
+        }
+        return stringBuilder.toString().trim()
+    }
 }

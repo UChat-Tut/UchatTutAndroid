@@ -7,7 +7,7 @@ import android.view.View
 import androidx.annotation.MenuRes
 
 class PrimaryActionModeCallback(
-    private val onActionItemClickListener: OnActionModeClickListener? = null,
+    private val onActionItemClickListener: OnActionModeMenuClickListener? = null,
     private val finishCallback: () -> Unit
 ) : ActionMode.Callback {
 
@@ -36,7 +36,6 @@ class PrimaryActionModeCallback(
 
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         onActionItemClickListener?.onMenuItemSelected(item)
-        mode.finish()
         return true
     }
 
@@ -62,9 +61,7 @@ class PrimaryActionModeCallback(
     fun isNotActive(): Boolean =
         !isActive()
 
-    interface OnActionModeClickListener {
+    interface OnActionModeMenuClickListener {
         fun onMenuItemSelected(item: MenuItem)
-        fun selectItem(view: View)
-        fun unSelectItem(view: View)
     }
 }

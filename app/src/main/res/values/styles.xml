@@ -20,4 +20,10 @@
         <item name="height">?attr/actionBarSize</item>
     </style>
 
+    <style name="DialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowMinWidthMajor">97%</item>
+        <item name="android:windowMinWidthMinor">97%</item>
+        <item name="dialogCornerRadius">10dp</item>
+    </style>
+
 </resources>

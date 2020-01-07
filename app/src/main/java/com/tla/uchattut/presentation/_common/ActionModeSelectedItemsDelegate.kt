@@ -3,17 +3,21 @@ package com.tla.uchattut.presentation._common
 import android.view.View
 import androidx.annotation.MenuRes
 
-class ActionModeSelectItemsDelegate<E>(
-    private val onActionItemClickListener: PrimaryActionModeCallback.OnActionModeClickListener
+class ActionModeSelectedItemsDelegate<E>(
+    onMenuItemListener: PrimaryActionModeCallback.OnActionModeMenuClickListener
 ) {
 
-    private val selectedItems = mutableListOf<E>()
+    val selectedItems = mutableListOf<E>()
     private val selectedViews = mutableListOf<View>()
-    private val actionModeCallback =
-        PrimaryActionModeCallback(
-            onActionItemClickListener = onActionItemClickListener,
-            finishCallback = this::unSelectAll
-        )
+    private val actionModeCallback = PrimaryActionModeCallback(
+        onActionItemClickListener = onMenuItemListener,
+        finishCallback = {
+            unSelectAll()
+            onCloseActionMode()
+        }
+    )
+
+    private val clickListenersMap = HashMap<View, OnActionModeClickListener>()
 
     fun startActionMode(
         view: View,
@@ -24,9 +28,10 @@ class ActionModeSelectItemsDelegate<E>(
         if (actionModeCallback.isActive()) return
 
         actionModeCallback.startActionMode(view, menuResId, title, subtitle)
+        onOpenActionMode()
     }
 
-    private fun finishActionMode() {
+    fun finishActionMode() {
         actionModeCallback.finishActionMode()
     }
 
@@ -47,7 +52,7 @@ class ActionModeSelectItemsDelegate<E>(
     }
 
     private fun selectItem(view: View, item: E) {
-        onActionItemClickListener.selectItem(view)
+        clickListenersMap[view]?.selectItem()
         selectedViews.add(view)
         selectedItems.add(item)
     }
@@ -56,7 +61,7 @@ class ActionModeSelectItemsDelegate<E>(
         actionModeCallback.isActive()
 
     private fun unSelectItem(view: View, item: E) {
-        onActionItemClickListener.unSelectItem(view)
+        clickListenersMap[view]?.unSelectItem()
         selectedViews.remove(view)
         selectedItems.remove(item)
     }
@@ -64,8 +69,28 @@ class ActionModeSelectItemsDelegate<E>(
     private fun unSelectAll() {
         selectedItems.clear()
         selectedViews.forEach {
-            onActionItemClickListener.unSelectItem(it)
+            clickListenersMap[it]?.unSelectItem()
         }
         selectedViews.clear()
+    }
+
+    fun addActionModeClickListener(view: View, actionModeClickListener: OnActionModeClickListener) {
+        clickListenersMap[view] = actionModeClickListener
+    }
+
+    private fun onOpenActionMode() {
+        clickListenersMap.entries.forEach { it.value.onOpenActionMode() }
+    }
+
+    private fun onCloseActionMode() {
+        clickListenersMap.entries.forEach { it.value.onCloseActionMode() }
+    }
+
+    interface OnActionModeClickListener {
+        fun selectItem()
+        fun unSelectItem()
+
+        fun onOpenActionMode() {}
+        fun onCloseActionMode() {}
     }
 }

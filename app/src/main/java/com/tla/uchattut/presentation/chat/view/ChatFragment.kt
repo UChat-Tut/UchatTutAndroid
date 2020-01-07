@@ -1,9 +1,15 @@
 package com.tla.uchattut.presentation.chat.view
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,6 +18,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
+import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
+import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
+import com.tla.uchattut.presentation._common.dialogs.AppAlertDialog
+import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
@@ -25,6 +35,20 @@ class ChatFragment : Fragment() {
     }
     private val args: ChatFragmentArgs by navArgs()
     private lateinit var navController: NavController
+    private val onActionItemClickListener =
+        object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
+            override fun onMenuItemSelected(item: MenuItem) {
+                val selectedMessages = chatRecyclerAdapter.getSelectedMessages()
+                when (item.itemId) {
+                    R.id.replyItem -> onReplyItemClick(selectedMessages)
+                    R.id.copyItem -> onCopyItemClick(selectedMessages)
+                    R.id.forwardItem -> onForwardItemClick(selectedMessages)
+                    R.id.deleteItem -> onDeleteItemClick(selectedMessages)
+                }
+            }
+        }
+    private val actionModeDelegate =
+        ActionModeSelectedItemsDelegate<MessagePresentationModel>(onActionItemClickListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +84,10 @@ class ChatFragment : Fragment() {
 
         navController = findNavController()
 
-        chatRecyclerAdapter = ChatRecyclerAdapter()
+        chatRecyclerAdapter = ChatRecyclerAdapter(
+            onItemClick = this::showContextMenu,
+            actionModeDelegate = actionModeDelegate
+        )
         chatRecyclerView.layoutManager = LinearLayoutManager(view.context).apply {
             stackFromEnd = true
         }
@@ -120,5 +147,37 @@ class ChatFragment : Fragment() {
             else -> return false
         }
         return true
+    }
+
+    private fun showContextMenu(messageId: Int) {
+    }
+
+    private fun onReplyItemClick(selectedMessages: List<MessagePresentationModel>) {
+        toast("Ответ")
+        actionModeDelegate.finishActionMode()
+    }
+
+    private fun onCopyItemClick(selectedMessages: List<MessagePresentationModel>) {
+        viewModel.copyMessages(context!!, selectedMessages)
+        actionModeDelegate.finishActionMode()
+    }
+
+    private fun onForwardItemClick(selectedMessages: List<MessagePresentationModel>) {
+        toast("Переслать")
+        actionModeDelegate.finishActionMode()
+    }
+
+    private fun onDeleteItemClick(selectedMessages: List<MessagePresentationModel>) {
+        AppAlertDialog.show(
+            fragmentManager!!,
+            "Вы действителььно хотите удлаить сообщение? "
+        ) {
+            viewModel.removeMessages(selectedMessages)
+            actionModeDelegate.finishActionMode()
+        }
+    }
+
+    private fun sd() {
+
     }
 }
