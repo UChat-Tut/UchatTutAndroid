@@ -60,7 +60,7 @@ class DialoguesFragment : Fragment() {
         mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
         chatListAdapter = DialoguesRecyclerAdapter(
-            onItemClick = { id -> openChat(id) },
+            onItemClick = ::openChat,
             actionModeDelegate = actionModeDelegate
         )
 

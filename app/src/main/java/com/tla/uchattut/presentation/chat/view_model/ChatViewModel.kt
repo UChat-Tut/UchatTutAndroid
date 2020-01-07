@@ -1,10 +1,12 @@
 package com.tla.uchattut.presentation.chat.view_model
 
 import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.tla.uchattut.data.repositories.auth.AuthRepository
-import com.tla.uchattut.data.repositories.chat.FakeChatRepository
-import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
+import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
 import com.tla.uchattut.domain.chat.ChatInteractor
 import com.tla.uchattut.presentation._common.saveTextToClipboard
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class ChatViewModel : ViewModel() {
     private val chatInteractor =
-        ChatInteractor(FakeChatRepository(AuthRepository()), AuthRepository())
+        ChatInteractor(ChatRepositoryImpl(), AuthRepository())
 
     private val chatLiveData = MutableLiveData<ChatPresentationModel>()
     val state = MutableLiveData<State>()
@@ -36,8 +38,8 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun sendMessage(text: String) {
-
+    fun sendMessage(message: String) {
+        chatInteractor.sendMessage("123", message)
     }
 
     fun removeMessages(messages: List<MessagePresentationModel>) {
@@ -47,6 +49,10 @@ class ChatViewModel : ViewModel() {
     fun copyMessages(context: Context?, messages: List<MessagePresentationModel>) {
         val text = chatInteractor.extractTextFromMessages(messages)
         context?.saveTextToClipboard(text)
+    }
+
+    fun connectDialogue(dialogueId: Int) {
+        chatInteractor.connectDialogue(dialogueId)
     }
 
     enum class State {

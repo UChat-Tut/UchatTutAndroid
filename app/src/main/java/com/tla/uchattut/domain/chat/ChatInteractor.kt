@@ -1,9 +1,11 @@
 package com.tla.uchattut.domain.chat
 
 import com.tla.uchattut.data.repositories.auth.AuthRepository
-import com.tla.uchattut.data.repositories.chat.models.MessageRepoModel
+import com.tla.uchattut.data.repositories.chat.models.response.ResponseMessageRepoModel
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class ChatInteractor(
     private val chatRepository: ChatRepository,
@@ -13,17 +15,20 @@ class ChatInteractor(
         val chatRepoModel = chatRepository.getChat(dialogueId)
 
         val messages = chatRepoModel.messages.map {
-            MessagePresentationModel(
-                type = spotMessageType(it),
-                id = it.id,
-                senderId = it.senderId,
-                text = it.text,
-                time = it.time
-            )
+            it.convertToMessagePresentationModel()
         }.markLastInBlockMessages()
 
         return ChatPresentationModel(messages)
     }
+
+    private fun ResponseMessageRepoModel.convertToMessagePresentationModel(): MessagePresentationModel =
+        MessagePresentationModel(
+            type = spotMessageType(this),
+            id = id ?: 0,
+            senderId = sender,
+            text = message,
+            time = time
+        )
 
     private fun List<MessagePresentationModel>.markLastInBlockMessages(): List<MessagePresentationModel> {
         for (i in 0 until size) {
@@ -34,8 +39,8 @@ class ChatInteractor(
         return this
     }
 
-    private fun spotMessageType(messageRepoModel: MessageRepoModel): MessagePresentationModel.Type =
-        when (messageRepoModel.senderId) {
+    private fun spotMessageType(messageRepoModel: ResponseMessageRepoModel): MessagePresentationModel.Type =
+        when (messageRepoModel.sender) {
             null -> MessagePresentationModel.Type.DATE
             userRepository.getCurrentUserId() -> MessagePresentationModel.Type.OUT
             else -> MessagePresentationModel.Type.IN
@@ -43,14 +48,22 @@ class ChatInteractor(
 
     fun removeMessages(messages: List<MessagePresentationModel>) {
         val repoMessages = messages.map {
-            MessageRepoModel(
+            ResponseMessageRepoModel(
                 id = it.id,
-                senderId = it.senderId,
-                text = it.text,
+                sender = it.senderId,
+                message = it.text,
                 time = it.time
             )
         }
         chatRepository.removeMessages(repoMessages)
+    }
+
+    fun sendMessage(senderId: String, message: String) {
+        chatRepository.sendMessage(senderId, message)
+    }
+
+    fun connectDialogue(dialogueId: Int) {
+        chatRepository.connectDialogue(dialogueId)
     }
 
     fun extractTextFromMessages(messages: List<MessagePresentationModel>): String {
@@ -67,4 +80,10 @@ class ChatInteractor(
         }
         return stringBuilder.toString().trim()
     }
+
+    fun observeMessages(): Flow<MessagePresentationModel> =
+        chatRepository.observeMessages()
+            .map {
+                it.convertToMessagePresentationModel()
+            }
 }
