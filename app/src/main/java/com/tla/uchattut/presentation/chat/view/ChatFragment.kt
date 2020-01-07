@@ -1,15 +1,9 @@
 package com.tla.uchattut.presentation.chat.view
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.text.Editable
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -175,9 +169,5 @@ class ChatFragment : Fragment() {
             viewModel.removeMessages(selectedMessages)
             actionModeDelegate.finishActionMode()
         }
-    }
-
-    private fun sd() {
-
     }
 }

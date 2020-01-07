@@ -6,7 +6,7 @@ import com.tla.uchattut.domain.chat.ChatRepository
 
 class FakeChatRepository(
     private val authRepository: AuthRepository
-): ChatRepository {
+) : ChatRepository {
 
     override fun getAllMessages(): List<MessageRepoModel> = listOf(
         MessageRepoModel(
@@ -48,6 +48,5 @@ class FakeChatRepository(
     )
 
     override fun removeMessages(messages: List<MessageRepoModel>) {
-
     }
 }

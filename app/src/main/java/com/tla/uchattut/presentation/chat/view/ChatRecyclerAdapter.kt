@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
-import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import com.tla.uchattut.presentation._common.px
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.extensions.LayoutContainer
