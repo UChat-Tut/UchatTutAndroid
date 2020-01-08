@@ -3,12 +3,15 @@ package com.tla.uchattut.data.repositories.chat
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
 import com.tla.uchattut.data.repositories.chat.models.response.ResponseMessageRepoModel
+import com.tla.uchattut.di.chat.ChatScope
 import com.tla.uchattut.domain.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 @Suppress("BlockingMethodInNonBlockingContext")
-class FakeChatRepository(
+@ChatScope
+class FakeChatRepository @Inject constructor(
     private val authRepository: AuthRepository
 ) : ChatRepository {
 
@@ -65,5 +68,5 @@ class FakeChatRepository(
     override fun connectDialogue(dialogueId: Int) {
     }
 
-    override fun observeMessages(): Flow<ResponseMessageRepoModel> = flow{}
+    override fun observeMessages(): Flow<ResponseMessageRepoModel> = flow {}
 }

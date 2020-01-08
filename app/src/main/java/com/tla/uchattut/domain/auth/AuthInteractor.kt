@@ -3,8 +3,9 @@ package com.tla.uchattut.domain.auth
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.tla.uchattut.data.repositories.auth.AuthRepository
+import javax.inject.Inject
 
-class AuthInteractor(
+class AuthInteractor @Inject constructor(
     private val authRepository: AuthRepository
 ) {
 

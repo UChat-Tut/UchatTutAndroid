@@ -8,13 +8,13 @@ import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.domain.auth.AuthInteractor
 import com.tla.uchattut.presentation._common.SingleLiveEvent
 import com.tla.uchattut.presentation._common.resources.ResourceManager
+import javax.inject.Inject
 
 
-class SignUpViewModel(
+class SignUpViewModel @Inject constructor(
+    private val authInteractor: AuthInteractor,
     private val resourceManager: ResourceManager
 ) : ViewModel() {
-
-    private val authInteractor = AuthInteractor(AuthRepository())
 
     val navigateToMainScreenLiveEvent = SingleLiveEvent<Void>()
     val toastLiveEvent = SingleLiveEvent<String>()
