@@ -1,42 +1,46 @@
 package com.tla.uchattut.presentation.chat.view_model
 
-import android.R.attr.label
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tla.uchattut.R
+import androidx.lifecycle.viewModelScope
 import com.tla.uchattut.data.repositories.auth.AuthRepository
+import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
 import com.tla.uchattut.data.repositories.chat.FakeChatRepository
 import com.tla.uchattut.domain.chat.ChatInteractor
 import com.tla.uchattut.presentation._common.saveTextToClipboard
+import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ChatViewModel : ViewModel() {
     private val chatInteractor =
         ChatInteractor(FakeChatRepository(AuthRepository()), AuthRepository())
 
-    val messageList = MutableLiveData<List<MessagePresentationModel>>()
+    private val chatLiveData = MutableLiveData<ChatPresentationModel>()
     val state = MutableLiveData<State>()
 
-    fun requestMessages(userId: Int) {
+    fun getChatLiveData(): LiveData<ChatPresentationModel> = chatLiveData
+
+    fun requestChat(dialogueId: Int) = viewModelScope.launch(Dispatchers.IO) {
+
         state.postValue(State.LOADING)
 
-        val messages = chatInteractor.getAllMessages()
-        messageList.postValue(messages)
+        val messages = chatInteractor.getChat(dialogueId)
+        chatLiveData.postValue(messages)
 
-        if (messages.isNullOrEmpty()) {
+        if (messages.messages.isNullOrEmpty()) {
             state.postValue(State.EMPTY)
         } else {
             state.postValue(State.CONTENT)
         }
     }
 
-    fun sendMessage(text: String) {
-
+    fun sendMessage(message: String) {
+        chatInteractor.sendMessage("123", message)
     }
 
     fun removeMessages(messages: List<MessagePresentationModel>) {
@@ -46,6 +50,10 @@ class ChatViewModel : ViewModel() {
     fun copyMessages(context: Context?, messages: List<MessagePresentationModel>) {
         val text = chatInteractor.extractTextFromMessages(messages)
         context?.saveTextToClipboard(text)
+    }
+
+    fun connectDialogue(dialogueId: Int) {
+        chatInteractor.connectDialogue(dialogueId)
     }
 
     enum class State {

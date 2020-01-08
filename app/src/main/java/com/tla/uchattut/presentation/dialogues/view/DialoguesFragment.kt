@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.chatlist.view
+package com.tla.uchattut.presentation.dialogues.view
 
 import android.graphics.Color
 import android.os.Bundle
@@ -14,22 +14,32 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
-import com.tla.uchattut.data.repositories.chatlist.models.ChatRepoModel
-import com.tla.uchattut.presentation._common.DividerItemDecoration
-import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
-import com.tla.uchattut.presentation._common.toast
-import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.chatlist.view_model.ChatListViewModel
+import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
+import com.tla.uchattut.presentation._common.*
+import com.tla.uchattut.presentation.dialogues.view_model.DialoguesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 
-class ChatListFragment : Fragment() {
+class DialoguesFragment : Fragment() {
 
     private lateinit var mainNavController: NavController
     private val viewModel by lazy {
-        viewModel { ChatListViewModel() }
+        viewModel { DialoguesViewModel() }
     }
 
-    private lateinit var chatListAdapter: ChatListRecyclerAdapter
+    private lateinit var chatListAdapter: DialoguesRecyclerAdapter
+
+    private val onActionItemClickListener =
+        object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
+            override fun onMenuItemSelected(item: MenuItem) {
+                when (item.itemId) {
+                    R.id.muteItem -> onMuteItemClick()
+                    R.id.deleteItem -> onDeleteItemClick()
+                }
+            }
+        }
+
+    private val actionModeDelegate =
+        ActionModeSelectedItemsDelegate<DialogueRepoModel>(onActionItemClickListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,9 +59,9 @@ class ChatListFragment : Fragment() {
 
         mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
 
-        chatListAdapter = ChatListRecyclerAdapter(
-            onItemClick = { id -> openChat(id) },
-            onMenuClickListener = onActionItemClickListener
+        chatListAdapter = DialoguesRecyclerAdapter(
+            onItemClick = ::openChat,
+            actionModeDelegate = actionModeDelegate
         )
 
         val dividerDrawable = resources.getDrawable(R.drawable.divider_horizontal, activity!!.theme)
@@ -63,15 +73,13 @@ class ChatListFragment : Fragment() {
             )
         )
 
-        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<ChatRepoModel>> {
+        viewModel.chatList.observe(viewLifecycleOwner, Observer<List<DialogueRepoModel>> {
             chatListAdapter.setChats(it)
         })
 
         viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             updateState(state)
         })
-
-        viewModel.requestChatList()
     }
 
     private fun openChat(id: Int) {
@@ -79,19 +87,19 @@ class ChatListFragment : Fragment() {
         mainNavController.navigate(action)
     }
 
-    private fun updateState(state: ChatListViewModel.State) =
+    private fun updateState(state: DialoguesViewModel.State) =
         when (state) {
-            ChatListViewModel.State.LOADING -> {
+            DialoguesViewModel.State.LOADING -> {
                 loadingLayout.visibility = View.VISIBLE
                 contentLayout.visibility = View.GONE
                 emptyLayout.visibility = View.GONE
             }
-            ChatListViewModel.State.CONTENT -> {
+            DialoguesViewModel.State.CONTENT -> {
                 loadingLayout.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE
                 emptyLayout.visibility = View.GONE
             }
-            ChatListViewModel.State.EMPTY -> {
+            DialoguesViewModel.State.EMPTY -> {
                 loadingLayout.visibility = View.GONE
                 contentLayout.visibility = View.GONE
                 emptyLayout.visibility = View.VISIBLE
@@ -163,13 +171,14 @@ class ChatListFragment : Fragment() {
         }
     }
 
-    private val onActionItemClickListener = object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
-        override fun onMenuItemSelected(item: MenuItem) {
-            when (item.itemId) {
-                R.id.deleteItem -> toast("Удаление")
-                R.id.muteItem -> toast("Отключены оповещания")
-            }
-        }
+    private fun onMuteItemClick() {
+        toast("Отключены оповещания")
+        actionModeDelegate.finishActionMode()
+    }
+
+    private fun onDeleteItemClick() {
+        toast("Удаление")
+        actionModeDelegate.finishActionMode()
     }
 
     private fun addDialog() {

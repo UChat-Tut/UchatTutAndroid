@@ -18,6 +18,7 @@ import com.tla.uchattut.presentation._common.dialogs.AppAlertDialog
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
+import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.synthetic.main.fragment_chat.*
 
@@ -91,11 +92,11 @@ class ChatFragment : Fragment() {
             updateState(it)
         })
 
-        viewModel.messageList.observe(viewLifecycleOwner, Observer<List<MessagePresentationModel>> {
-            chatRecyclerAdapter.setMessages(it)
+        viewModel.getChatLiveData().observe(viewLifecycleOwner, Observer<ChatPresentationModel> {
+            chatRecyclerAdapter.setMessages(it.messages)
         })
 
-        viewModel.requestMessages(args.id)
+        viewModel.requestChat(args.id)
     }
 
     private fun setupActionBar() {

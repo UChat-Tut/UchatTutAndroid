@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "494460818672",
+    "firebase_url": "https://uchat-tut-tla.firebaseio.com",
+    "project_id": "uchat-tut-tla",
+    "storage_bucket": "uchat-tut-tla.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494460818672:android:17e3d2105f9c6784a7de35",
+        "android_client_info": {
+          "package_name": "com.tla.uchattut.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494460818672-fmrs91pfd6rlbqot8ojalq6rabovoot0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tla.uchattut.debug",
+            "certificate_hash": "65bb70e375ad53423ee63038c13051d352038ffe"
+          }
+        },
+        {
+          "client_id": "494460818672-ck5m6ua2vmrga69mmoqfm7k6h6vbv06o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tla.uchattut.debug",
+            "certificate_hash": "a4accbe27ec4195cd1ebf29de57c310fcd1399fb"
+          }
+        },
+        {
+          "client_id": "494460818672-khqdmoeo1lscu08h16jsgsgduc5bhn7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFDljgn-rNr8_9GEi66f9zmyCgnlNZsBs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494460818672-khqdmoeo1lscu08h16jsgsgduc5bhn7r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "494460818672-j7j4eeouelo92s3rbnvruuf1ngei11m3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "uchat-tut-app.uchatTutApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

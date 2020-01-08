@@ -90,10 +90,10 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/contentLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chatToolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone">
 
         <TextView
@@ -113,10 +113,10 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/contentLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chatToolbar"
+        app:layout_constraintTop_toTopOf="@+id/chatToolbar"
         tools:visibility="gone">
 
         <ProgressBar

@@ -62,6 +62,11 @@ class ChatRecyclerAdapter(
         notifyDataSetChanged()
     }
 
+    fun addMessage(message: MessagePresentationModel) {
+        this.messages.add(message)
+        notifyDataSetChanged()
+    }
+
     fun getSelectedMessages(): List<MessagePresentationModel> =
         actionModeDelegate.selectedItems
 
