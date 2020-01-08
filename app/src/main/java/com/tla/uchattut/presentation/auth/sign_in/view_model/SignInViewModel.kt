@@ -9,12 +9,13 @@ import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.domain.auth.AuthInteractor
 import com.tla.uchattut.presentation._common.SingleLiveEvent
 import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
+import com.tla.uchattut.presentation._common.resources.ResourceManager
+import javax.inject.Inject
 
-class SignInViewModel(
-    private val resourceManager: AndroidResourceManager
+class SignInViewModel @Inject constructor(
+    private val authInteractor: AuthInteractor,
+    private val resourceManager: ResourceManager
 ) : ViewModel() {
-
-    private val authInteractor = AuthInteractor(AuthRepository())
 
     val toastLiveEvent = SingleLiveEvent<String>()
     val emailTextViewErrorLiveData = MutableLiveData<String?>(null)

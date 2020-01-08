@@ -15,16 +15,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
+import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.*
 import com.tla.uchattut.presentation.dialogues.view_model.DialoguesViewModel
 import kotlinx.android.synthetic.main.fragment_chat_list.*
+import javax.inject.Inject
 
 class DialoguesFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModel: DialoguesViewModel
+
     private lateinit var mainNavController: NavController
-    private val viewModel by lazy {
-        viewModel { DialoguesViewModel() }
-    }
 
     private lateinit var chatListAdapter: DialoguesRecyclerAdapter
 
@@ -44,6 +46,9 @@ class DialoguesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        DaggerContainer.dialoguesComponent(this)
+            .inject(this)
     }
 
     override fun onCreateView(

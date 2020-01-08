@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
+import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
 import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import com.tla.uchattut.presentation._common.dialogs.AppAlertDialog
@@ -21,15 +22,17 @@ import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.synthetic.main.fragment_chat.*
+import javax.inject.Inject
 
 class ChatFragment : Fragment() {
 
+    @Inject
+    lateinit var viewModel: ChatViewModel
+
     private lateinit var chatRecyclerAdapter: ChatRecyclerAdapter
-    private val viewModel: ChatViewModel by lazy {
-        viewModel { ChatViewModel() }
-    }
-    private val args: ChatFragmentArgs by navArgs()
     private lateinit var navController: NavController
+
+    private val args: ChatFragmentArgs by navArgs()
     private val onActionItemClickListener =
         object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
             override fun onMenuItemSelected(item: MenuItem) {
@@ -49,6 +52,9 @@ class ChatFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
+
+        DaggerContainer.chatComponent(this)
+            .inject(this)
     }
 
     override fun onCreateView(

@@ -9,14 +9,21 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.profile.models.ProfileRepoModel
-import com.tla.uchattut.presentation._common.viewModel
+import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation.profile.view_model.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
+import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
 
-    private val viewModel by lazy {
-        viewModel { ProfileViewModel() }
+    @Inject
+    lateinit var viewModel: ProfileViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        DaggerContainer.profileComponent(this)
+            .inject(this)
     }
 
     override fun onCreateView(

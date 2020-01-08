@@ -12,6 +12,7 @@ import com.kizitonwose.calendarview.model.*
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.tla.uchattut.R
+import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.schedule.view_model.ScheduleViewModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -20,14 +21,21 @@ import org.threeten.bp.YearMonth
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
+import javax.inject.Inject
 
 class ScheduleFragment : Fragment() {
 
-    private val viewModel by lazy {
-        viewModel { ScheduleViewModel() }
-    }
+    @Inject
+    lateinit var viewModel: ScheduleViewModel
 
     private lateinit var months: Array<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        DaggerContainer.scheduleComponent(this)
+            .inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

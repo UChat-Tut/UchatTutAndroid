@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 inline fun <reified T : ViewModel> Fragment.viewModel(crossinline f: () -> T): T {
-    return ViewModelProviders.of(this,
+    return ViewModelProviders.of(
+        this,
         factory(f)
     ).get(T::class.java)
 }

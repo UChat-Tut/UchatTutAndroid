@@ -5,20 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tla.uchattut.data.repositories.auth.AuthRepository
-import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
-import com.tla.uchattut.data.repositories.chat.FakeChatRepository
+import com.tla.uchattut.di.chat.ChatComponent
 import com.tla.uchattut.domain.chat.ChatInteractor
+import com.tla.uchattut.presentation._common.ScopeViewModel
 import com.tla.uchattut.presentation._common.saveTextToClipboard
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class ChatViewModel : ViewModel() {
-    private val chatInteractor =
-        ChatInteractor(FakeChatRepository(AuthRepository()), AuthRepository())
+class ChatViewModel @Inject constructor(
+    private val chatInteractor: ChatInteractor
+) : ScopeViewModel(ChatComponent::class) {
 
     private val chatLiveData = MutableLiveData<ChatPresentationModel>()
     val state = MutableLiveData<State>()

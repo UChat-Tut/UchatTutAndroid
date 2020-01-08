@@ -6,8 +6,9 @@ import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class ChatInteractor(
+class ChatInteractor @Inject constructor(
     private val chatRepository: ChatRepository,
     private val userRepository: AuthRepository
 ) {

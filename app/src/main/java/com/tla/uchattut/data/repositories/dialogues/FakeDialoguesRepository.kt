@@ -1,10 +1,12 @@
 package com.tla.uchattut.data.repositories.dialogues
 
 import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
+import com.tla.uchattut.di.dialogues.DialoguesScope
 import com.tla.uchattut.domain.dialogues.DialoguesRepository
+import javax.inject.Inject
 
-class FakeDialoguesRepository : DialoguesRepository {
-
+@DialoguesScope
+class FakeDialoguesRepository @Inject constructor(): DialoguesRepository {
 
     override suspend fun getChatList(): List<DialogueRepoModel> {
         Thread.sleep(2000)

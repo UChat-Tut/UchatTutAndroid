@@ -8,16 +8,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
+import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
-import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.auth.sign_up.view_model.SignUpViewModel
 import kotlinx.android.synthetic.main.fragment_sign_up.*
+import javax.inject.Inject
 
 class SignUpFragment : Fragment() {
 
-    private val viewModel: SignUpViewModel by lazy {
-        viewModel { SignUpViewModel(AndroidResourceManager(context!!)) }
+    @Inject
+    lateinit var viewModel: SignUpViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        DaggerContainer.authComponent(this)
+            .inject(this)
     }
 
     override fun onCreateView(
