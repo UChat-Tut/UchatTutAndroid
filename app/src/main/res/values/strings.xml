@@ -6,4 +6,13 @@
     <string name="fail_auth">AuthFailed</string>
     <string name="success_sign_in">Sign In Success</string>
     <string name="fail_sign_in">Sign In Failed</string>
+    <string name="auth_title">Зарегистрироваться</string>
+    <string name="hint_name">Фамилия Имя Отчество</string>
+    <string name="hint_email">Электронная почта</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_confirm_passw">Подтвердите пароль</string>
+    <string name="button_sign_up">Регистрация</string>
+    <string name="button_sign_in">Войти</string>
+    <string name="signin_title">Войти</string>
+    <string name="button_sign_in2">Вход</string>
 </resources>

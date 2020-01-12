@@ -48,7 +48,7 @@ class AuthViewModel(
                         toastLiveData.postValue("Email не подтвержден")
                         visibilityLiveData.postValue(View.GONE)}
                 } else {
-                    val message = "Sign In Failed"
+                    val message = resourceManager.getString(R.string.fail_sign_in)
                     toastLiveData.postValue(message)
                     visibilityLiveData.postValue(View.GONE)
                 }
