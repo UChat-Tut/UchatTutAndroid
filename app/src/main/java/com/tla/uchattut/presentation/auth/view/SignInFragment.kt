@@ -53,8 +53,8 @@ class SignInFragment: Fragment() {
             when {
                 email.isNullOrEmpty()
                         || password.isNullOrEmpty() ->
-                    tv_email_input.error = "Не все поля введены"
-                password.length < 6 -> tv_pass_input.error = "Возможно, вы неправильно ввели пароль"
+                    tv_email_input.error = resources.getString(R.string.not_all_fields_are_entered)
+                password.length < 6 -> tv_pass_input.error = resources.getString(R.string.sign_in_incorrect_pass_input)
                 else -> authViewModel.signIn(activity as FragmentActivity,email, password)
             }
         }

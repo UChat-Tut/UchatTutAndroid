@@ -45,7 +45,8 @@ class AuthViewModel(
                         screenLiveData.postValue(Screen.MAIN)
                         visibilityLiveData.postValue(View.GONE)
                     } else {
-                        toastLiveData.postValue("Email не подтвержден")
+                        val message = resourceManager.getString(R.string.email_not_confirmed)
+                        toastLiveData.postValue(message)
                         visibilityLiveData.postValue(View.GONE)}
                 } else {
                     val message = resourceManager.getString(R.string.fail_sign_in)
@@ -60,10 +61,12 @@ class AuthViewModel(
     private fun sendEmail(){
         auth.currentUser?.sendEmailVerification()?.addOnCompleteListener{task->
             if(task.isSuccessful) {
+                val message = resourceManager.getString(R.string.confirmation_email_sent)
                 visibilityLiveData.postValue(View.GONE)
-                toastLiveData.postValue("Вам отправлено письмо на электронную почту")
+                toastLiveData.postValue(message)
             } else {
-                toastLiveData.postValue("Ошибка при отправке сообщения с подтверждением")
+                val message = resourceManager.getString(R.string.sending_email_error)
+                toastLiveData.postValue(message)
                 visibilityLiveData.postValue(View.GONE)
             }
 

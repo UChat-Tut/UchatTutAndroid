@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_auth_title"
@@ -16,7 +17,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/roboto_medium"
             android:gravity="center"
-            android:text="Зарегистрироваться"
+            android:text="@string/auth_title"
             android:textColor="@color/chariotRequiem"
             android:textSize="30sp" />
 
@@ -29,11 +30,13 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/shape_field"
             android:backgroundTint="@android:color/white"
-            android:elevation="1dp"
-            android:gravity="start|center_vertical"
-            android:hint="Фамилия Имя Отчество"
             android:drawableStart="@drawable/ic_user"
             android:drawablePadding="8dp"
+            android:elevation="1dp"
+            android:gravity="start|center_vertical"
+            android:hint="@string/hint_name"
+            android:importantForAutofill="no"
+            android:inputType="text"
             android:paddingStart="16dp" />
 
         <EditText
@@ -45,14 +48,14 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/shape_field"
             android:backgroundTint="@android:color/white"
-            android:elevation="1dp"
-            android:gravity="start|center_vertical"
-            android:hint="Электронная почта"
-            android:inputType="textEmailAddress"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="8dp"
+            android:elevation="1dp"
+            android:gravity="start|center_vertical"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
             android:paddingStart="16dp"
-            app:errorEnabled="true"/>
+            app:errorEnabled="true" />
 
         <EditText
             android:id="@+id/tv_pass_input"
@@ -63,14 +66,14 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/shape_field"
             android:backgroundTint="@android:color/white"
-            android:elevation="1dp"
-            android:gravity="start|center_vertical"
-            android:hint="Пароль"
-            android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="8dp"
+            android:elevation="1dp"
+            android:gravity="start|center_vertical"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
             android:paddingStart="16dp"
-            app:errorEnabled="true"/>
+            app:errorEnabled="true" />
 
         <EditText
             android:id="@+id/tv_confirm_password"
@@ -81,14 +84,14 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/shape_field"
             android:backgroundTint="@android:color/white"
-            android:elevation="1dp"
-            android:gravity="start|center_vertical"
-            android:hint="Подтвердите пароль"
-            android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password"
             android:drawablePadding="8dp"
+            android:elevation="1dp"
+            android:gravity="start|center_vertical"
+            android:hint="@string/hint_confirm_passw"
+            android:inputType="textPassword"
             android:paddingStart="16dp"
-            app:errorEnabled="true"/>
+            app:errorEnabled="true" />
 
         <Button
             android:id="@+id/button_sign_up"
@@ -99,7 +102,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/shape_button"
             android:fontFamily="@font/roboto_medium"
-            android:text="Регистрация"
+            android:text="@string/button_sign_up"
             android:textColor="@android:color/white" />
 
         <Button
@@ -111,7 +114,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/shape_framed_button"
             android:fontFamily="@font/roboto_medium"
-            android:text="Войти"
+            android:text="@string/button_sign_in"
             android:textColor="@color/colorAccent" />
     </LinearLayout>
 </ScrollView>

@@ -64,12 +64,13 @@ class AuthFragment : Fragment() {
             val passwordConfirmation = tv_confirm_password.text?.toString()
             when {
                 areFieldsBlank(fullName, email, password, passwordConfirmation) -> {
-                    makeText("Не все поля введены")//Make it string resource later
+                    val message = resources.getString(R.string.not_all_fields_are_entered)
+                    makeText(message)
                 }
                 password!!.length < 6 ->
-                    tv_pass_input.error = "Пароль должен быть больше 6 символов"
+                    tv_pass_input.error = resources.getString(R.string.incorrect_pass_input)
                 password != passwordConfirmation ->
-                    tv_confirm_password.error = "Пароли не совпадают"
+                    tv_confirm_password.error = resources.getString(R.string.passwords_dont_match)
                 else -> authViewModel.createUserWithEmailAndPassword(
                     activity as FragmentActivity, email!!, password
                 )

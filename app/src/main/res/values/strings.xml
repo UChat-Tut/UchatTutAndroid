@@ -15,4 +15,12 @@
     <string name="button_sign_in">Войти</string>
     <string name="signin_title">Войти</string>
     <string name="button_sign_in2">Вход</string>
+    <string name="email_not_confirmed">Email не подтверждён</string>
+    <string name="confirmation_email_sent">Вам отправлено письмо на электронную почту</string>
+    <string name="sending_email_error">Ошибка при отправке сообщения с подтверждением</string>
+    <string name="not_all_fields_are_entered">Не все поля введены</string>
+    <string name="incorrect_pass_input">Пароль должен быть больше 6 символов</string>
+    <string name="sign_in_incorrect_pass_input">Возможно, вы неправильно ввели пароль</string>
+    <string name="passwords_dont_match">Пароли не совпадают</string>
+
 </resources>
