@@ -23,6 +23,10 @@
     <string name="friday">Пт</string>
     <string name="saturday">Сб</string>
     <string name="sunday">Вс</string>
+    <string name="save">Сохранить</string>
+    <string name="add_task">Добавить задачу…</string>
+    <string name="remove">Удалить</string>
+    <string name="edit">Редактировать</string>
 
     <string-array name="months">
         <item>Январь</item>

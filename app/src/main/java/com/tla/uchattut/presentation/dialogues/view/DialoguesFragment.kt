@@ -35,7 +35,7 @@ class DialoguesFragment : Fragment() {
             override fun onMenuItemSelected(item: MenuItem) {
                 when (item.itemId) {
                     R.id.muteItem -> onMuteItemClick()
-                    R.id.deleteItem -> onDeleteItemClick()
+                    R.id.removeItem -> onDeleteItemClick()
                 }
             }
         }

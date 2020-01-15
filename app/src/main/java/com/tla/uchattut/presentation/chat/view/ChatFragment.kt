@@ -17,7 +17,6 @@ import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
 import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import com.tla.uchattut.presentation._common.dialogs.AppAlertDialog
 import com.tla.uchattut.presentation._common.toast
-import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
@@ -41,7 +40,7 @@ class ChatFragment : Fragment() {
                     R.id.replyItem -> onReplyItemClick(selectedMessages)
                     R.id.copyItem -> onCopyItemClick(selectedMessages)
                     R.id.forwardItem -> onForwardItemClick(selectedMessages)
-                    R.id.deleteItem -> onDeleteItemClick(selectedMessages)
+                    R.id.removeItem -> onDeleteItemClick(selectedMessages)
                 }
             }
         }
