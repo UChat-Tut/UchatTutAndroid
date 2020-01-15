@@ -1,5 +1,6 @@
 package com.tla.uchattut.di.tasks
 
+import com.tla.uchattut.domain.tasks.TasksInteractor
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.tasks.view.TasksFragment
 import com.tla.uchattut.presentation.tasks.view_model.TasksViewModel
@@ -12,8 +13,8 @@ class TasksModule(
 ) {
 
     @Provides
-    fun provideViewModel(): TasksViewModel =
-        fragment.viewModel { TasksViewModel() }
+    fun provideViewModel(tasksInteractor: TasksInteractor): TasksViewModel =
+        fragment.viewModel { TasksViewModel(tasksInteractor) }
 
     @Module
     interface TasksAbstractModule

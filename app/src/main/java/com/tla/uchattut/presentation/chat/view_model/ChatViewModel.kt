@@ -3,7 +3,6 @@ package com.tla.uchattut.presentation.chat.view_model
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tla.uchattut.di.chat.ChatComponent
 import com.tla.uchattut.domain.chat.ChatInteractor
