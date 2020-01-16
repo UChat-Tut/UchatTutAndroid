@@ -1,23 +1,27 @@
-package com.tla.uchattut.data
+package com.tla.uchattut.data.db
 
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tla.uchattut.App
+import com.tla.uchattut.data.db.dao.EventDao
 import com.tla.uchattut.data.db.dao.TaskDao
+import com.tla.uchattut.data.db.model.EventDbModel
 import com.tla.uchattut.data.db.model.TaskDbModel
 
-@Database(entities = [TaskDbModel::class], version = 1)
+@Database(entities = [TaskDbModel::class, EventDbModel::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val taskDao: TaskDao
+    abstract val eventDao: EventDao
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
         fun getDatabase(): AppDatabase {
-            val tempInstance = INSTANCE
+            val tempInstance =
+                INSTANCE
             if (tempInstance != null) {
                 return tempInstance
             }
@@ -26,7 +30,8 @@ abstract class AppDatabase : RoomDatabase() {
                     App.context,
                     AppDatabase::class.java,
                     "uchat_tut_database"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 return instance
             }

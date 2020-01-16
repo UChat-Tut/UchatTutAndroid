@@ -1,5 +1,6 @@
 package com.tla.uchattut.di.schedule
 
+import com.tla.uchattut.domain.schedule.ScheduleInteractor
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
 import com.tla.uchattut.presentation.schedule.view_model.ScheduleViewModel
@@ -12,8 +13,8 @@ class ScheduleModule(
 ) {
 
     @Provides
-    fun provideViewModel(): ScheduleViewModel =
-        fragment.viewModel { ScheduleViewModel() }
+    fun provideViewModel(scheduleInteractor: ScheduleInteractor): ScheduleViewModel =
+        fragment.viewModel { ScheduleViewModel(scheduleInteractor) }
 
     @Module
     interface ScheduleAbstractModule
