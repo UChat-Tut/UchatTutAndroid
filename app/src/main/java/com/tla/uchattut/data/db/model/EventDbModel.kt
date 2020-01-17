@@ -8,6 +8,10 @@ import com.tla.uchattut.data.db.model.EventDbModel.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
 data class EventDbModel(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = COLUMN_NAME_ID)
+    var id: Int = 0,
+
     @ColumnInfo(name = COLUMN_NAME_TITLE)
     val title: String,
 
@@ -20,11 +24,6 @@ data class EventDbModel(
     @ColumnInfo(name = COLUMN_NAME_END_TIMESTAMP)
     val endTimestamp: Long
 ) {
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = COLUMN_NAME_ID)
-    var id: Int = 0
-
     companion object {
         const val TABLE_NAME = "Event"
 

@@ -12,10 +12,13 @@ interface EventDao {
     @Delete
     suspend fun delete(eventDbModel: EventDbModel)
 
+    @Query("SELECT * FROM ${EventDbModel.TABLE_NAME} WHERE ${EventDbModel.COLUMN_NAME_DATE} >= :start AND ${EventDbModel.COLUMN_NAME_DATE} <= :end")
+    suspend fun getInPeriod(start: String, end: String): List<EventDbModel>
+
     @Query("SELECT * FROM ${EventDbModel.TABLE_NAME}")
     suspend fun getAll(): List<EventDbModel>
 
-    @Query("SELECT * FROM ${EventDbModel.TABLE_NAME} WHERE date = :date")
+    @Query("SELECT * FROM ${EventDbModel.TABLE_NAME} WHERE ${EventDbModel.COLUMN_NAME_DATE} = :date")
     suspend fun getByDate(date: String): List<EventDbModel>
 
 }

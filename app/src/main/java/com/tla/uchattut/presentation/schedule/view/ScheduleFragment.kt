@@ -2,6 +2,7 @@ package com.tla.uchattut.presentation.schedule.view
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,21 +17,22 @@ import com.kizitonwose.calendarview.model.*
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.tla.uchattut.R
-import com.tla.uchattut.data.db.model.EventDbModel
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
+import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.view_model.ScheduleViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_add_event.*
+import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.threeten.bp.YearMonth
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.temporal.WeekFields
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
 
-class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListener, DatePickerDialog.OnDateSetListener {
+class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListener,
+    DatePickerDialog.OnDateSetListener {
 
     @Inject
     lateinit var viewModel: ScheduleViewModel
@@ -65,13 +67,12 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-
             }
 
         })
@@ -87,16 +88,29 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
         saveButton.setOnClickListener { addNewEvent() }
         dateTextView.setOnClickListener { datePickerDialog.show() }
-        startTimeTextView.setOnClickListener {  }
-        endTimeTextView.setOnClickListener {  }
-        repeatLayout.setOnClickListener {  }
-        colorLayout.setOnClickListener {  }
+        startTimeTextView.setOnClickListener { }
+        endTimeTextView.setOnClickListener { }
+        repeatLayout.setOnClickListener { }
+        colorLayout.setOnClickListener { }
 
         viewModel.getEventsLiveData().observe(viewLifecycleOwner, Observer {
             eventsAdapter.addEvents(it)
         })
 
+        viewModel.getUpdateCalendarNotifier().observe(viewLifecycleOwner, Observer {
+            calendarView.notifyCalendarChanged()
+        })
+
         viewModel.loadEvents()
+        val startDayCalendar = Calendar.getInstance()
+        val endDayCalendar = Calendar.getInstance()
+        startDayCalendar.add(Calendar.MONTH, -10)
+        startDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
+
+        endDayCalendar.add(Calendar.MONTH, 11)
+        endDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
+
+        viewModel.loadAllPeriodEvents(10)
     }
 
     private fun setupCalendarView() {
@@ -108,7 +122,11 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.calendarDayTextView.text = day.date.dayOfMonth.toString()
+                paintDatCard(container, day)
+                provideEvents(container, day)
+            }
 
+            private fun paintDatCard(container: DayViewContainer, day: CalendarDay) {
                 when {
                     day.date.isEqual(ZonedDateTime.now().chronology.dateNow()) -> {
                         container.calendarDayTextView.setTextColor(resources.getColor(android.R.color.white))
@@ -136,6 +154,22 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
                 val month = day.date.monthValue - 1
                 val dayOfMonth = day.date.dayOfMonth
                 viewModel.loadEvents(year, month, dayOfMonth)
+            }
+
+            private fun provideEvents(container: DayViewContainer, day: CalendarDay) {
+                val dayEvents = viewModel.getEventsForCalendarDay(day)
+                val lineMaxCount = container.lineViews.size
+                if (dayEvents != null) {
+                    for (i in dayEvents.indices) {
+                        if (i == lineMaxCount) {
+                            container.lineViews[lineMaxCount - 1].setBackgroundColor(
+                                Color.BLACK
+                            )
+                            break
+                        }
+                        container.lineViews[i].visibility = View.VISIBLE
+                    }
+                }
             }
         }
 
@@ -190,9 +224,9 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         cancelBottomSheet()
     }
 
-    private fun buildNewEvent(): EventDbModel = EventDbModel(
+    private fun buildNewEvent(): EventPresentationModel = EventPresentationModel(
         title = titleEditText.text.toString(),
-        date = viewModel.formatCalendarDateForDb(viewModel.getNewEventDate()),
+        date = viewModel.getNewEventDate().time,
         startTimestamp = 0,
         endTimestamp = 0
     )
@@ -205,6 +239,6 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.setNewEventDate(year, month, dayOfMonth)
-        dateTextView.text = viewModel.formatCalendarDateForView(viewModel.getNewEventDate())
+        dateTextView.text = viewModel.formatCalendarDate(viewModel.getNewEventDate())
     }
 }

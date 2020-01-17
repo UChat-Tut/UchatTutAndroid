@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tla.uchattut.R
 import com.tla.uchattut.data.db.model.EventDbModel
+import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_event.*
 
@@ -13,7 +14,7 @@ class EventsRecyclerAdapter(
     private val eventItemClickListener: OnEventItemClickListener? = null
 ) : RecyclerView.Adapter<EventsRecyclerAdapter.EventViewHolder>() {
 
-    private val events = mutableListOf<EventDbModel?>(null)
+    private val events = mutableListOf<EventPresentationModel?>(null)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -40,7 +41,7 @@ class EventsRecyclerAdapter(
         }
     }
 
-    fun addEvents(events: List<EventDbModel>) {
+    fun addEvents(events: List<EventPresentationModel>) {
         this.events.clear()
         this.events.addAll(events)
         this.events.add(null)
@@ -64,12 +65,12 @@ class EventsRecyclerAdapter(
             view: View,
             private val itemClickListener: OnEventItemClickListener?
         ) : EventViewHolder(view) {
-            fun bind(eventDbModel: EventDbModel) {
-                titleTextView.text = eventDbModel.title
+            fun bind(eventModel: EventPresentationModel) {
+                titleTextView.text = eventModel.title
                 timeTextView.text = "15:00 - 16:00"
 
                 containerView.setOnClickListener {
-                    itemClickListener?.onEventItemClick(eventDbModel.id)
+                    itemClickListener?.onEventItemClick(eventModel.id)
                 }
             }
         }
