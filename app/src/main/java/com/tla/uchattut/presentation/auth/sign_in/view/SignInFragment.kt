@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.tla.uchattut.App
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
@@ -22,7 +23,7 @@ class SignInFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerContainer.authComponent(this)
+        DaggerContainer.authComponent(App.context, this)
             .inject(this)
     }
 

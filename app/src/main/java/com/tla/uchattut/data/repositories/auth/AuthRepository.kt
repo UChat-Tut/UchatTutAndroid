@@ -6,7 +6,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.tla.uchattut.di.auth.AuthScope
 import javax.inject.Inject
 
-@AuthScope
 class AuthRepository @Inject constructor() {
     private val auth = FirebaseAuth.getInstance()
     private val user = auth.currentUser

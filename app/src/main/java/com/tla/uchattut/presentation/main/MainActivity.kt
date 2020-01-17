@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.tla.uchattut.App
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain.auth.AuthInteractor
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        DaggerContainer.authComponent()
+        DaggerContainer.authComponent(App.context)
             .inject(this)
 
         navController = findNavController(R.id.nav_host_fragment)

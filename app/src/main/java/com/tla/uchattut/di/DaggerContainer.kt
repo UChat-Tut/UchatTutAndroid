@@ -57,13 +57,11 @@ object DaggerContainer {
                 .build()
         }
 
-    fun authComponent(fragment: Fragment? = null): AuthComponent =
-        provide(AuthComponent::class) {
-            DaggerAuthComponent.builder()
-                .appComponent(appComponent(fragment?.context))
-                .authModule(AuthModule(fragment))
-                .build()
-        }
+    fun authComponent(context: Context, fragment: Fragment? = null): AuthComponent =
+        DaggerAuthComponent.builder()
+            .authModule(AuthModule(fragment))
+            .appModule(AppModule(context))
+            .build()
 
     fun profileComponent(fragment: ProfileFragment): ProfileComponent =
         provide(ProfileComponent::class) {
@@ -76,7 +74,7 @@ object DaggerContainer {
     fun chatComponent(fragment: ChatFragment): ChatComponent =
         provide(ChatComponent::class) {
             DaggerChatComponent.builder()
-                .authComponent(authComponent(fragment))
+                .authComponent(authComponent(fragment.context!!, fragment))
                 .chatModule(ChatModule(fragment))
                 .build()
         }
