@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tla.uchattut.R
 import com.tla.uchattut.data.db.model.TaskDbModel
-import kotlinx.android.synthetic.main.dialog_bottom_sheet_new_task.*
+import kotlinx.android.synthetic.main.bottom_sheet_new_task.*
 
 
 class NewTaskBottomSheetDialog private constructor(
@@ -28,7 +28,7 @@ class NewTaskBottomSheetDialog private constructor(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.dialog_bottom_sheet_new_task, container, false)
+        return inflater.inflate(R.layout.bottom_sheet_new_task, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

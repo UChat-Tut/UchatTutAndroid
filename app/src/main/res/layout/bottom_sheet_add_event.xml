@@ -99,6 +99,30 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/notificationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_notifications" />
+
+                <TextView
+                    android:id="@+id/notificationTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="Добавить уведмление"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/repeatLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

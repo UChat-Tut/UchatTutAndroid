@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.schedule.view
+package com.tla.uchattut.presentation.schedule.view.calendar_containers
 
 import android.view.View
 import com.kizitonwose.calendarview.ui.ViewContainer

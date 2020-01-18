@@ -107,11 +107,11 @@ class ScheduleViewModel @Inject constructor(
     fun loadAllPeriodEvents(range: Int) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            val startDayCalendar = CalendarWrapper.getDefaultInstance()
+            val startDayCalendar = Calendar.getInstance()
             startDayCalendar.add(Calendar.MONTH, -range)
             startDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
-            val endDayCalendar = CalendarWrapper.getDefaultInstance()
+            val endDayCalendar = Calendar.getInstance()
             endDayCalendar.add(Calendar.MONTH, range + 1)
             endDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 

@@ -23,6 +23,12 @@ import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
+import com.tla.uchattut.presentation.schedule.view.adapters.EventsRecyclerAdapter
+import com.tla.uchattut.presentation.schedule.view.calendar_containers.DayViewContainer
+import com.tla.uchattut.presentation.schedule.view.calendar_containers.MonthHeaderViewContainer
+import com.tla.uchattut.presentation.schedule.view.dialogs.color_picker.ColorPickerDialog
+import com.tla.uchattut.presentation.schedule.view.dialogs.NotificationSelectorDialog
+import com.tla.uchattut.presentation.schedule.view.dialogs.RepeatingSelectorDialog
 import com.tla.uchattut.presentation.schedule.view_model.ScheduleViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_add_event.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -63,7 +69,10 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
         setupCalendarView()
 
-        eventsAdapter = EventsRecyclerAdapter(this)
+        eventsAdapter =
+            EventsRecyclerAdapter(
+                this
+            )
         eventsRecyclerView.adapter = eventsAdapter
         eventsRecyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -78,6 +87,14 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
             }
 
         })
+
+        addEventButton.setOnClickListener {
+            openBottomSheet()
+        }
+
+        notificationLayout.setOnClickListener {
+            openNotificationSelectorDialog()
+        }
 
         saveButton.setOnClickListener {
             addNewEvent()
@@ -95,8 +112,13 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
             showEndTimePickerDialog()
         }
 
-        repeatLayout.setOnClickListener { }
-        colorLayout.setOnClickListener { }
+        repeatLayout.setOnClickListener {
+            openRepeatingSelectorDialog()
+        }
+
+        colorLayout.setOnClickListener {
+            openColorPickerDialog()
+        }
 
         viewModel.getEventsLiveData().observe(viewLifecycleOwner, Observer {
             eventsAdapter.addEvents(it)
@@ -128,6 +150,18 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         endDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
         viewModel.loadAllPeriodEvents(10)
+    }
+
+    private fun openNotificationSelectorDialog() {
+        NotificationSelectorDialog.show(childFragmentManager)
+    }
+
+    private fun openRepeatingSelectorDialog() {
+        RepeatingSelectorDialog.show(childFragmentManager)
+    }
+
+    private fun openColorPickerDialog() {
+        ColorPickerDialog.show(childFragmentManager)
     }
 
     private fun showDatePickerDialog() {
@@ -174,7 +208,10 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
 
-            override fun create(view: View) = DayViewContainer(view)
+            override fun create(view: View) =
+                DayViewContainer(
+                    view
+                )
 
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.calendarDayTextView.text = day.date.dayOfMonth.toString()
@@ -232,7 +269,9 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         calendarView.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthHeaderViewContainer> {
                 override fun create(view: View): MonthHeaderViewContainer =
-                    MonthHeaderViewContainer(view)
+                    MonthHeaderViewContainer(
+                        view
+                    )
 
                 @SuppressLint("SetTextI18n")
                 override fun bind(container: MonthHeaderViewContainer, month: CalendarMonth) {
@@ -266,7 +305,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         }
     }
 
-    override fun onNewItemClick() {
+    private fun openBottomSheet() {
         viewModel.initBottomSheetData()
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
