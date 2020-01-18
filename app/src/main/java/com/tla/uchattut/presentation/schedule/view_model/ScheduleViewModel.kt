@@ -82,10 +82,11 @@ class ScheduleViewModel @Inject constructor(
 
     private fun formatCalendarDate(calendar: Calendar): String {
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        Calendar.SUNDAY
         val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
-        return "${resources.getStringArray(R.array.short_days_of_week)[dayOfWeek - 2]}, $dayOfMonth " +
+        return "${resources.getStringArray(R.array.short_days_of_week)[dayOfWeek - 1]}, $dayOfMonth " +
                 " ${resources.getStringArray(R.array.short_months)[month]}. $year г."
     }
 

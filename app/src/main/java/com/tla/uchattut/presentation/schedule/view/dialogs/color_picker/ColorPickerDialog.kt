@@ -28,7 +28,7 @@ class ColorPickerDialog private constructor(): DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        colorRecyclerView.adapter = ColorPickerAdapter()
+        colorRecyclerView.adapter = ColorPickerAdapter(context!!)
         colorRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 

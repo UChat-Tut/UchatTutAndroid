@@ -5,18 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.tla.uchattut.R
+import com.tla.uchattut.domain._common.UniqueQueue
+import com.tla.uchattut.presentation._common.BaseFragment
+import com.tla.uchattut.presentation.conversation.conversation.ConversationFragment
+import com.tla.uchattut.presentation.library.view.LibraryFragment
+import com.tla.uchattut.presentation.profile.view.ProfileFragment
+import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
+import com.tla.uchattut.presentation.tasks.view.TasksFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.util.*
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
-    private lateinit var navController: NavController
+    private val tabsQueue: Queue<Int> = UniqueQueue<Int>()
+    private var visibleFragmentTag: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,22 +34,78 @@ class MainFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        navController = findNavController(view.findViewById(R.id.bottom_nav_host_fragment))
+        initTabFragments()
+        openFragment(ConversationFragment.TAG)
+        tabsQueue.offer(nav_view.menu.getItem(0).itemId)
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_conversation,
-                R.id.navigation_library,
-                R.id.navigation_schedule,
-                R.id.navigation_tasks,
-                R.id.navigation_profile
-            )
-        )
-        setupActionBarWithNavController(
-            activity as AppCompatActivity,
-            navController,
-            appBarConfiguration)
+        nav_view.setOnNavigationItemSelectedListener {
+            if (it.isChecked) return@setOnNavigationItemSelectedListener false
 
-        nav_view.setupWithNavController(navController)
+            tabsQueue.offer(it.itemId)
+            when (it.itemId) {
+                R.id.navigation_conversation -> {
+                    openFragment(ConversationFragment.TAG)
+                }
+                R.id.navigation_library -> {
+                    openFragment(LibraryFragment.TAG)
+                }
+                R.id.navigation_schedule -> {
+                    openFragment(ScheduleFragment.TAG)
+                }
+                R.id.navigation_tasks -> {
+                    openFragment(TasksFragment.TAG)
+                }
+                R.id.navigation_profile -> {
+                    openFragment(ProfileFragment.TAG)
+                }
+            }
+
+            return@setOnNavigationItemSelectedListener true
+        }
+    }
+
+    private fun initTabFragments() {
+        val conversationFragment = ConversationFragment()
+        val libraryFragment = LibraryFragment()
+        val scheduleFragment = ScheduleFragment()
+        val tasksFragment = TasksFragment()
+        val profileFragment = ProfileFragment()
+
+        childFragmentManager.beginTransaction()
+            .add(R.id.mainFragmentContainer, conversationFragment, ConversationFragment.TAG)
+            .hide(conversationFragment)
+            .add(R.id.mainFragmentContainer, libraryFragment, LibraryFragment.TAG)
+            .hide(libraryFragment)
+            .add(R.id.mainFragmentContainer, scheduleFragment, ScheduleFragment.TAG)
+            .hide(scheduleFragment)
+            .add(R.id.mainFragmentContainer, tasksFragment, TasksFragment.TAG)
+            .hide(tasksFragment)
+            .add(R.id.mainFragmentContainer, profileFragment, ProfileFragment.TAG)
+            .hide(profileFragment)
+            .commitNow()
+    }
+
+    private fun openFragment(tag: String) {
+        val fragment = childFragmentManager.findFragmentByTag(tag)!!
+        val transaction = childFragmentManager.beginTransaction()
+        if (visibleFragmentTag != null) {
+            val visibleFragment = childFragmentManager.findFragmentByTag(visibleFragmentTag)!!
+            transaction.hide(visibleFragment)
+        }
+
+        transaction
+            .show(fragment)
+            .commit()
+
+        visibleFragmentTag = tag
+    }
+
+    override fun onBackPressed(): Boolean {
+        if(!super.onBackPressed() && tabsQueue.size > 1) {
+            tabsQueue.poll()
+            nav_view.selectedItemId = tabsQueue.peek()!!
+            return true
+        }
+        return false
     }
 }

@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
 import com.tla.uchattut.di.DaggerContainer
@@ -18,7 +15,9 @@ import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
 import com.tla.uchattut.presentation._common.DividerItemDecoration
 import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
 import com.tla.uchattut.presentation._common.toast
+import com.tla.uchattut.presentation.chat.view.ChatFragment
 import com.tla.uchattut.presentation.conversation.dialogues.view_model.DialoguesViewModel
+import com.tla.uchattut.presentation.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_dialogues.*
 import javax.inject.Inject
 
@@ -26,8 +25,6 @@ class DialoguesFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: DialoguesViewModel
-
-    private lateinit var mainNavController: NavController
 
     private lateinit var chatListAdapter: DialoguesRecyclerAdapter
 
@@ -63,8 +60,6 @@ class DialoguesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainNavController = Navigation.findNavController(activity!!, R.id.nav_host_fragment)
-
         chatListAdapter = DialoguesRecyclerAdapter(
             onItemClick = ::openChat,
             actionModeDelegate = actionModeDelegate
@@ -89,8 +84,14 @@ class DialoguesFragment : Fragment() {
     }
 
     private fun openChat(id: Int) {
-        val action = MobileNavDirections.actionToChatFragment(id = id)
-        mainNavController.navigate(action)
+        val mainActivity = activity as? MainActivity
+
+        val bundle = Bundle()
+        bundle.putInt("id", id)
+        val chatFragment = ChatFragment()
+        chatFragment.arguments = bundle
+
+        mainActivity?.openScreen(chatFragment)
     }
 
     private fun updateState(state: DialoguesViewModel.State) =

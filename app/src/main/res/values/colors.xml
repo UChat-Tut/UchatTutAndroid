@@ -10,4 +10,15 @@
     <color name="chariotRequiem">#39434C</color>
     <color name="vanillaIce">#000000</color>
     <color name="white">#FFFFFF</color>
+    
+    <color name="task_label_red">#D50000</color>
+    <color name="task_label_pink">#E67C73</color>
+    <color name="task_label_orange">#F4511E</color>
+    <color name="task_label_yellow">#F6BF26</color>
+    <color name="task_label_light_green">#33B679</color>
+    <color name="task_label_green">#0B8043</color>
+    <color name="task_label_light_blue">#039BE5</color>
+    <color name="task_label_blue">#3F51B5</color>
+    <color name="task_label_lilac">#7986CB</color>
+    <color name="task_label_violet">#8E24AA</color>
 </resources>

@@ -29,4 +29,8 @@ class LibraryFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_library, container, false)
     }
+
+    companion object {
+        const val TAG = "LibraryFragment"
+    }
 }

@@ -7,9 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
@@ -29,9 +26,7 @@ class ChatFragment : Fragment() {
     lateinit var viewModel: ChatViewModel
 
     private lateinit var chatRecyclerAdapter: ChatRecyclerAdapter
-    private lateinit var navController: NavController
 
-    private val args: ChatFragmentArgs by navArgs()
     private val onActionItemClickListener =
         object : PrimaryActionModeCallback.OnActionModeMenuClickListener {
             override fun onMenuItemSelected(item: MenuItem) {
@@ -82,8 +77,6 @@ class ChatFragment : Fragment() {
             sendMessage(editText.text)
         }
 
-        navController = findNavController()
-
         chatRecyclerAdapter = ChatRecyclerAdapter(
             onItemClick = this::showContextMenu,
             actionModeDelegate = actionModeDelegate
@@ -101,7 +94,10 @@ class ChatFragment : Fragment() {
             chatRecyclerAdapter.setMessages(it.messages)
         })
 
-        viewModel.requestChat(args.id)
+        val bundle = arguments
+        val id = bundle!!.getInt("id", 0)
+
+        viewModel.requestChat(id)
     }
 
     private fun setupActionBar() {

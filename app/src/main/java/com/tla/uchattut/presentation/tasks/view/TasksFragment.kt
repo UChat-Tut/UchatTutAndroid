@@ -73,4 +73,8 @@ class TasksFragment : Fragment(), TasksRecyclerAdapter.OnTaskItemClickListener {
     override fun onEditTask(id: Int, task: TaskDbModel) {
         NewTaskBottomSheetDialog.show(childFragmentManager, this::addTask, task = task)
     }
+
+    companion object {
+        const val TAG = "TasksFragment"
+    }
 }

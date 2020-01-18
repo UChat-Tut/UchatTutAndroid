@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
 import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
-import kotlinx.android.synthetic.main.item_message_send.*
 
 class ConversationFragment : Fragment() {
 
@@ -56,7 +55,8 @@ class ConversationFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                val searchUserFragment = childFragmentManager.findFragmentByTag(SEARCH_USER_FRAGMENT_TAG) as? SearchUserFragment
+                val searchUserFragment =
+                    childFragmentManager.findFragmentByTag(SEARCH_USER_FRAGMENT_TAG) as? SearchUserFragment
                 searchUserFragment?.executeSearchQuery(newText)
                 return false
             }
@@ -75,10 +75,13 @@ class ConversationFragment : Fragment() {
         childFragmentManager.beginTransaction()
             .remove(searchUserFragment)
             .commit()
+
     }
 
     companion object {
         private const val SEARCH_USER_FRAGMENT_TAG = "SearchUserFragment"
         private const val DIALOGUES_FRAGMENT_TAG = "DialoguesFragment"
+
+        const val TAG = "ConversationFragment"
     }
 }

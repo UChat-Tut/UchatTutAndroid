@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.tla.uchattut.App
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
+import com.tla.uchattut.presentation.auth.sign_in.view.SignInFragment
 import com.tla.uchattut.presentation.auth.sign_up.view_model.SignUpViewModel
+import com.tla.uchattut.presentation.main.MainActivity
+import com.tla.uchattut.presentation.main.MainFragment
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import javax.inject.Inject
 
@@ -39,7 +41,8 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         signInButton.setOnClickListener {
-            findNavController().navigate(R.id.action_to_signInFragment)
+            val mainActivity = activity as? MainActivity
+            mainActivity?.openScreen(SignInFragment())
         }
 
         signUpButton.setOnClickListener {
@@ -52,7 +55,8 @@ class SignUpFragment : Fragment() {
         }
 
         viewModel.navigateToMainScreenLiveEvent.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(R.id.navigation_main)
+            val mainActivity = activity as? MainActivity
+            mainActivity?.openScreen(MainFragment())
         })
 
         viewModel.toastLiveEvent.observe(viewLifecycleOwner, Observer { message ->
@@ -66,5 +70,9 @@ class SignUpFragment : Fragment() {
         viewModel.confirmPassTextViewErrorLiveData.observe(viewLifecycleOwner, Observer {
             confirmPasswordTextView.error = it
         })
+    }
+
+    companion object {
+        const val TAG = "SignUpFragment"
     }
 }

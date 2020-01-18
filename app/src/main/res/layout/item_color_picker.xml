@@ -21,10 +21,10 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_gravity="center"
-            app:cardCornerRadius="7dp" />
+            app:cardCornerRadius="6dp" />
 
     </FrameLayout>
 

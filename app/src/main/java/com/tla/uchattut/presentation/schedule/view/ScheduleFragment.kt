@@ -48,6 +48,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
     private lateinit var months: Array<String>
+    private var lastChoosedDayView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +85,10 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> addEventButton.hide()
+                    BottomSheetBehavior.STATE_COLLAPSED -> addEventButton.show()
+                }
             }
 
         })
@@ -150,6 +155,13 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         endDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
         viewModel.loadAllPeriodEvents(10)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (view != null && bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            cancelBottomSheet()
+        }
     }
 
     private fun openNotificationSelectorDialog() {
@@ -226,13 +238,23 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
                         container.calendarDayView.background =
                             resources.getDrawable(R.drawable.background_day_calendar_current)
 
-                        container.calendarDayView.setOnClickListener { loadEvents(day) }
+                        container.calendarDayView.setOnClickListener {
+                            loadEvents(day)
+                            lastChoosedDayView?.isActivated = false
+                            container.calendarDayView.isActivated = true
+                            lastChoosedDayView = container.calendarDayView
+                        }
                     }
                     day.owner == DayOwner.THIS_MONTH -> {
                         container.calendarDayTextView.setTextColor(resources.getColor(android.R.color.black))
                         container.calendarDayView.background =
                             resources.getDrawable(R.drawable.background_day_calendar_in_month)
-                        container.calendarDayView.setOnClickListener { loadEvents(day) }
+                        container.calendarDayView.setOnClickListener {
+                            loadEvents(day)
+                            lastChoosedDayView?.isActivated = false
+                            container.calendarDayView.isActivated = true
+                            lastChoosedDayView = container.calendarDayView
+                        }
                     }
                     else -> {
                         container.calendarDayTextView.setTextColor(resources.getColor(R.color.silverChariot))
@@ -307,6 +329,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
     private fun openBottomSheet() {
         viewModel.initBottomSheetData()
+        addEventButton.hide()
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
@@ -329,11 +352,15 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
     private fun cancelBottomSheet() {
         titleEditText.text.clear()
-
+        addEventButton.show()
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.setNewEventDate(year, month, dayOfMonth)
+    }
+
+    companion object {
+        const val TAG = "ScheduleFragment"
     }
 }

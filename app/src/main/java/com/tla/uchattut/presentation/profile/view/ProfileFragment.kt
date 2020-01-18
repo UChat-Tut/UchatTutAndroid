@@ -53,4 +53,8 @@ class ProfileFragment : Fragment() {
             .load(profile.photoUrl)
             .into(avatarImageView)
     }
+
+    companion object {
+        const val TAG = "ProfileFragment"
+    }
 }
