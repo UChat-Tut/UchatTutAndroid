@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/navigation_chat">
+    app:startDestination="@id/navigation_conversation">
 
     <fragment
-        android:id="@+id/navigation_chat"
-        android:name="com.tla.uchattut.presentation.dialogues.view.DialoguesFragment"
+        android:id="@+id/navigation_conversation"
+        android:name="com.tla.uchattut.presentation.conversation.conversation.ConversationFragment"
         android:label="@string/nav_title_chat"
-        tools:layout="@layout/fragment_chat_list">
+        tools:layout="@layout/fragment_conversation">
     </fragment>
 
     <fragment

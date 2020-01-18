@@ -1,12 +1,10 @@
-package com.tla.uchattut.presentation.dialogues.view
+package com.tla.uchattut.presentation.conversation.dialogues.view
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.*
-import android.view.View.OnAttachStateChangeListener
-import android.widget.ImageButton
-import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.SearchView
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -16,9 +14,12 @@ import com.tla.uchattut.MobileNavDirections
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
 import com.tla.uchattut.di.DaggerContainer
-import com.tla.uchattut.presentation._common.*
-import com.tla.uchattut.presentation.dialogues.view_model.DialoguesViewModel
-import kotlinx.android.synthetic.main.fragment_chat_list.*
+import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
+import com.tla.uchattut.presentation._common.DividerItemDecoration
+import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
+import com.tla.uchattut.presentation._common.toast
+import com.tla.uchattut.presentation.conversation.dialogues.view_model.DialoguesViewModel
+import kotlinx.android.synthetic.main.fragment_dialogues.*
 import javax.inject.Inject
 
 class DialoguesFragment : Fragment() {
@@ -56,7 +57,7 @@ class DialoguesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_chat_list, container, false)
+        return inflater.inflate(R.layout.fragment_dialogues, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,71 +112,6 @@ class DialoguesFragment : Fragment() {
             }
         }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.chat_list, menu)
-
-        val searchView: SearchView = menu.findItem(R.id.actionSearch).actionView as SearchView
-
-        searchView.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {
-            override fun onViewDetachedFromWindow(arg0: View?) {
-                setItemsVisibility(menu, true)
-            }
-
-            override fun onViewAttachedToWindow(arg0: View?) {
-                setItemsVisibility(menu, false)
-            }
-        })
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                chatListAdapter.filter.filter(newText)
-                return false
-            }
-        })
-
-        val addActionView: ImageButton = menu.findItem(R.id.actionAdd).actionView as ImageButton
-        val addDialogMenu = createAddDialogPopupMenu(addActionView, this::onAddDialogClickListener)
-        addActionView.run {
-            setBackgroundColor(Color.TRANSPARENT)
-            setImageResource(R.drawable.ic_add)
-        }
-        addActionView.setOnClickListener {
-            addDialogMenu.show()
-        }
-    }
-
-    private fun setItemsVisibility(menu: Menu, visible: Boolean) {
-        val exception = menu.findItem(R.id.actionSearch)
-        for (i in 0 until menu.size()) {
-            val item = menu.getItem(i)
-            if (item === exception) continue
-
-            item.isVisible = visible
-        }
-    }
-
-    private fun createAddDialogPopupMenu(
-        view: View,
-        onItemClick: (menuItem: MenuItem) -> Unit
-    ): PopupMenu = PopupMenu(context!!, view).apply {
-        menuInflater.inflate(R.menu.add_chat_dialog, menu)
-        setOnMenuItemClickListener {
-            onItemClick(it)
-            true
-        }
-    }
-
-    private fun onAddDialogClickListener(menuItem: MenuItem) {
-        when (menuItem.itemId) {
-            R.id.newMessageItem -> addDialog()
-        }
-    }
-
     private fun onMuteItemClick() {
         toast("Отключены оповещания")
         actionModeDelegate.finishActionMode()
@@ -184,9 +120,5 @@ class DialoguesFragment : Fragment() {
     private fun onDeleteItemClick() {
         toast("Удаление")
         actionModeDelegate.finishActionMode()
-    }
-
-    private fun addDialog() {
-        toast("Add")
     }
 }

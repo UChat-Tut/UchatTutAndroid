@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.dialogues.view
+package com.tla.uchattut.presentation.conversation.dialogues.view
 
 import android.view.LayoutInflater
 import android.view.View

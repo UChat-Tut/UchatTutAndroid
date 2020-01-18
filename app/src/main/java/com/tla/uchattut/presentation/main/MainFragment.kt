@@ -35,7 +35,7 @@ class MainFragment : Fragment() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_chat,
+                R.id.navigation_conversation,
                 R.id.navigation_library,
                 R.id.navigation_schedule,
                 R.id.navigation_tasks,

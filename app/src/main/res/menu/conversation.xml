@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/actionAdd"
-        android:icon="@drawable/ic_add"
-        android:title="@string/add"
-        app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.AppCompatImageButton"/>
-
     <item android:id="@+id/actionSearch"
         android:icon="@drawable/ic_search"
         android:title="@string/search"

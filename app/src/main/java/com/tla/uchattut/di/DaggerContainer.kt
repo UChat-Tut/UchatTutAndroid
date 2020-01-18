@@ -27,7 +27,7 @@ import com.tla.uchattut.di.tasks.DaggerTasksComponent
 import com.tla.uchattut.di.tasks.TasksComponent
 import com.tla.uchattut.di.tasks.TasksModule
 import com.tla.uchattut.presentation.chat.view.ChatFragment
-import com.tla.uchattut.presentation.dialogues.view.DialoguesFragment
+import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
 import com.tla.uchattut.presentation.profile.view.ProfileFragment
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
