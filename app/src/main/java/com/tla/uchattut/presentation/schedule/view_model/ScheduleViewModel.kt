@@ -4,32 +4,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kizitonwose.calendarview.model.CalendarDay
+import com.tla.uchattut.R
 import com.tla.uchattut.di.schedule.ScheduleComponent
+import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.domain.schedule.ScheduleInteractor
 import com.tla.uchattut.presentation._common.ScopeViewModel
 import com.tla.uchattut.presentation._common.SingleLiveEvent
+import com.tla.uchattut.presentation._common.resources.ResourceManager
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+
 class ScheduleViewModel @Inject constructor(
-    private val scheduleInteractor: ScheduleInteractor
+    private val scheduleInteractor: ScheduleInteractor,
+    private val resources: ResourceManager
 ) : ScopeViewModel(ScheduleComponent::class) {
 
     private val dayEventsLiveData = MutableLiveData<List<EventPresentationModel>>()
     private val updateCalendarEvent = SingleLiveEvent<Unit>()
+    private val dateTextLiveData = MutableLiveData<String>()
+    private val startTimeLiveData = MutableLiveData<String>()
+    private val endTimeLiveData = MutableLiveData<String>()
 
     private var dayEvents = HashMap<String, MutableList<EventPresentationModel>>()
 
-    private var newEventDate = Calendar.getInstance()
+    private var chosenCalendarDay = CalendarWrapper.getDefaultInstance()
+    private var chosenStartTime = CalendarWrapper.getDefaultInstance()
+    private var chosenEndTime = CalendarWrapper.getDefaultInstance()
 
-    private val currentEventDate = Calendar.getInstance()
+    private val currentEventDate = CalendarWrapper.getDefaultInstance()
 
     fun loadEvents() = viewModelScope.launch(Dispatchers.IO) {
         val events = scheduleInteractor.getEvents(currentEventDate.time)
@@ -48,22 +56,42 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun setNewEventDate(year: Int, month: Int, dayOfMonth: Int) {
-        newEventDate = Calendar.getInstance()
-        newEventDate.set(year, month, dayOfMonth, 0, 0, 0)
+        chosenCalendarDay.set(year, month, dayOfMonth, 0, 0, 0)
+        dateTextLiveData.postValue(formatCalendarDate(chosenCalendarDay))
     }
 
-    fun getNewEventDate(): Calendar {
-        return newEventDate
+    fun getChosenCalendarDay(): Calendar {
+        return chosenCalendarDay
     }
 
-    fun formatCalendarDate(calendar: Calendar): String {
-        val format = SimpleDateFormat("yyyy.MM.dd")
-        return format.format(calendar.time)
+    fun getChosenStartCalendarTime(): Calendar {
+        return chosenStartTime
+    }
+
+    fun getChosenEndCalendarTime(): Calendar {
+        return chosenEndTime
+    }
+
+    fun getStartTimeLiveData(): LiveData<String> {
+        return startTimeLiveData
+    }
+
+    fun getEndTimeLiveData(): LiveData<String> {
+        return endTimeLiveData
+    }
+
+    private fun formatCalendarDate(calendar: Calendar): String {
+        val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        return "${resources.getStringArray(R.array.short_days_of_week)[dayOfWeek - 2]}, $dayOfMonth " +
+                " ${resources.getStringArray(R.array.short_months)[month]}. $year г."
     }
 
     fun loadEvents(year: Int, month: Int, dayOfMonth: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val calendar = Calendar.getInstance()
+            val calendar = CalendarWrapper.getDefaultInstance()
             calendar.set(year, month, dayOfMonth, 0, 0, 0)
 
             val events = scheduleInteractor.getEvents(calendar.time)
@@ -79,23 +107,28 @@ class ScheduleViewModel @Inject constructor(
     fun loadAllPeriodEvents(range: Int) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            val startDayCalendar = Calendar.getInstance()
+            val startDayCalendar = CalendarWrapper.getDefaultInstance()
             startDayCalendar.add(Calendar.MONTH, -range)
             startDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
-            val endDayCalendar = Calendar.getInstance()
+            val endDayCalendar = CalendarWrapper.getDefaultInstance()
             endDayCalendar.add(Calendar.MONTH, range + 1)
             endDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
-            val events = scheduleInteractor.getEventsInPeriod(startDayCalendar.time, endDayCalendar.time)
+            val events =
+                scheduleInteractor.getEventsInPeriod(startDayCalendar.time, endDayCalendar.time)
             dayEvents = distributeByDate(events)
 
             updateCalendarEvent.postCall()
         }
     }
 
-    fun dateToString(date: Date): String {
+    private fun dateToString(date: Date): String {
         return scheduleInteractor.dateToString(date)
+    }
+
+    fun getDateTextLiveData(): LiveData<String> {
+        return dateTextLiveData
     }
 
     fun getEventsForCalendarDay(day: CalendarDay): List<EventPresentationModel>? {
@@ -120,5 +153,59 @@ class ScheduleViewModel @Inject constructor(
             dateToEventsMap[dateStr]?.add(it)
         }
         return dateToEventsMap
+    }
+
+    private fun Calendar.roundTime(minutes: Int) {
+        val currentMinutes = get(Calendar.MINUTE)
+
+        val mod = currentMinutes % minutes
+        add(Calendar.MINUTE, minutes - mod)
+    }
+
+    private fun Calendar.stringifyTime(): String {
+        val hours = get(Calendar.HOUR_OF_DAY)
+        val minutes = get(Calendar.MINUTE)
+        return "${String.format("%02d", hours)}:${String.format("%02d", minutes)}"
+    }
+
+    fun initBottomSheetData() {
+        val calendar = Calendar.getInstance()
+        chosenCalendarDay.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+        chosenCalendarDay.set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+        chosenCalendarDay.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
+        dateTextLiveData.postValue(formatCalendarDate(chosenCalendarDay))
+
+        val startCalendar = Calendar.getInstance()
+        startCalendar.roundTime(30)
+        chosenStartTime.set(Calendar.HOUR_OF_DAY, startCalendar.get(Calendar.HOUR_OF_DAY))
+        chosenStartTime.set(Calendar.MINUTE, startCalendar.get(Calendar.MINUTE))
+
+        val endCalendar = Calendar.getInstance()
+        endCalendar.add(Calendar.HOUR_OF_DAY, 1)
+        endCalendar.roundTime(30)
+        chosenEndTime.set(Calendar.HOUR_OF_DAY, endCalendar.get(Calendar.HOUR_OF_DAY))
+        chosenEndTime.set(Calendar.MINUTE, endCalendar.get(Calendar.MINUTE))
+
+        val startTime = startCalendar.stringifyTime()
+        startTimeLiveData.postValue(startTime)
+
+        val endTime = endCalendar.stringifyTime()
+        endTimeLiveData.postValue(endTime)
+    }
+
+    fun updateStartTime(hours: Int, minutes: Int) {
+        chosenStartTime.set(Calendar.HOUR_OF_DAY, hours)
+        chosenStartTime.set(Calendar.MINUTE, minutes)
+
+        val startTime = chosenStartTime.stringifyTime()
+        startTimeLiveData.postValue(startTime)
+    }
+
+    fun updateEndTime(hours: Int, minutes: Int) {
+        chosenEndTime.set(Calendar.HOUR_OF_DAY, hours)
+        chosenEndTime.set(Calendar.MINUTE, minutes)
+
+        val endTime = chosenEndTime.stringifyTime()
+        endTimeLiveData.postValue(endTime)
     }
 }

@@ -1,14 +1,15 @@
 package com.tla.uchattut.presentation.schedule.view
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tla.uchattut.R
-import com.tla.uchattut.data.db.model.EventDbModel
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_event.*
+import java.util.*
 
 class EventsRecyclerAdapter(
     private val eventItemClickListener: OnEventItemClickListener? = null
@@ -65,9 +66,18 @@ class EventsRecyclerAdapter(
             view: View,
             private val itemClickListener: OnEventItemClickListener?
         ) : EventViewHolder(view) {
+            @SuppressLint("SetTextI18n")
             fun bind(eventModel: EventPresentationModel) {
                 titleTextView.text = eventModel.title
-                timeTextView.text = "15:00 - 16:00"
+
+                val startHour = eventModel.startCalendarTime.get(Calendar.HOUR_OF_DAY)
+                val startMinute = eventModel.startCalendarTime.get(Calendar.MINUTE)
+
+                val endHour = eventModel.endCalendarTime.get(Calendar.HOUR_OF_DAY)
+                val endMinute = eventModel.startCalendarTime.get(Calendar.MINUTE)
+
+                timeTextView.text = "${String.format("%02d", startHour)}:${String.format("%02d", startMinute)} - " +
+                        "${String.format("%02d", endHour)}:${String.format("%02d", endMinute)}"
 
                 containerView.setOnClickListener {
                     itemClickListener?.onEventItemClick(eventModel.id)

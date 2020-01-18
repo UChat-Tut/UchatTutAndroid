@@ -7,6 +7,10 @@ import javax.inject.Inject
 class AndroidResourceManager @Inject constructor(
     private val context: Context?
 ) : ResourceManager {
+
     override fun getString(@StringRes resId: Int): String =
         context!!.getString(resId)
+
+    override fun getStringArray(resId: Int): Array<String> =
+        context!!.resources.getStringArray(resId)
 }

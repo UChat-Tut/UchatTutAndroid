@@ -2,6 +2,7 @@ package com.tla.uchattut.data.repositories.events
 
 import com.tla.uchattut.data.db.AppDatabase
 import com.tla.uchattut.data.db.model.EventDbModel
+import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -52,15 +53,19 @@ class EventsRepositoryImpl @Inject constructor() {
         id = id,
         title = title,
         date = dateToString(date),
-        startTimestamp = startTimestamp,
-        endTimestamp = endTimestamp
+        startTimestamp = startCalendarTime.time.time,
+        endTimestamp = endCalendarTime.time.time
     )
 
     private fun EventDbModel.convertToDbModel(): EventPresentationModel = EventPresentationModel(
         id = id,
         title = title,
         date = stringToDate(date),
-        startTimestamp = startTimestamp,
-        endTimestamp = endTimestamp
+        startCalendarTime = CalendarWrapper.getDefaultInstance().apply {
+            timeInMillis = startTimestamp
+        },
+        endCalendarTime = CalendarWrapper.getDefaultInstance().apply {
+            timeInMillis = endTimestamp
+        }
     )
 }

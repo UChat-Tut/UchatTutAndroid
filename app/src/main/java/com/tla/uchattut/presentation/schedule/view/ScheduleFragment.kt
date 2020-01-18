@@ -2,6 +2,8 @@ package com.tla.uchattut.presentation.schedule.view
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.app.TimePickerDialog.OnTimeSetListener
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,11 +20,11 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
+import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.view_model.ScheduleViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_add_event.*
-import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.threeten.bp.YearMonth
 import org.threeten.bp.ZonedDateTime
@@ -77,19 +79,22 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
         })
 
-        val calendarInstance = Calendar.getInstance()
-        val currYear = calendarInstance.get(Calendar.YEAR)
-        val currMonth = calendarInstance.get(Calendar.MONTH)
-        val currDay = calendarInstance.get(Calendar.DAY_OF_MONTH)
+        saveButton.setOnClickListener {
+            addNewEvent()
+        }
 
-        val datePickerDialog = DatePickerDialog(
-            context!!, this, currYear, currMonth, currDay
-        )
+        dateTextView.setOnClickListener {
+            showDatePickerDialog()
+        }
 
-        saveButton.setOnClickListener { addNewEvent() }
-        dateTextView.setOnClickListener { datePickerDialog.show() }
-        startTimeTextView.setOnClickListener { }
-        endTimeTextView.setOnClickListener { }
+        startTimeTextView.setOnClickListener {
+            showStartTimePickerDialog()
+        }
+
+        endTimeTextView.setOnClickListener {
+            showEndTimePickerDialog()
+        }
+
         repeatLayout.setOnClickListener { }
         colorLayout.setOnClickListener { }
 
@@ -101,9 +106,21 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
             calendarView.notifyCalendarChanged()
         })
 
+        viewModel.getDateTextLiveData().observe(viewLifecycleOwner, Observer {
+            dateTextView.text = it
+        })
+
+        viewModel.getStartTimeLiveData().observe(viewLifecycleOwner, Observer {
+            startTimeTextView.text = it
+        })
+
+        viewModel.getEndTimeLiveData().observe(viewLifecycleOwner, Observer {
+            endTimeTextView.text = it
+        })
+
         viewModel.loadEvents()
-        val startDayCalendar = Calendar.getInstance()
-        val endDayCalendar = Calendar.getInstance()
+        val startDayCalendar = CalendarWrapper.getDefaultInstance()
+        val endDayCalendar = CalendarWrapper.getDefaultInstance()
         startDayCalendar.add(Calendar.MONTH, -10)
         startDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
@@ -111,6 +128,45 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         endDayCalendar.set(Calendar.DAY_OF_MONTH, 1)
 
         viewModel.loadAllPeriodEvents(10)
+    }
+
+    private fun showDatePickerDialog() {
+        val calendarInstance = Calendar.getInstance()
+        val currYear = calendarInstance.get(Calendar.YEAR)
+        val currMonth = calendarInstance.get(Calendar.MONTH)
+        val currDay = calendarInstance.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            context!!, this, currYear, currMonth, currDay
+        )
+
+        datePickerDialog.show()
+    }
+
+    private val startTimeCallback = OnTimeSetListener { _, hour, minute ->
+        viewModel.updateStartTime(hour, minute)
+    }
+
+    private fun showStartTimePickerDialog() {
+        val lastChosenStartTime = viewModel.getChosenStartCalendarTime()
+        val hours = lastChosenStartTime.get(Calendar.HOUR_OF_DAY)
+        val minutes = lastChosenStartTime.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(context, startTimeCallback, hours, minutes, true)
+        timePickerDialog.show()
+    }
+
+    private val endTimeCallback = OnTimeSetListener { _, hour, minute ->
+        viewModel.updateEndTime(hour, minute)
+    }
+
+    private fun showEndTimePickerDialog() {
+        val lastChosenEndTime = viewModel.getChosenEndCalendarTime()
+        val hours = lastChosenEndTime.get(Calendar.HOUR_OF_DAY)
+        val minutes = lastChosenEndTime.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(context, endTimeCallback, hours, minutes, true)
+        timePickerDialog.show()
     }
 
     private fun setupCalendarView() {
@@ -211,6 +267,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
     }
 
     override fun onNewItemClick() {
+        viewModel.initBottomSheetData()
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
@@ -226,9 +283,9 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
     private fun buildNewEvent(): EventPresentationModel = EventPresentationModel(
         title = titleEditText.text.toString(),
-        date = viewModel.getNewEventDate().time,
-        startTimestamp = 0,
-        endTimestamp = 0
+        date = viewModel.getChosenCalendarDay().time,
+        startCalendarTime = viewModel.getChosenStartCalendarTime(),
+        endCalendarTime = viewModel.getChosenEndCalendarTime()
     )
 
     private fun cancelBottomSheet() {
@@ -239,6 +296,5 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.setNewEventDate(year, month, dayOfMonth)
-        dateTextView.text = viewModel.formatCalendarDate(viewModel.getNewEventDate())
     }
 }

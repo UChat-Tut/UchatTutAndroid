@@ -6,6 +6,6 @@ data class EventPresentationModel(
     val id: Int = 0,
     val title: String,
     val date: Date,
-    val startTimestamp: Long,
-    val endTimestamp: Long
+    val startCalendarTime: Calendar,
+    val endCalendarTime: Calendar
 )
