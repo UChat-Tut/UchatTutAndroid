@@ -11,4 +11,6 @@ object RetrofitClient {
         .build()
 
     val networkApi = retrofit.create(RestApi::class.java)
+
+    val networkAuthApi = retrofit.create(RestAuthApi::class.java)
 }
