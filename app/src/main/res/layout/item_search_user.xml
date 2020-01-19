@@ -9,20 +9,26 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_margin="16dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="12dp"
         app:srcCompat="@drawable/background_day_calendar_current" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/fullNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             tools:text="Дмитрий Сафин" />
@@ -31,7 +37,8 @@
             android:id="@+id/lastSeenTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="last seen recently" />
+            android:layout_marginTop="1dp"
+            android:text="last seen recently" />
 
     </LinearLayout>
 </LinearLayout>

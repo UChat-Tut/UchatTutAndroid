@@ -1,5 +1,6 @@
 package com.tla.uchattut.data.db.model
 
+import android.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -22,7 +23,10 @@ data class EventDbModel(
     val startTimestamp: Long,
 
     @ColumnInfo(name = COLUMN_NAME_END_TIMESTAMP)
-    val endTimestamp: Long
+    val endTimestamp: Long,
+
+    @ColumnInfo(name = COLUMN_NAME_COLOR)
+    val color: Int = Color.BLUE
 ) {
     companion object {
         const val TABLE_NAME = "Event"
@@ -32,5 +36,6 @@ data class EventDbModel(
         const val COLUMN_NAME_DATE = "date"
         const val COLUMN_NAME_START_TIMESTAMP = "startTimestamp"
         const val COLUMN_NAME_END_TIMESTAMP = "endTimestamp"
+        const val COLUMN_NAME_COLOR = "color"
     }
 }

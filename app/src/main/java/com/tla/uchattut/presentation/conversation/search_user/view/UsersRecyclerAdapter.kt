@@ -1,5 +1,6 @@
 package com.tla.uchattut.presentation.conversation.search_user.view
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,9 +31,12 @@ class UsersRecyclerAdapter : RecyclerView.Adapter<UsersRecyclerAdapter.UsersView
         notifyDataSetChanged()
     }
 
-    class UsersViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class UsersViewHolder(override val containerView: View) :
+        RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+        @SuppressLint("SetTextI18n")
         fun bind(users: MinimalUserNetworkModel) {
-            fullNameTextView.text = users.name
+            fullNameTextView.text = "${users.name} ${users.surname}"
         }
     }
 }

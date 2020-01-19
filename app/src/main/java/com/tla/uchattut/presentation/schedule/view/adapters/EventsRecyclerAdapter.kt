@@ -52,6 +52,8 @@ class EventsRecyclerAdapter(
             val endHour = eventModel.endCalendarTime.get(Calendar.HOUR_OF_DAY)
             val endMinute = eventModel.startCalendarTime.get(Calendar.MINUTE)
 
+            colorView.setCardBackgroundColor(eventModel.color)
+
             timeTextView.text =
                 "${String.format("%02d", startHour)}:${String.format("%02d", startMinute)} - " +
                         "${String.format("%02d", endHour)}:${String.format("%02d", endMinute)}"

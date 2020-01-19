@@ -15,8 +15,8 @@ class TokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
         val token = authRepository.getAuthToken()
-        if (token.isNotBlank()) {
-            requestBuilder.addHeader(TOKEN_HEADER, authRepository.getAuthToken())
+        if (token?.isNotBlank() == true) {
+            requestBuilder.addHeader(TOKEN_HEADER, token)
         } else {
             openLoginActivity()
         }

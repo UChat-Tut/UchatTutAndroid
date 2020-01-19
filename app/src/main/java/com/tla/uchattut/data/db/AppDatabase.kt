@@ -9,7 +9,7 @@ import com.tla.uchattut.data.db.dao.TaskDao
 import com.tla.uchattut.data.db.model.EventDbModel
 import com.tla.uchattut.data.db.model.TaskDbModel
 
-@Database(entities = [TaskDbModel::class, EventDbModel::class], version = 5)
+@Database(entities = [TaskDbModel::class, EventDbModel::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val taskDao: TaskDao
@@ -37,5 +37,4 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-
 }

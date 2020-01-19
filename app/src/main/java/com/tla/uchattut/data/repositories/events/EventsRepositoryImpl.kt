@@ -54,7 +54,8 @@ class EventsRepositoryImpl @Inject constructor() {
         title = title,
         date = dateToString(date),
         startTimestamp = startCalendarTime.time.time,
-        endTimestamp = endCalendarTime.time.time
+        endTimestamp = endCalendarTime.time.time,
+        color = color
     )
 
     private fun EventDbModel.convertToDbModel(): EventPresentationModel = EventPresentationModel(
@@ -66,6 +67,7 @@ class EventsRepositoryImpl @Inject constructor() {
         },
         endCalendarTime = CalendarWrapper.getDefaultInstance().apply {
             timeInMillis = endTimestamp
-        }
+        },
+        color = color
     )
 }

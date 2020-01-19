@@ -7,5 +7,6 @@ data class EventPresentationModel(
     val title: String,
     val date: Date,
     val startCalendarTime: Calendar,
-    val endCalendarTime: Calendar
+    val endCalendarTime: Calendar,
+    val color: Int
 )

@@ -156,6 +156,7 @@
                 android:padding="16dp">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/colorView"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="0dp"

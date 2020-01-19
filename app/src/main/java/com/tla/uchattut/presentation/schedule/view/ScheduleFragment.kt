@@ -145,6 +145,10 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
             endTimeTextView.text = it
         })
 
+        viewModel.getEventColorLiveData().observe(viewLifecycleOwner, Observer {
+            colorView.setCardBackgroundColor(it)
+        })
+
         viewModel.loadEvents()
         val startDayCalendar = CalendarWrapper.getDefaultInstance()
         val endDayCalendar = CalendarWrapper.getDefaultInstance()
@@ -173,7 +177,11 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
     }
 
     private fun openColorPickerDialog() {
-        ColorPickerDialog.show(childFragmentManager)
+        ColorPickerDialog.show(childFragmentManager, ::onColorPicked)
+    }
+
+    private fun onColorPicked(color: Int) {
+        viewModel.updateEventColor(color)
     }
 
     private fun showDatePickerDialog() {
@@ -283,6 +291,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
                             break
                         }
                         container.lineViews[i].visibility = View.VISIBLE
+                        container.lineViews[i].setBackgroundColor(dayEvents[i].color)
                     }
                 }
             }
@@ -347,7 +356,8 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         title = titleEditText.text.toString(),
         date = viewModel.getChosenCalendarDay().time,
         startCalendarTime = viewModel.getChosenStartCalendarTime(),
-        endCalendarTime = viewModel.getChosenEndCalendarTime()
+        endCalendarTime = viewModel.getChosenEndCalendarTime(),
+        color = viewModel.getChosenColor()
     )
 
     private fun cancelBottomSheet() {

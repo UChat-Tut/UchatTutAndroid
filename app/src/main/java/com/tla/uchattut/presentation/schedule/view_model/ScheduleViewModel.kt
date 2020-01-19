@@ -1,5 +1,6 @@
 package com.tla.uchattut.presentation.schedule.view_model
 
+import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -30,12 +31,14 @@ class ScheduleViewModel @Inject constructor(
     private val dateTextLiveData = MutableLiveData<String>()
     private val startTimeLiveData = MutableLiveData<String>()
     private val endTimeLiveData = MutableLiveData<String>()
+    private val eventColorLiveData = MutableLiveData<Int>()
 
     private var dayEvents = HashMap<String, MutableList<EventPresentationModel>>()
 
     private var chosenCalendarDay = CalendarWrapper.getDefaultInstance()
     private var chosenStartTime = CalendarWrapper.getDefaultInstance()
     private var chosenEndTime = CalendarWrapper.getDefaultInstance()
+    private var chosenColor = Color.BLUE
 
     private val currentEventDate = CalendarWrapper.getDefaultInstance()
 
@@ -208,5 +211,18 @@ class ScheduleViewModel @Inject constructor(
 
         val endTime = chosenEndTime.stringifyTime()
         endTimeLiveData.postValue(endTime)
+    }
+
+    fun updateEventColor(color: Int) {
+        chosenColor = color
+        eventColorLiveData.postValue(chosenColor)
+    }
+
+    fun getChosenColor(): Int {
+        return chosenColor
+    }
+
+    fun getEventColorLiveData(): LiveData<Int> {
+        return eventColorLiveData
     }
 }

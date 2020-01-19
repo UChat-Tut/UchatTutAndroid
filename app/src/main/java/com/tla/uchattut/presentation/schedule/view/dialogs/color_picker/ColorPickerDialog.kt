@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
 import kotlinx.android.synthetic.main.dialog_color_picker.*
 
-class ColorPickerDialog private constructor(): DialogFragment() {
+class ColorPickerDialog private constructor(
+    private val onColorPicked: (color: Int) -> Unit
+): DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +30,18 @@ class ColorPickerDialog private constructor(): DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        colorRecyclerView.adapter = ColorPickerAdapter(context!!)
+        colorRecyclerView.adapter = ColorPickerAdapter(context!!, ::pickColorAndCloseDialog)
         colorRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
+    private fun pickColorAndCloseDialog(color: Int) {
+        onColorPicked(color)
+        dismiss()
+    }
+
     companion object {
-        fun show(fragmentManager: FragmentManager) {
-            val colorPickerDialog = ColorPickerDialog()
+        fun show(fragmentManager: FragmentManager, onColorPicked: (color: Int) -> Unit = {}) {
+            val colorPickerDialog = ColorPickerDialog(onColorPicked)
             colorPickerDialog.show(fragmentManager, ColorPickerDialog::class.java.toString())
         }
     }
