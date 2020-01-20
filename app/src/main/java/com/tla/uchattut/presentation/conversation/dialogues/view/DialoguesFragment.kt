@@ -91,7 +91,7 @@ class DialoguesFragment : Fragment() {
         val chatFragment = ChatFragment()
         chatFragment.arguments = bundle
 
-        mainActivity?.openScreen(chatFragment)
+        mainActivity?.addScreen(chatFragment, addToBackStack = true)
     }
 
     private fun updateState(state: DialoguesViewModel.State) =

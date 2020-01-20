@@ -5,15 +5,18 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tla.uchattut.App
 import com.tla.uchattut.data.db.dao.EventDao
+import com.tla.uchattut.data.db.dao.EventNotificationDao
 import com.tla.uchattut.data.db.dao.TaskDao
 import com.tla.uchattut.data.db.model.EventDbModel
+import com.tla.uchattut.data.db.model.EventNotificationDbModel
 import com.tla.uchattut.data.db.model.TaskDbModel
 
-@Database(entities = [TaskDbModel::class, EventDbModel::class], version = 6)
+@Database(entities = [TaskDbModel::class, EventDbModel::class, EventNotificationDbModel::class], version = 7)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract val taskDao: TaskDao
     abstract val eventDao: EventDao
+    abstract val eventNotificationDao: EventNotificationDao
 
     companion object {
         @Volatile

@@ -5,10 +5,11 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.tla.uchattut.R
+import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
 import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
 
-class ConversationFragment : Fragment() {
+class ConversationFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class ConversationFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
         inflater.inflate(R.menu.conversation, menu)
 
         val searchView: SearchView = menu.findItem(R.id.actionSearch).actionView as SearchView

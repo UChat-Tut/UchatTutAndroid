@@ -10,7 +10,8 @@ import com.tla.uchattut.App
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain.auth.AuthInteractor
-import com.tla.uchattut.presentation._common.BackPressable
+import com.tla.uchattut.presentation._common.BaseFragment
+import com.tla.uchattut.presentation._common.popEntireBackStack
 import com.tla.uchattut.presentation.auth.sign_up.view.SignUpFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         DaggerContainer.authComponent(App.context)
             .inject(this)
 
-        openScreen(MainFragment())
+        replaceScreen(MainFragment())
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -40,26 +41,41 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         if (!authInteractor.isAuthenticatedUser()) {
-            openScreen(SignUpFragment())
+            replaceScreen(SignUpFragment())
         }
         progressBar.visibility = View.GONE
     }
 
-    fun openScreen(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
+    fun replaceScreen(fragment: Fragment, addToBackStack: Boolean = false) {
+        supportFragmentManager.popEntireBackStack()
+        val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.mainActivityFragmentContainer, fragment)
-            .commitNow()
+        if(addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+        transaction.commit()
+    }
+
+    fun addScreen(fragment: Fragment, addToBackStack: Boolean = false) {
+        supportFragmentManager.popEntireBackStack()
+        val transaction = supportFragmentManager.beginTransaction()
+            .add(R.id.mainActivityFragmentContainer, fragment)
+        if(addToBackStack) {
+            transaction.addToBackStack(null)
+        }
+        transaction.commit()
     }
 
     override fun onBackPressed() {
         val backPressableFragments = supportFragmentManager.fragments
-            .filterIsInstance(BackPressable::class.java)
+            .filterIsInstance(BaseFragment::class.java)
 
         for (fragment in backPressableFragments) {
             if (fragment.onBackPressed()) {
                 return
             }
         }
+
         super.onBackPressed()
     }
 }

@@ -42,7 +42,7 @@ class SignUpFragment : Fragment() {
 
         signInButton.setOnClickListener {
             val mainActivity = activity as? MainActivity
-            mainActivity?.openScreen(SignInFragment())
+            mainActivity?.replaceScreen(SignInFragment())
         }
 
         signUpButton.setOnClickListener {
@@ -56,7 +56,7 @@ class SignUpFragment : Fragment() {
 
         viewModel.navigateToMainScreenLiveEvent.observe(viewLifecycleOwner, Observer {
             val mainActivity = activity as? MainActivity
-            mainActivity?.openScreen(MainFragment())
+            mainActivity?.replaceScreen(MainFragment())
         })
 
         viewModel.toastLiveEvent.observe(viewLifecycleOwner, Observer { message ->

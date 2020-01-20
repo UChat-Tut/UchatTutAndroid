@@ -11,6 +11,7 @@ import javax.inject.Inject
 class EventsRepositoryImpl @Inject constructor() {
 
     private val eventDao = AppDatabase.getDatabase().eventDao
+    private val eventNotificationDao = AppDatabase.getDatabase().eventNotificationDao
 
     suspend fun addEvent(eventModel: EventPresentationModel) {
         eventDao.insert(eventModel.convertToDbModel())

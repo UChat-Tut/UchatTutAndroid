@@ -23,11 +23,15 @@ import com.tla.uchattut.di.profile.ProfileModule
 import com.tla.uchattut.di.schedule.DaggerScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleModule
+import com.tla.uchattut.di.search_user.DaggerSearchUserComponent
+import com.tla.uchattut.di.search_user.SearchUserComponent
+import com.tla.uchattut.di.search_user.SearchUserModule
 import com.tla.uchattut.di.tasks.DaggerTasksComponent
 import com.tla.uchattut.di.tasks.TasksComponent
 import com.tla.uchattut.di.tasks.TasksModule
 import com.tla.uchattut.presentation.chat.view.ChatFragment
 import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
+import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
 import com.tla.uchattut.presentation.profile.view.ProfileFragment
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
@@ -108,6 +112,14 @@ object DaggerContainer {
             DaggerLibraryComponent.builder()
                 .appComponent(appComponent(fragment.context))
                 .libraryModule(LibraryModule(fragment))
+                .build()
+        }
+
+    fun searchUserComponent(fragment: SearchUserFragment): SearchUserComponent =
+        provide(SearchUserComponent::class) {
+            DaggerSearchUserComponent.builder()
+                .appComponent(appComponent(fragment.context))
+                .searchUserModule(SearchUserModule(fragment))
                 .build()
         }
 }

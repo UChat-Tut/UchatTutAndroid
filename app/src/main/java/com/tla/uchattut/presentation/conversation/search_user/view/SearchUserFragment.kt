@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.search.SearchRepositoryImpl
+import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain.search.SearchInteractor
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.conversation.search_user.view_model.SearchUserViewModel
@@ -23,9 +24,8 @@ class SearchUserFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val searchRepository = SearchRepositoryImpl()
-        val searchInteractor = SearchInteractor(searchRepository)
-        viewModel = viewModel { SearchUserViewModel(searchInteractor) }
+        DaggerContainer.searchUserComponent(this)
+            .inject(this)
     }
 
     override fun onCreateView(

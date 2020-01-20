@@ -10,18 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
-import com.tla.uchattut.presentation._common.ActionModeSelectedItemsDelegate
-import com.tla.uchattut.presentation._common.BackPressable
-import com.tla.uchattut.presentation._common.PrimaryActionModeCallback
+import com.tla.uchattut.presentation._common.*
 import com.tla.uchattut.presentation._common.dialogs.AppAlertDialog
-import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
 import com.tla.uchattut.presentation.chat.view_model.model.MessagePresentationModel
 import kotlinx.android.synthetic.main.fragment_chat.*
 import javax.inject.Inject
 
-class ChatFragment : Fragment() {
+class ChatFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModel: ChatViewModel
@@ -135,6 +132,7 @@ class ChatFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
         inflater.inflate(R.menu.profile, menu)
     }
 

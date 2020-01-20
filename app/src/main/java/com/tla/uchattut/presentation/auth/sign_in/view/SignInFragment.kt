@@ -47,7 +47,7 @@ class SignInFragment : Fragment() {
 
         viewModel.navigateToMainScreenLiveEvent.observe(viewLifecycleOwner, Observer {
             val mainActivity = activity as? MainActivity
-            mainActivity?.openScreen(MainFragment())
+            mainActivity?.replaceScreen(MainFragment())
         })
 
         viewModel.toastLiveEvent.observe(viewLifecycleOwner, Observer { message ->

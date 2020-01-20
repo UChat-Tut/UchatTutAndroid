@@ -21,6 +21,7 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain._common.CalendarWrapper
+import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.view.adapters.EventsRecyclerAdapter
@@ -39,7 +40,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListener,
+class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
     DatePickerDialog.OnDateSetListener {
 
     @Inject
@@ -70,8 +71,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
         setupCalendarView()
 
-        eventsAdapter =
-            EventsRecyclerAdapter(
+        eventsAdapter = EventsRecyclerAdapter(
                 this
             )
         eventsRecyclerView.adapter = eventsAdapter
@@ -130,7 +130,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         })
 
         viewModel.getUpdateCalendarNotifier().observe(viewLifecycleOwner, Observer {
-            calendarView.notifyCalendarChanged()
+            //calendarView.notifyCalendarChanged()
         })
 
         viewModel.getDateTextLiveData().observe(viewLifecycleOwner, Observer {
@@ -228,10 +228,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
 
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
 
-            override fun create(view: View) =
-                DayViewContainer(
-                    view
-                )
+            override fun create(view: View) = DayViewContainer(view)
 
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.calendarDayTextView.text = day.date.dayOfMonth.toString()
@@ -300,9 +297,7 @@ class ScheduleFragment : Fragment(), EventsRecyclerAdapter.OnEventItemClickListe
         calendarView.monthHeaderBinder =
             object : MonthHeaderFooterBinder<MonthHeaderViewContainer> {
                 override fun create(view: View): MonthHeaderViewContainer =
-                    MonthHeaderViewContainer(
-                        view
-                    )
+                    MonthHeaderViewContainer(view)
 
                 @SuppressLint("SetTextI18n")
                 override fun bind(container: MonthHeaderViewContainer, month: CalendarMonth) {

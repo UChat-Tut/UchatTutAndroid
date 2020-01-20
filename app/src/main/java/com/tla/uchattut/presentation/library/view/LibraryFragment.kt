@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
+import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.library.view_model.LibraryViewModel
 import javax.inject.Inject
 
-class LibraryFragment : Fragment() {
+class LibraryFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModel: LibraryViewModel

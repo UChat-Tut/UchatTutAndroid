@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
 import com.tla.uchattut.data.db.model.TaskDbModel
 import com.tla.uchattut.di.DaggerContainer
+import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.tasks.view.dialogs.NewTaskBottomSheetDialog
 import com.tla.uchattut.presentation.tasks.view_model.TasksViewModel
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import javax.inject.Inject
 
-class TasksFragment : Fragment(), TasksRecyclerAdapter.OnTaskItemClickListener {
+class TasksFragment : BaseFragment(), TasksRecyclerAdapter.OnTaskItemClickListener {
 
     @Inject
     lateinit var viewModel: TasksViewModel

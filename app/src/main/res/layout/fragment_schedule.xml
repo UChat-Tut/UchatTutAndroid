@@ -17,7 +17,6 @@
             android:background="@android:color/white"
             android:orientation="vertical">
 
-
             <com.kizitonwose.calendarview.CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
