@@ -1,6 +1,6 @@
 package com.tla.uchattut.data.repositories.tasks
 
-import com.tla.uchattut.data.AppDatabase
+import com.tla.uchattut.data.db.AppDatabase
 import com.tla.uchattut.data.db.model.TaskDbModel
 import com.tla.uchattut.di.tasks.TasksScope
 import javax.inject.Inject

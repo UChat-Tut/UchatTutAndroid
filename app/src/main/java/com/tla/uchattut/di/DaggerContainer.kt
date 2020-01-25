@@ -1,7 +1,6 @@
 package com.tla.uchattut.di
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import com.tla.uchattut.di.app.AppComponent
 import com.tla.uchattut.di.app.AppModule
 import com.tla.uchattut.di.app.DaggerAppComponent
@@ -23,11 +22,16 @@ import com.tla.uchattut.di.profile.ProfileModule
 import com.tla.uchattut.di.schedule.DaggerScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleModule
+import com.tla.uchattut.di.search_user.DaggerSearchUserComponent
+import com.tla.uchattut.di.search_user.SearchUserComponent
+import com.tla.uchattut.di.search_user.SearchUserModule
 import com.tla.uchattut.di.tasks.DaggerTasksComponent
 import com.tla.uchattut.di.tasks.TasksComponent
 import com.tla.uchattut.di.tasks.TasksModule
+import com.tla.uchattut.presentation.auth.view.AuthActivity
 import com.tla.uchattut.presentation.chat.view.ChatFragment
-import com.tla.uchattut.presentation.dialogues.view.DialoguesFragment
+import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
+import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
 import com.tla.uchattut.presentation.profile.view.ProfileFragment
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
@@ -57,13 +61,11 @@ object DaggerContainer {
                 .build()
         }
 
-    fun authComponent(fragment: Fragment? = null): AuthComponent =
-        provide(AuthComponent::class) {
-            DaggerAuthComponent.builder()
-                .appComponent(appComponent(fragment?.context))
-                .authModule(AuthModule(fragment))
-                .build()
-        }
+    fun authComponent(context: Context, activity: AuthActivity? = null): AuthComponent =
+        DaggerAuthComponent.builder()
+            .authModule(AuthModule(activity))
+            .appModule(AppModule(context))
+            .build()
 
     fun profileComponent(fragment: ProfileFragment): ProfileComponent =
         provide(ProfileComponent::class) {
@@ -76,7 +78,7 @@ object DaggerContainer {
     fun chatComponent(fragment: ChatFragment): ChatComponent =
         provide(ChatComponent::class) {
             DaggerChatComponent.builder()
-                .authComponent(authComponent(fragment))
+                .appComponent(appComponent(fragment.context))
                 .chatModule(ChatModule(fragment))
                 .build()
         }
@@ -110,6 +112,14 @@ object DaggerContainer {
             DaggerLibraryComponent.builder()
                 .appComponent(appComponent(fragment.context))
                 .libraryModule(LibraryModule(fragment))
+                .build()
+        }
+
+    fun searchUserComponent(fragment: SearchUserFragment): SearchUserComponent =
+        provide(SearchUserComponent::class) {
+            DaggerSearchUserComponent.builder()
+                .appComponent(appComponent(fragment.context))
+                .searchUserModule(SearchUserModule(fragment))
                 .build()
         }
 }

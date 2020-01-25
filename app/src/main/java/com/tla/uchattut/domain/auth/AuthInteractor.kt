@@ -2,6 +2,8 @@ package com.tla.uchattut.domain.auth
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.tla.uchattut.data.network.ResultWrapper
+import com.tla.uchattut.data.network.model.auth.RegisterNetworkModel
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import javax.inject.Inject
 
@@ -35,6 +37,18 @@ class AuthInteractor @Inject constructor(
             if (it.isNullOrBlank()) return true
         }
         return false
+    }
+
+    suspend fun createUserWithEmailAndPasswordAtServer(
+        name: String,
+        email: String,
+        password: String
+    ): ResultWrapper<RegisterNetworkModel.Response> {
+        return authRepository.createUserWithEmailAndPasswordAtServer(name, email, password)
+    }
+
+    fun saveAuthToken(token: String) {
+        authRepository.saveAuthToken(token)
     }
 
     companion object {

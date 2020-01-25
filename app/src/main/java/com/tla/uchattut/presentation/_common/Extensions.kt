@@ -7,7 +7,9 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.Menu
+import androidx.fragment.app.FragmentManager
 import com.tla.uchattut.R
+
 
 fun Menu.setIconsColor(color: Int) {
     for (i in 0 until size()) {
@@ -25,4 +27,10 @@ fun Context.saveTextToClipboard(text: String) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
     val clip = ClipData.newPlainText(getString(R.string.app_name), text)
     clipboard?.setPrimaryClip(clip)
+}
+
+fun FragmentManager.popEntireBackStack() {
+    for (i in 0 until backStackEntryCount) {
+        popBackStack()
+    }
 }

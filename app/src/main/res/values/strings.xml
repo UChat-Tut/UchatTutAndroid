@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">UchatTut</string>
-    <string name="nav_title_chat">Диалоги</string>
+    <string name="nav_title_conversation">Диалоги</string>
     <string name="nav_title_library">Библиотека</string>
     <string name="nav_title_schedule">Календарь</string>
     <string name="nav_title_tasks">Задачи</string>
@@ -42,4 +42,40 @@
         <item>Ноябрь</item>
         <item>Декабрь</item>
     </string-array>
+
+    <string-array name="short_days_of_week">
+        <item>Вс</item>
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+    </string-array>
+
+    <string-array name="short_months">
+        <item>янв</item>
+        <item>фев</item>
+        <item>мар</item>
+        <item>апр</item>
+        <item>май</item>
+        <item>июн</item>
+        <item>июл</item>
+        <item>авг</item>
+        <item>сен</item>
+        <item>окт</item>
+        <item>ноя</item>
+        <item>дек</item>
+    </string-array>
+
+    <string name="task_label_red">Красный</string>
+    <string name="task_label_pink">Розовый</string>
+    <string name="task_label_orange">Оранжевый</string>
+    <string name="task_label_yellow">Желтый</string>
+    <string name="task_label_light_green">Светло-зеленый</string>
+    <string name="task_label_green">Зеленый</string>
+    <string name="task_label_light_blue">Светло-синий</string>
+    <string name="task_label_blue">Синий</string>
+    <string name="task_label_lilac">Сиреневый</string>
+    <string name="task_label_violet">Фиолетовый</string>
 </resources>

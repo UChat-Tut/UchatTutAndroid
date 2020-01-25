@@ -1,0 +1,21 @@
+package com.tla.uchattut.data.network
+
+import com.tla.uchattut.data.network.model.MinimalUserNetworkModel
+import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
+import com.tla.uchattut.data.repositories.dialogues.models.DialoguesListRepoModel
+import com.tla.uchattut.domain.chat.ChatRepository
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+interface RestApi {
+    @GET("chat/{dialogueId}")
+    suspend fun getChat(@Path("dialogueId") dialogueId: Int): ChatRepoModel
+
+    @GET("chat/")
+    suspend fun getChats(): DialoguesListRepoModel
+
+    @GET("user/")
+    suspend fun fetchUsers(@Query("q") query: String): List<MinimalUserNetworkModel>
+
+}

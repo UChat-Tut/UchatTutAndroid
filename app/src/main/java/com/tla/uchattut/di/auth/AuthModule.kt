@@ -1,29 +1,21 @@
 package com.tla.uchattut.di.auth
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.tla.uchattut.domain.auth.AuthInteractor
 import com.tla.uchattut.presentation._common.resources.ResourceManager
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.auth.sign_in.view_model.SignInViewModel
-import com.tla.uchattut.presentation.auth.sign_up.view_model.SignUpViewModel
+import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import dagger.Module
 import dagger.Provides
 
 @Module
 class AuthModule(
-    private val fragment: Fragment?
+    private val activity: FragmentActivity?
 ) {
     @Provides
-    fun provideSignInViewModel(
+    fun provideViewModel(
         authInteractor: AuthInteractor,
         resourceManager: ResourceManager
-    ): SignInViewModel =
-        fragment!!.viewModel { SignInViewModel(authInteractor, resourceManager) }
-
-    @Provides
-    fun provideSignUpViewModel(
-        authInteractor: AuthInteractor,
-        resourceManager: ResourceManager
-    ): SignUpViewModel =
-        fragment!!.viewModel { SignUpViewModel(authInteractor, resourceManager) }
+    ): AuthViewModel =
+        activity!!.viewModel { AuthViewModel(authInteractor, resourceManager) }
 }

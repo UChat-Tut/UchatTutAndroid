@@ -1,8 +1,7 @@
 package com.tla.uchattut.data.repositories.chat
 
 import com.google.gson.Gson
-import com.tla.uchattut.data.network.ChatService
-import com.tla.uchattut.data.network.RetrofitClient
+import com.tla.uchattut.data.network.RestApi
 import com.tla.uchattut.data.network.WebSocketApi
 import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
 import com.tla.uchattut.data.repositories.chat.models.request.RequestMessageRepoModel
@@ -10,15 +9,17 @@ import com.tla.uchattut.data.repositories.chat.models.response.ResponseMessageRe
 import com.tla.uchattut.domain.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
-class ChatRepositoryImpl : ChatRepository {
+class ChatRepositoryImpl @Inject constructor(
+    private val networkApi: RestApi
+) : ChatRepository {
 
-    private val chatService: ChatService = RetrofitClient.retrofit.create(ChatService::class.java)
     private val gson = Gson()
 
     override suspend fun getChat(dialogueId: Int): ChatRepoModel {
-        return chatService.getChat(dialogueId)
+        return networkApi.getChat(dialogueId)
     }
 
     override fun removeMessages(messages: List<ResponseMessageRepoModel>) {
