@@ -8,7 +8,7 @@ import com.tla.uchattut.domain.profile.ProfileInteractor
 import com.tla.uchattut.presentation._common.ScopeViewModel
 import javax.inject.Inject
 
-class OtherProfileViewModel : ViewModel() {
+class UserProfileViewModel : ViewModel() {
     private val profileInteractor = ProfileInteractor(FakeProfileRepository())
     val profileLiveData = MutableLiveData<ProfileRepoModel>()
 

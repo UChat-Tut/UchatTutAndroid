@@ -34,7 +34,6 @@ import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragme
 import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
 import com.tla.uchattut.presentation.profile.view.MyProfileFragment
-import com.tla.uchattut.presentation.profile.view.OtherProfileFragment
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
 import com.tla.uchattut.presentation.tasks.view.TasksFragment
 import kotlin.reflect.KClass

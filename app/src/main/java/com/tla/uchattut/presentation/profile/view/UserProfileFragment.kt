@@ -8,16 +8,15 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.profile.models.ProfileRepoModel
-import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.profile.view_model.OtherProfileViewModel
+import com.tla.uchattut.presentation.profile.view_model.UserProfileViewModel
 import kotlinx.android.synthetic.main.fragment_student_profile.*
 
-class OtherProfileFragment: BaseFragment() {
+class UserProfileFragment: BaseFragment() {
 
     private val viewModel by lazy {
-        viewModel { OtherProfileViewModel() }
+        viewModel { UserProfileViewModel() }
     }
 
     override fun onCreateView(
