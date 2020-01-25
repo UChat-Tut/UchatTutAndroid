@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.tla.uchattut.App
 import com.tla.uchattut.data.repositories.auth.AuthRepository
+import com.tla.uchattut.presentation._common.openActivity
 import com.tla.uchattut.presentation.auth.view.AuthActivity
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -28,15 +29,9 @@ class TokenInterceptor @Inject constructor(): Interceptor {
         if (token?.isNotBlank() == true) {
             requestBuilder.addHeader(TOKEN_HEADER, "Token $token")
         } else {
-            openAuthActivity()
+            App.context.openActivity(AuthActivity::class.java)
         }
         return chain.proceed(requestBuilder.build())
-    }
-
-    private fun openAuthActivity() {
-        val intent = Intent(App.context, AuthActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        App.context.startActivity(intent)
     }
 
 }

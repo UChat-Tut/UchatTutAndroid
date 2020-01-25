@@ -33,7 +33,7 @@ class AppModule(
     @Provides
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-            //.addInterceptor(TokenInterceptor())
+            .addInterceptor(TokenInterceptor())
             .build()
 
     @Provides
