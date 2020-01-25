@@ -1,11 +1,11 @@
 package com.tla.uchattut.data.repositories.profile
 
 import com.tla.uchattut.data.repositories.profile.models.ProfileRepoModel
-import com.tla.uchattut.di.profile.ProfileScope
+import com.tla.uchattut.di.myprofile.MyProfileScope
 import com.tla.uchattut.domain.profile.ProfileRepository
 import javax.inject.Inject
 
-@ProfileScope
+@MyProfileScope
 class FakeProfileRepository @Inject constructor(): ProfileRepository {
     override fun getProfile(): ProfileRepoModel = ProfileRepoModel(
         id = 0,
