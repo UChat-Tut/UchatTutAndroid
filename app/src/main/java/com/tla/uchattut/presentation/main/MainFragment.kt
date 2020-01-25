@@ -11,7 +11,7 @@ import com.tla.uchattut.domain._common.UniqueQueue
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.conversation.conversation.ConversationFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
-import com.tla.uchattut.presentation.profile.view.ProfileFragment
+import com.tla.uchattut.presentation.profile.view.MyProfileFragment
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
 import com.tla.uchattut.presentation.tasks.view.TasksFragment
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -74,7 +74,7 @@ class MainFragment : BaseFragment() {
                 replaceScreen(TasksFragment())
             }
             R.id.navigation_profile -> {
-                replaceScreen(ProfileFragment())
+                replaceScreen(MyProfileFragment())
             }
         }
     }
