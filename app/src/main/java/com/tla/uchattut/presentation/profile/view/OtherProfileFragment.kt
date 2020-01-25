@@ -4,27 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.profile.models.ProfileRepoModel
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
-import com.tla.uchattut.presentation.profile.view_model.ProfileViewModel
-import kotlinx.android.synthetic.main.fragment_profile.*
-import javax.inject.Inject
+import com.tla.uchattut.presentation._common.viewModel
+import com.tla.uchattut.presentation.profile.view_model.OtherProfileViewModel
+import kotlinx.android.synthetic.main.fragment_student_profile.*
 
-class ProfileFragment : BaseFragment() {
+class OtherProfileFragment: BaseFragment() {
 
-    @Inject
-    lateinit var viewModel: ProfileViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        DaggerContainer.profileComponent(this)
-            .inject(this)
+    private val viewModel by lazy {
+        viewModel { OtherProfileViewModel() }
     }
 
     override fun onCreateView(
@@ -32,7 +25,7 @@ class ProfileFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_student_profile,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +38,7 @@ class ProfileFragment : BaseFragment() {
         viewModel.requestProfile()
     }
 
-    private fun updateProfile(profile: ProfileRepoModel) {
+    private fun updateProfile(profile: ProfileRepoModel){
         usernameTextView.text = profile.name
         phoneNumberTextView.text = profile.phone
         addressTextView.text = profile.address
@@ -53,9 +46,5 @@ class ProfileFragment : BaseFragment() {
         Glide.with(this)
             .load(profile.photoUrl)
             .into(avatarImageView)
-    }
-
-    companion object {
-        const val TAG = "ProfileFragment"
     }
 }

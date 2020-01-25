@@ -16,9 +16,9 @@ import com.tla.uchattut.di.dialogues.DialoguesModule
 import com.tla.uchattut.di.library.DaggerLibraryComponent
 import com.tla.uchattut.di.library.LibraryComponent
 import com.tla.uchattut.di.library.LibraryModule
-import com.tla.uchattut.di.profile.DaggerProfileComponent
-import com.tla.uchattut.di.profile.ProfileComponent
-import com.tla.uchattut.di.profile.ProfileModule
+import com.tla.uchattut.di.myprofile.DaggerMyProfileComponent
+import com.tla.uchattut.di.myprofile.MyProfileComponent
+import com.tla.uchattut.di.myprofile.ProfileModule
 import com.tla.uchattut.di.schedule.DaggerScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleModule
@@ -33,7 +33,8 @@ import com.tla.uchattut.presentation.chat.view.ChatFragment
 import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
 import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
-import com.tla.uchattut.presentation.profile.view.ProfileFragment
+import com.tla.uchattut.presentation.profile.view.MyProfileFragment
+import com.tla.uchattut.presentation.profile.view.OtherProfileFragment
 import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
 import com.tla.uchattut.presentation.tasks.view.TasksFragment
 import kotlin.reflect.KClass
@@ -67,13 +68,14 @@ object DaggerContainer {
             .appModule(AppModule(context))
             .build()
 
-    fun profileComponent(fragment: ProfileFragment): ProfileComponent =
-        provide(ProfileComponent::class) {
-            DaggerProfileComponent.builder()
+    fun myProfileComponent(fragment: MyProfileFragment): MyProfileComponent =
+        provide(MyProfileComponent::class) {
+            DaggerMyProfileComponent.builder()
                 .appComponent(appComponent(fragment.context))
                 .profileModule(ProfileModule(fragment))
                 .build()
         }
+
 
     fun chatComponent(fragment: ChatFragment): ChatComponent =
         provide(ChatComponent::class) {
