@@ -19,12 +19,6 @@ import com.tla.uchattut.di.library.LibraryModule
 import com.tla.uchattut.di.myprofile.DaggerMyProfileComponent
 import com.tla.uchattut.di.myprofile.MyProfileComponent
 import com.tla.uchattut.di.myprofile.ProfileModule
-import com.tla.uchattut.di.schedule.DaggerScheduleComponent
-import com.tla.uchattut.di.schedule.ScheduleComponent
-import com.tla.uchattut.di.schedule.ScheduleModule
-import com.tla.uchattut.di.profile.DaggerProfileComponent
-import com.tla.uchattut.di.profile.ProfileComponent
-import com.tla.uchattut.di.profile.ProfileModule
 import com.tla.uchattut.di.search_user.DaggerSearchUserComponent
 import com.tla.uchattut.di.search_user.SearchUserComponent
 import com.tla.uchattut.di.search_user.SearchUserModule
