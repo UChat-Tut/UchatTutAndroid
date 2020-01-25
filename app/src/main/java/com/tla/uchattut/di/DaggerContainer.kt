@@ -1,7 +1,6 @@
 package com.tla.uchattut.di
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import com.tla.uchattut.di.app.AppComponent
 import com.tla.uchattut.di.app.AppModule
 import com.tla.uchattut.di.app.DaggerAppComponent
@@ -29,6 +28,7 @@ import com.tla.uchattut.di.search_user.SearchUserModule
 import com.tla.uchattut.di.tasks.DaggerTasksComponent
 import com.tla.uchattut.di.tasks.TasksComponent
 import com.tla.uchattut.di.tasks.TasksModule
+import com.tla.uchattut.presentation.auth.view.AuthActivity
 import com.tla.uchattut.presentation.chat.view.ChatFragment
 import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
 import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
@@ -61,9 +61,9 @@ object DaggerContainer {
                 .build()
         }
 
-    fun authComponent(context: Context, fragment: Fragment? = null): AuthComponent =
+    fun authComponent(context: Context, activity: AuthActivity? = null): AuthComponent =
         DaggerAuthComponent.builder()
-            .authModule(AuthModule(fragment))
+            .authModule(AuthModule(activity))
             .appModule(AppModule(context))
             .build()
 
@@ -78,7 +78,7 @@ object DaggerContainer {
     fun chatComponent(fragment: ChatFragment): ChatComponent =
         provide(ChatComponent::class) {
             DaggerChatComponent.builder()
-                .authComponent(authComponent(fragment.context!!, fragment))
+                .appComponent(appComponent(fragment.context))
                 .chatModule(ChatModule(fragment))
                 .build()
         }

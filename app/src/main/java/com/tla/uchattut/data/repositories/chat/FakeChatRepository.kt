@@ -1,6 +1,6 @@
 package com.tla.uchattut.data.repositories.chat
 
-import com.tla.uchattut.data.repositories.auth.AuthRepository
+import com.tla.uchattut.data.repositories._common.UserRepository
 import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
 import com.tla.uchattut.data.repositories.chat.models.response.ResponseMessageRepoModel
 import com.tla.uchattut.di.chat.ChatScope
@@ -12,7 +12,7 @@ import javax.inject.Inject
 @Suppress("BlockingMethodInNonBlockingContext")
 @ChatScope
 class FakeChatRepository @Inject constructor(
-    private val authRepository: AuthRepository
+    private val userRepository: UserRepository
 ) : ChatRepository {
 
     override suspend fun getChat(dialogueId: Int): ChatRepoModel {
@@ -21,7 +21,7 @@ class FakeChatRepository @Inject constructor(
             listOf(
                 ResponseMessageRepoModel(
                     id = 0,
-                    sender = authRepository.getCurrentUserId(),
+                    sender = userRepository.getCurrentUserId(),
                     message = "Привет! ",
                     time = "10:01"
                 ),
@@ -33,7 +33,7 @@ class FakeChatRepository @Inject constructor(
                 ),
                 ResponseMessageRepoModel(
                     id = 2,
-                    sender = authRepository.getCurrentUserId(),
+                    sender = userRepository.getCurrentUserId(),
                     message = "Оплати занятие по номеру +7(985)333-33-33",
                     time = "10:05"
                 ),

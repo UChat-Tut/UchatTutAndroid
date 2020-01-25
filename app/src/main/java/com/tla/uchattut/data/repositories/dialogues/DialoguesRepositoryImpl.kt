@@ -1,14 +1,19 @@
 package com.tla.uchattut.data.repositories.dialogues
 
 import com.tla.uchattut.data.network.RestApi
-import com.tla.uchattut.data.network.RetrofitClient
+import com.tla.uchattut.data.network.ResultWrapper
+import com.tla.uchattut.data.network.safeApiCall
 import com.tla.uchattut.data.repositories.dialogues.models.DialogueRepoModel
 import com.tla.uchattut.domain.dialogues.DialoguesRepository
+import javax.inject.Inject
 
-class DialoguesRepositoryImpl : DialoguesRepository {
+class DialoguesRepositoryImpl @Inject constructor(
+    private val networkApi: RestApi
+) : DialoguesRepository {
 
-    private val networkApi: RestApi = RetrofitClient.networkApi
-
-    override suspend fun getChatList(): List<DialogueRepoModel> =
-        networkApi.getChats().dialogues!!
+    override suspend fun getChatList(): ResultWrapper<List<DialogueRepoModel>> {
+        return safeApiCall {
+            networkApi.getChats().dialogues!!
+        }
+    }
 }

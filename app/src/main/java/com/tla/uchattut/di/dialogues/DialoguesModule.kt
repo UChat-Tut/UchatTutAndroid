@@ -1,6 +1,6 @@
 package com.tla.uchattut.di.dialogues
 
-import com.tla.uchattut.data.repositories.dialogues.FakeDialoguesRepository
+import com.tla.uchattut.data.repositories.dialogues.DialoguesRepositoryImpl
 import com.tla.uchattut.domain.dialogues.DialoguesInteractor
 import com.tla.uchattut.domain.dialogues.DialoguesRepository
 import com.tla.uchattut.domain.search.SearchInteractor
@@ -16,13 +16,16 @@ class DialoguesModule(
     private val fragment: DialoguesFragment
 ) {
     @Provides
-    fun provideViewModel(dialoguesInteractor: DialoguesInteractor, searchInteractor: SearchInteractor): DialoguesViewModel =
+    fun provideViewModel(
+        dialoguesInteractor: DialoguesInteractor,
+        searchInteractor: SearchInteractor
+    ): DialoguesViewModel =
         fragment.viewModel { DialoguesViewModel(dialoguesInteractor, searchInteractor) }
 
     @Module
     interface DialoguesAbstractModule {
         @Binds
         @DialoguesScope
-        fun bindDialoguesRepository(repository: FakeDialoguesRepository): DialoguesRepository
+        fun bindDialoguesRepository(repository: DialoguesRepositoryImpl): DialoguesRepository
     }
 }

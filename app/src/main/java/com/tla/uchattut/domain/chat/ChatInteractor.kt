@@ -1,5 +1,6 @@
 package com.tla.uchattut.domain.chat
 
+import com.tla.uchattut.data.repositories._common.UserRepository
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.data.repositories.chat.models.response.ResponseMessageRepoModel
 import com.tla.uchattut.presentation.chat.view_model.model.ChatPresentationModel
@@ -10,7 +11,7 @@ import javax.inject.Inject
 
 class ChatInteractor @Inject constructor(
     private val chatRepository: ChatRepository,
-    private val userRepository: AuthRepository
+    private val userRepository: UserRepository
 ) {
     suspend fun getChat(dialogueId: Int): ChatPresentationModel {
         val chatRepoModel = chatRepository.getChat(dialogueId)

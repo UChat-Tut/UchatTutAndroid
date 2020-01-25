@@ -6,13 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.tla.uchattut.App
 import com.tla.uchattut.R
-import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain.auth.AuthInteractor
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.popEntireBackStack
-import com.tla.uchattut.presentation.auth.sign_up.view.SignUpFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -26,9 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        DaggerContainer.authComponent(App.context)
-            .inject(this)
-
         replaceScreen(MainFragment())
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -40,17 +34,14 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        if (!authInteractor.isAuthenticatedUser()) {
-            replaceScreen(SignUpFragment())
-        }
         progressBar.visibility = View.GONE
     }
 
     fun replaceScreen(fragment: Fragment, addToBackStack: Boolean = false) {
         supportFragmentManager.popEntireBackStack()
         val transaction = supportFragmentManager.beginTransaction()
-            .replace(R.id.mainActivityFragmentContainer, fragment)
-        if(addToBackStack) {
+            .replace(R.id.mainFragmentContainer, fragment)
+        if (addToBackStack) {
             transaction.addToBackStack(null)
         }
         transaction.commit()
@@ -59,8 +50,8 @@ class MainActivity : AppCompatActivity() {
     fun addScreen(fragment: Fragment, addToBackStack: Boolean = false) {
         supportFragmentManager.popEntireBackStack()
         val transaction = supportFragmentManager.beginTransaction()
-            .add(R.id.mainActivityFragmentContainer, fragment)
-        if(addToBackStack) {
+            .add(R.id.mainFragmentContainer, fragment)
+        if (addToBackStack) {
             transaction.addToBackStack(null)
         }
         transaction.commit()

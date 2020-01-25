@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.auth.sign_up.view
+package com.tla.uchattut.presentation.auth.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,7 @@ import com.tla.uchattut.App
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
-import com.tla.uchattut.presentation.auth.sign_in.view.SignInFragment
-import com.tla.uchattut.presentation.auth.sign_up.view_model.SignUpViewModel
+import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import com.tla.uchattut.presentation.main.MainActivity
 import com.tla.uchattut.presentation.main.MainFragment
 import kotlinx.android.synthetic.main.fragment_sign_up.*
@@ -20,12 +19,14 @@ import javax.inject.Inject
 class SignUpFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: SignUpViewModel
+    lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerContainer.authComponent(App.context, this)
+        val authActivity = activity as AuthActivity
+
+        DaggerContainer.authComponent(App.context, authActivity)
             .inject(this)
     }
 
@@ -41,8 +42,8 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         signInButton.setOnClickListener {
-            val mainActivity = activity as? MainActivity
-            mainActivity?.replaceScreen(SignInFragment())
+            val authActivity = activity as? AuthActivity
+            authActivity?.replaceScreen(SignInFragment())
         }
 
         signUpButton.setOnClickListener {

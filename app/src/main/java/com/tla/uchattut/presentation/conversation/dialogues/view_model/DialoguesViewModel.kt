@@ -2,6 +2,7 @@ package com.tla.uchattut.presentation.conversation.dialogues.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import com.tla.uchattut.data.network.ResultWrapper
 import com.tla.uchattut.di.dialogues.DialoguesComponent
 import com.tla.uchattut.domain.dialogues.DialoguesInteractor
 import com.tla.uchattut.domain.search.SearchInteractor
@@ -20,12 +21,19 @@ class DialoguesViewModel @Inject constructor(
         state.postValue(State.LOADING)
 
         val chatList = dialoguesInteractor.getChatList()
-        emit(chatList)
+        when (chatList) {
+            is ResultWrapper.Success -> {
+                emit(chatList.value)
 
-        if (chatList.isNullOrEmpty()) {
-            state.postValue(State.EMPTY)
-        } else {
-            state.postValue(State.CONTENT)
+                if (chatList.value.isNullOrEmpty()) {
+                    state.postValue(State.EMPTY)
+                } else {
+                    state.postValue(State.CONTENT)
+                }
+            }
+            is ResultWrapper.Error -> {
+                state.postValue(State.EMPTY)
+            }
         }
     }
 

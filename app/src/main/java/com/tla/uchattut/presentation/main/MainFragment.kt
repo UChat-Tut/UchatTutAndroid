@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.tla.uchattut.R
+import com.tla.uchattut.domain._common.UniqueQueue
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.conversation.conversation.ConversationFragment
 import com.tla.uchattut.presentation.library.view.LibraryFragment
@@ -15,7 +16,17 @@ import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
 import com.tla.uchattut.presentation.tasks.view.TasksFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
+
 class MainFragment : BaseFragment() {
+
+    private val tabsQueue = UniqueQueue<Int>()
+    private val mapItemToTile = hashMapOf(
+        R.id.navigation_conversation to R.string.nav_title_conversation,
+        R.id.navigation_library to R.string.nav_title_library,
+        R.id.navigation_schedule to R.string.nav_title_schedule,
+        R.id.navigation_tasks to R.string.nav_title_tasks,
+        R.id.navigation_profile to R.string.nav_title_profile
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,31 +39,43 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        toolbar.title = ""
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        replaceScreen(ConversationFragment())
 
         nav_view.setOnNavigationItemSelectedListener {
             if (it.isChecked) return@setOnNavigationItemSelectedListener false
-
-            when (it.itemId) {
-                R.id.navigation_conversation -> {
-                    replaceScreen(ConversationFragment())
-                }
-                R.id.navigation_library -> {
-                    replaceScreen(LibraryFragment())
-                }
-                R.id.navigation_schedule -> {
-                    replaceScreen(ScheduleFragment())
-                }
-                R.id.navigation_tasks -> {
-                    replaceScreen(TasksFragment())
-                }
-                R.id.navigation_profile -> {
-                    replaceScreen(ProfileFragment())
-                }
-            }
-
+            selectBottomNavItem(it.itemId)
             return@setOnNavigationItemSelectedListener true
+        }
+
+
+        selectBottomNavItem(R.id.navigation_conversation)
+    }
+
+    private fun selectBottomNavItem(itemId: Int) {
+        tabsQueue.offer(itemId)
+        toolbar?.title = resources.getString(mapItemToTile[itemId]!!)
+        nav_view.menu.findItem(itemId).isChecked = true
+        showFragmentByItemId(itemId)
+    }
+
+    private fun showFragmentByItemId(itemId: Int) {
+        when (itemId) {
+            R.id.navigation_conversation -> {
+                replaceScreen(ConversationFragment())
+            }
+            R.id.navigation_library -> {
+                replaceScreen(LibraryFragment())
+            }
+            R.id.navigation_schedule -> {
+                replaceScreen(ScheduleFragment())
+            }
+            R.id.navigation_tasks -> {
+                replaceScreen(TasksFragment())
+            }
+            R.id.navigation_profile -> {
+                replaceScreen(ProfileFragment())
+            }
         }
     }
 
@@ -64,8 +87,16 @@ class MainFragment : BaseFragment() {
     }
 
     override fun onBackPressed(): Boolean {
-        super.onBackPressed()
-        return true
+        var isOnBackPressHandled = super.onBackPressed()
+        if (!isOnBackPressHandled) {
+            tabsQueue.poll()
+            val prevItemId = tabsQueue.peek()
+            if (prevItemId != null) {
+                selectBottomNavItem(prevItemId)
+                isOnBackPressHandled = true
+            }
+        }
+        return isOnBackPressHandled
     }
 
     companion object {

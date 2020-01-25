@@ -1,4 +1,4 @@
-package com.tla.uchattut.presentation.auth.sign_in.view
+package com.tla.uchattut.presentation.auth.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.tla.uchattut.App
 import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
-import com.tla.uchattut.presentation.auth.sign_in.view_model.SignInViewModel
+import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
 import com.tla.uchattut.presentation.main.MainActivity
 import com.tla.uchattut.presentation.main.MainFragment
 import kotlinx.android.synthetic.main.fragment_sign_in.*
@@ -19,12 +19,13 @@ import javax.inject.Inject
 class SignInFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: SignInViewModel
+    lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        DaggerContainer.authComponent(App.context, this)
+        val authActivity = activity as AuthActivity
+        DaggerContainer.authComponent(App.context, authActivity)
             .inject(this)
     }
 

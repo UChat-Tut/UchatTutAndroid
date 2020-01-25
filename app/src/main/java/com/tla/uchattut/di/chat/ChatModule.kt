@@ -1,5 +1,6 @@
 package com.tla.uchattut.di.chat
 
+import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
 import com.tla.uchattut.data.repositories.chat.FakeChatRepository
 import com.tla.uchattut.domain.chat.ChatInteractor
 import com.tla.uchattut.domain.chat.ChatRepository
