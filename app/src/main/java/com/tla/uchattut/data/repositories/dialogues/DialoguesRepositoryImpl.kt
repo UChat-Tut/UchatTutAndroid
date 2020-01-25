@@ -13,7 +13,7 @@ class DialoguesRepositoryImpl @Inject constructor(
 
     override suspend fun getChatList(): ResultWrapper<List<DialogueRepoModel>> {
         return safeApiCall {
-            networkApi.getChats().dialogues!!
+            networkApi.getChats()
         }
     }
 }

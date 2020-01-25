@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
+import com.tla.uchattut.data.repositories._common.UserRepository
+import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
 import com.tla.uchattut.di.DaggerContainer
+import com.tla.uchattut.domain.chat.ChatInteractor
 import com.tla.uchattut.presentation._common.*
 import com.tla.uchattut.presentation._common.dialogs.AppAlertDialog
 import com.tla.uchattut.presentation.chat.view_model.ChatViewModel

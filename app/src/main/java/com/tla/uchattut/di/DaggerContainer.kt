@@ -22,6 +22,9 @@ import com.tla.uchattut.di.myprofile.ProfileModule
 import com.tla.uchattut.di.schedule.DaggerScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleModule
+import com.tla.uchattut.di.profile.DaggerProfileComponent
+import com.tla.uchattut.di.profile.ProfileComponent
+import com.tla.uchattut.di.profile.ProfileModule
 import com.tla.uchattut.di.search_user.DaggerSearchUserComponent
 import com.tla.uchattut.di.search_user.SearchUserComponent
 import com.tla.uchattut.di.search_user.SearchUserModule
@@ -75,7 +78,6 @@ object DaggerContainer {
                 .build()
         }
 
-
     fun chatComponent(fragment: ChatFragment): ChatComponent =
         provide(ChatComponent::class) {
             DaggerChatComponent.builder()
@@ -89,14 +91,6 @@ object DaggerContainer {
             DaggerDialoguesComponent.builder()
                 .appComponent(appComponent(fragment.context))
                 .dialoguesModule(DialoguesModule(fragment))
-                .build()
-        }
-
-    fun scheduleComponent(fragment: ScheduleFragment): ScheduleComponent =
-        provide(ScheduleComponent::class) {
-            DaggerScheduleComponent.builder()
-                .appComponent(appComponent(fragment.context))
-                .scheduleModule(ScheduleModule(fragment))
                 .build()
         }
 

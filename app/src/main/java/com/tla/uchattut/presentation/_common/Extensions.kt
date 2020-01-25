@@ -1,8 +1,10 @@
 package com.tla.uchattut.presentation._common
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
@@ -33,4 +35,10 @@ fun FragmentManager.popEntireBackStack() {
     for (i in 0 until backStackEntryCount) {
         popBackStack()
     }
+}
+
+fun Context.openActivity(clazz: Class<out Activity>) {
+    val intent = Intent(this, clazz)
+    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+    startActivity(intent)
 }

@@ -3,13 +3,13 @@ package com.tla.uchattut.presentation.schedule.view_model
 import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.tla.uchattut.R
-import com.tla.uchattut.di.schedule.ScheduleComponent
+import com.tla.uchattut.data.repositories.events.EventsRepositoryImpl
 import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.domain.schedule.ScheduleInteractor
-import com.tla.uchattut.presentation._common.ScopeViewModel
 import com.tla.uchattut.presentation._common.SingleLiveEvent
 import com.tla.uchattut.presentation._common.resources.ResourceManager
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
@@ -22,9 +22,10 @@ import kotlin.collections.HashMap
 
 
 class ScheduleViewModel @Inject constructor(
-    private val scheduleInteractor: ScheduleInteractor,
     private val resources: ResourceManager
-) : ScopeViewModel(ScheduleComponent::class) {
+) : ViewModel() {
+
+    private val scheduleInteractor = ScheduleInteractor(EventsRepositoryImpl())
 
     private val dayEventsLiveData = MutableLiveData<List<EventPresentationModel>>()
     private val updateCalendarEvent = SingleLiveEvent<Unit>()
@@ -54,8 +55,21 @@ class ScheduleViewModel @Inject constructor(
 
     fun addEvent(eventModel: EventPresentationModel) = viewModelScope.launch(Dispatchers.IO) {
         scheduleInteractor.addEvent(eventModel)
-        loadAllPeriodEvents(10)
-        loadEvents()
+
+        addEventToDayEventMap(eventModel)
+        updateCalendarEvent.postCall()
+
+        val events = dayEventsLiveData.value?.toMutableList() ?: mutableListOf()
+        events.add(eventModel)
+        dayEventsLiveData.postValue(events)
+    }
+
+    private fun addEventToDayEventMap(event: EventPresentationModel) {
+        val dateStr = dateToString(event.date)
+        if (dayEvents[dateStr] == null) {
+            dayEvents[dateStr] = ArrayList()
+        }
+        dayEvents[dateStr]?.add(event)
     }
 
     fun setNewEventDate(year: Int, month: Int, dayOfMonth: Int) {
