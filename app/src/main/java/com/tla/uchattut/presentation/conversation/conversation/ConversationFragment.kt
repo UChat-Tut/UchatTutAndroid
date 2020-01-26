@@ -2,11 +2,14 @@ package com.tla.uchattut.presentation.conversation.conversation
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.conversation.dialogues.DialoguesFragment
 import com.tla.uchattut.presentation.conversation.search_user.SearchUserFragment
+import kotlinx.android.synthetic.main.fragment_conversation.*
+import kotlinx.android.synthetic.main.fragment_library.*
 
 class ConversationFragment : BaseFragment() {
 
@@ -25,6 +28,9 @@ class ConversationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        conversationToolbar?.title = resources.getString(R.string.nav_title_conversation)
+        (activity as AppCompatActivity).setSupportActionBar(conversationToolbar)
 
         val dialoguesFragment =
             DialoguesFragment()

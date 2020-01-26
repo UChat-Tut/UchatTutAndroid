@@ -38,9 +38,6 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar.title = ""
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
-
         nav_view.setOnNavigationItemSelectedListener {
             if (it.isChecked) return@setOnNavigationItemSelectedListener false
             selectBottomNavItem(it.itemId)
@@ -52,7 +49,6 @@ class MainFragment : BaseFragment() {
 
     private fun selectBottomNavItem(itemId: Int) {
         tabsQueue.offer(itemId)
-        toolbar?.title = resources.getString(mapItemToTile[itemId]!!)
         nav_view.menu.findItem(itemId).isChecked = true
         showFragmentByItemId(itemId)
     }

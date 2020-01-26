@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.tasks.dialogs.NewTaskBottomSheetDialog
+import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import javax.inject.Inject
 
@@ -45,6 +47,9 @@ class TasksFragment : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        tasksToolbar?.title = resources.getString(R.string.nav_title_library)
+        (activity as AppCompatActivity).setSupportActionBar(tasksToolbar)
 
         tasksAdapter =
             TasksRecyclerAdapter(this)

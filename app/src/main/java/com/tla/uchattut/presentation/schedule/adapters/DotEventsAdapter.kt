@@ -34,6 +34,7 @@ class DotEventsAdapter : RecyclerView.Adapter<DotEventsAdapter.DotViewHolder>() 
         LayoutContainer {
         fun bind(event: EventPresentationModel) {
             dotView.backgroundTintList = ColorStateList.valueOf(event.color)
+            dotView.setOnClickListener(null)
         }
 
         fun setPlusIcon() {
