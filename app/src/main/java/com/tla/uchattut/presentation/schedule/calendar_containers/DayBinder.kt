@@ -2,11 +2,13 @@ package com.tla.uchattut.presentation.schedule.calendar_containers
 
 import android.graphics.Color
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation.schedule.ScheduleViewModel
+import com.tla.uchattut.presentation.schedule.adapters.DotEventsAdapter
 import org.threeten.bp.ZonedDateTime
 
 class DayBinder(
@@ -14,6 +16,7 @@ class DayBinder(
 ) : DayBinder<DayViewContainer> {
 
     private var lastSelectedDayView: View? = null
+    private var adapter: DotEventsAdapter? = null
 
     override fun create(view: View) = DayViewContainer(view)
 
@@ -25,6 +28,11 @@ class DayBinder(
 
     private fun paintDatCard(container: DayViewContainer, day: CalendarDay) {
         val resources = container.calendarDayView.resources
+
+        adapter = DotEventsAdapter()
+        container.dotEventRecyclerView.adapter = adapter
+        container.dotEventRecyclerView.layoutManager = GridLayoutManager(container.dotEventRecyclerView.context,5)
+
         when {
             isToday(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.colorAccent))
@@ -66,18 +74,8 @@ class DayBinder(
 
     private fun provideEvents(container: DayViewContainer, day: CalendarDay) {
         val dayEvents = viewModel.getEventsForCalendarDay(day)
-        val lineMaxCount = container.lineViews.size
         if (dayEvents != null) {
-            for (i in dayEvents.indices) {
-                if (i == lineMaxCount) {
-                    container.lineViews[lineMaxCount - 1].setBackgroundColor(
-                        Color.BLACK
-                    )
-                    break
-                }
-                container.lineViews[i].visibility = View.VISIBLE
-                container.lineViews[i].setBackgroundColor(dayEvents[i].color)
-            }
+            adapter?.setDots(dayEvents)
         }
     }
 
