@@ -1,29 +1,26 @@
 package com.tla.uchattut.di.chat
 
-import com.tla.uchattut.data.repositories.chat.ChatRepositoryImpl
+import androidx.lifecycle.ViewModelProvider
 import com.tla.uchattut.data.repositories.chat.FakeChatRepository
 import com.tla.uchattut.domain.chat.ChatInteractor
 import com.tla.uchattut.domain.chat.ChatRepository
-import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.chat.view.ChatFragment
-import com.tla.uchattut.presentation.chat.view_model.ChatViewModel
+import com.tla.uchattut.presentation._common.factory
+import com.tla.uchattut.presentation.chat.ChatViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module(includes = [ChatModule.ChatAbstractModule::class])
-class ChatModule(
-    private val fragment: ChatFragment
-) {
+class ChatModule {
 
     @Provides
-    fun provideViewModel(chatInteractor: ChatInteractor): ChatViewModel =
-        fragment.viewModel { ChatViewModel(chatInteractor) }
+    @ChatScope
+    fun provideViewModelFactory(chatInteractor: ChatInteractor): ViewModelProvider.Factory =
+        factory { ChatViewModel(chatInteractor) }
 
     @Module
     interface ChatAbstractModule {
         @Binds
-        @ChatScope
         fun bindChatRepository(chatRepository: FakeChatRepository): ChatRepository
     }
 }

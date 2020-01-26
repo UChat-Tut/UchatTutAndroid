@@ -1,11 +1,10 @@
 package com.tla.uchattut.data.network
 
 import android.content.Context
-import android.content.Intent
 import com.tla.uchattut.App
 import com.tla.uchattut.data.repositories.auth.AuthRepository
 import com.tla.uchattut.presentation._common.openActivity
-import com.tla.uchattut.presentation.auth.view.AuthActivity
+import com.tla.uchattut.presentation.auth.AuthActivity
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

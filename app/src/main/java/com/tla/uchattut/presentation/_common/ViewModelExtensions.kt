@@ -20,6 +20,14 @@ inline fun <reified T : ViewModel> FragmentActivity.viewModel(crossinline f: () 
     ).get(T::class.java)
 }
 
+inline fun <reified T : ViewModel> Fragment.viewModel(factory: ViewModelProvider.Factory): T {
+    return ViewModelProviders.of(this, factory).get(T::class.java)
+}
+
+inline fun <reified T : ViewModel> FragmentActivity.viewModel(factory: ViewModelProvider.Factory): T {
+    return ViewModelProviders.of(this, factory).get(T::class.java)
+}
+
 @Suppress("UNCHECKED_CAST")
 inline fun <VM : ViewModel> factory(crossinline f: () -> VM) = object : ViewModelProvider.Factory {
 

@@ -24,19 +24,21 @@ class AppModule(
         context
 
     @Provides
-    //@AppScope
+    @AppScope
     fun provideRetrofit(): Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl("https://uchattut.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
 
     @Provides
+    @AppScope
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(TokenInterceptor())
             .build()
 
     @Provides
+    @AppScope
     fun provideNetworkApi(retrofit: Retrofit.Builder, okHttpClient: OkHttpClient): RestApi =
         retrofit
             .client(okHttpClient)
@@ -44,6 +46,7 @@ class AppModule(
             .create(RestApi::class.java)
 
     @Provides
+    @AppScope
     fun provideNetworkAuthApi(retrofit: Retrofit.Builder): RestAuthApi =
         retrofit
             .build()

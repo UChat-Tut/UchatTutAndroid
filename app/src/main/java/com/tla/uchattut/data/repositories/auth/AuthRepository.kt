@@ -10,10 +10,8 @@ import com.tla.uchattut.data.network.RestAuthApi
 import com.tla.uchattut.data.network.ResultWrapper
 import com.tla.uchattut.data.network.model.auth.RegisterNetworkModel
 import com.tla.uchattut.data.network.safeApiCall
-import com.tla.uchattut.di.auth.AuthScope
 import javax.inject.Inject
 
-@AuthScope
 class AuthRepository @Inject constructor(
     private val networkApi: RestAuthApi
 ) {

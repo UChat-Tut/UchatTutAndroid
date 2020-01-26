@@ -10,10 +10,10 @@ import com.tla.uchattut.R
 import com.tla.uchattut.domain._common.UniqueQueue
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation.conversation.conversation.ConversationFragment
-import com.tla.uchattut.presentation.library.view.LibraryFragment
-import com.tla.uchattut.presentation.profile.view.MyProfileFragment
-import com.tla.uchattut.presentation.schedule.view.ScheduleFragment
-import com.tla.uchattut.presentation.tasks.view.TasksFragment
+import com.tla.uchattut.presentation.library.LibraryFragment
+import com.tla.uchattut.presentation.profile.myprofile.MyProfileFragment
+import com.tla.uchattut.presentation.schedule.ScheduleFragment
+import com.tla.uchattut.presentation.tasks.TasksFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -48,7 +48,6 @@ class MainFragment : BaseFragment() {
             return@setOnNavigationItemSelectedListener true
         }
 
-
         selectBottomNavItem(R.id.navigation_conversation)
     }
 
@@ -82,8 +81,7 @@ class MainFragment : BaseFragment() {
     private fun replaceScreen(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.mainFragmentContainer, fragment)
-            .addToBackStack(MAIN_FRAGMENT_BACK_STACK)
-            .commit()
+            .commitNow()
     }
 
     override fun onBackPressed(): Boolean {
@@ -98,10 +96,4 @@ class MainFragment : BaseFragment() {
         }
         return isOnBackPressHandled
     }
-
-    companion object {
-        const val MAIN_FRAGMENT_BACK_STACK = "MainFragmentBackStack"
-    }
-
-
 }

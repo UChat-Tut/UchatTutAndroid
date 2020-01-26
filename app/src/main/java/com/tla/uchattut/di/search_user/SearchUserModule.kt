@@ -1,20 +1,16 @@
 package com.tla.uchattut.di.search_user
 
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.tla.uchattut.domain.search.SearchInteractor
-import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.conversation.search_user.view_model.SearchUserViewModel
+import com.tla.uchattut.presentation._common.factory
+import com.tla.uchattut.presentation.conversation.search_user.SearchUserViewModel
 import dagger.Module
 import dagger.Provides
 
-@Module(includes = [SearchUserModule.SearchUserAbstractModule::class])
-class SearchUserModule(
-    private val fragment: Fragment
-) {
+@Module
+class SearchUserModule {
     @Provides
-    fun provideViewModel(searchInteractor: SearchInteractor): SearchUserViewModel =
-        fragment.viewModel { SearchUserViewModel(searchInteractor) }
-
-    @Module
-    interface SearchUserAbstractModule
+    @SearchUserScope
+    fun provideViewModelFactory(searchInteractor: SearchInteractor): ViewModelProvider.Factory =
+        factory { SearchUserViewModel(searchInteractor) }
 }

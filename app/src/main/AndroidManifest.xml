@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.auth.view.AuthActivity"/>
+        <activity android:name=".presentation.auth.AuthActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"
