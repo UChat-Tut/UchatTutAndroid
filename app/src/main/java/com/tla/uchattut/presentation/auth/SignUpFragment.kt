@@ -58,11 +58,6 @@ class SignUpFragment : Fragment() {
             viewModel.signUp(activity!!, fullName, email, password, passwordConfirmation)
         }
 
-        viewModel.navigateToMainScreenLiveEvent.observe(viewLifecycleOwner, Observer {
-            val mainActivity = activity as? MainActivity
-            mainActivity?.replaceScreen(MainFragment())
-        })
-
         viewModel.toastLiveEvent.observe(viewLifecycleOwner, Observer { message ->
             toast(message!!)
         })

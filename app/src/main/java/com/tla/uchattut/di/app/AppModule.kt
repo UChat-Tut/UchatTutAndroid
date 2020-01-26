@@ -24,7 +24,6 @@ class AppModule(
         context
 
     @Provides
-    @AppScope
     fun provideRetrofit(): Retrofit.Builder =
         Retrofit.Builder()
             .baseUrl("https://uchattut.herokuapp.com/")
@@ -32,9 +31,9 @@ class AppModule(
 
     @Provides
     @AppScope
-    fun provideOkHttpClient(): OkHttpClient =
+    fun provideOkHttpClient(tokenInterceptor: TokenInterceptor): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(TokenInterceptor())
+            .addInterceptor(tokenInterceptor)
             .build()
 
     @Provides
