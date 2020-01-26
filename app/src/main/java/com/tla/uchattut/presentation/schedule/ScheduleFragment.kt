@@ -56,13 +56,12 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                addEventButton.hide()
-            } else {
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 addEventButton.show()
+            } else {
+                addEventButton.hide()
             }
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,6 +90,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 
         addEventButton.setOnClickListener {
             openBottomSheet()
@@ -157,7 +157,18 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
             colorTextView.text = ColorsRepository.getStringByColor(context!!, it)
         })
 
+        viewModel.getSelectedStudentLiveData().observe(viewLifecycleOwner, Observer {
+            if (it == null) {
+                studentTextView.setTextColor(resources.getColor(R.color.chariotRequiem))
+                studentTextView.text = resources.getString(R.string.choose_student)
+            } else {
+                studentTextView.setTextColor(resources.getColor(R.color.black))
+                studentTextView.text = it.name
+            }
+        })
+
         viewModel.loadEvents()
+
         val startDayCalendar = CalendarWrapper.getDefaultInstance()
         val endDayCalendar = CalendarWrapper.getDefaultInstance()
         startDayCalendar.add(Calendar.MONTH, -MAX_MONTH_RANGE)
@@ -176,7 +187,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
             parentFragment!!.childFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
             return true
         } else if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             return true
         }
         return super.onBackPressed()

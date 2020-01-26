@@ -7,9 +7,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusableInTouchMode="true"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="0dp"
+    app:behavior_peekHeight="180dp"
     android:elevation="4dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -31,7 +30,7 @@
             android:background="@drawable/bg_button"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="Сохранить"
+            android:text="@string/save"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,15 +64,24 @@
             <EditText
                 android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="56dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="56dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/transparent"
                 android:gravity="start|top"
-                android:hint="Добавьте название"
+                android:hint="@string/hint_add_title"
                 android:inputType="textMultiLine"
                 android:textColor="@android:color/black"
                 android:textSize="24sp" />
+
+            <View
+                android:id="@+id/view7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/silverChariot" />
 
             <LinearLayout
                 android:id="@+id/addStudentLayout"
@@ -91,13 +99,13 @@
 
                 <TextView
                     android:id="@+id/studentTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_weight="1"
                     android:padding="2dp"
-                    android:text="Выбрать ученика"
-                    android:textColor="@android:color/black" />
+                    tools:text="Выбрать ученика"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -121,16 +129,18 @@
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
                     android:padding="2dp"
-                    android:text="Чт, 16 янв. 2020 г."
-                    android:textColor="@android:color/black" />
+                    tools:text="Чт, 16 янв. 2020 г."
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/startTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
-                    android:text="3:00"
-                    android:textColor="@android:color/black" />
+                    tools:text="3:00"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -138,15 +148,18 @@
                     android:layout_height="wrap_content"
                     android:padding="2dp"
                     android:text="-"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/endTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
-                    android:text="4:00"
-                    android:textColor="@android:color/black" />
+                    tools:text="4:00"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -161,16 +174,17 @@
                     android:id="@+id/imageView7"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_notifications" />
+                    app:srcCompat="@drawable/ic_notifications"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/notificationTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Добавить уведмление"
-                    android:textColor="@android:color/black" />
+                    android:text="@string/add_notification"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -185,16 +199,17 @@
                     android:id="@+id/imageView6"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_replay" />
+                    app:srcCompat="@drawable/ic_replay"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:id="@+id/repeatTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Не повторяется"
-                    android:textColor="@android:color/black" />
+                    android:text="@string/not_repeatable"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -217,12 +232,12 @@
 
                 <TextView
                     android:id="@+id/colorTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:text="Цвет по умолчанию"
-                    android:textColor="@android:color/black" />
+                    tools:text="Цвет по умолчанию"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>

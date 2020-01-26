@@ -1,6 +1,5 @@
 package com.tla.uchattut.presentation.schedule
 
-import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.data.repositories.events.EventsRepositoryImpl
 import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.domain.schedule.ScheduleInteractor
@@ -33,6 +33,7 @@ class ScheduleViewModel @Inject constructor(
     private val dateTextLiveData = MutableLiveData<String>()
     private val startTimeLiveData = MutableLiveData<String>()
     private val endTimeLiveData = MutableLiveData<String>()
+    private val selectedStudentLiveData = MutableLiveData<UserNetworkModel>(null)
 
     var lastSelectedDayView: View? = null
 
@@ -245,5 +246,9 @@ class ScheduleViewModel @Inject constructor(
 
     fun getSelectedColorLiveData(): LiveData<Int> {
         return selectedColorLiveData
+    }
+
+    fun getSelectedStudentLiveData(): LiveData<UserNetworkModel> {
+        return selectedStudentLiveData
     }
 }
