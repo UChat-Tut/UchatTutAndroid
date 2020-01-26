@@ -33,7 +33,7 @@ class ColorPickerAdapter(
         override val containerView: View,
         private val onColorPicked: (color: Int) -> Unit
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
-        fun bind(colorModel: ColorDialogModel) {
+        fun bind(colorModel: ColorPickerModel) {
             colorCardView.setCardBackgroundColor(colorModel.color)
             colorTextView.text = colorModel.colorName
             containerView.setOnClickListener {

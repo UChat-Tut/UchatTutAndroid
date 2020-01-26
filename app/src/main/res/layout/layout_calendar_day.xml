@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="0.5dp"
     android:orientation="vertical"
-    android:background="@drawable/background_day_calendar_in_month">
+    android:background="@drawable/bg_day_calendar_in_month">
 
     <TextView
         android:id="@+id/calendarDayTextView"

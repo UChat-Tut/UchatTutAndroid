@@ -84,6 +84,13 @@ class MainFragment : BaseFragment() {
             .commitNow()
     }
 
+    fun addScreen(fragment: Fragment, tag: String? = null) {
+        childFragmentManager.beginTransaction()
+            .add(R.id.mainFragmentContainer, fragment, tag)
+            .addToBackStack(null) // TODO Уюрать null
+            .commit()
+    }
+
     override fun onBackPressed(): Boolean {
         var isOnBackPressHandled = super.onBackPressed()
         if (!isOnBackPressHandled) {

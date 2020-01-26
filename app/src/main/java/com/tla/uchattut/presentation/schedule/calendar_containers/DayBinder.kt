@@ -13,8 +13,6 @@ class DayBinder(
     private val viewModel: ScheduleViewModel
 ) : DayBinder<DayViewContainer> {
 
-    private var lastSelectedDayView: View? = null
-
     override fun create(view: View) = DayViewContainer(view)
 
     override fun bind(container: DayViewContainer, day: CalendarDay) {
@@ -29,30 +27,43 @@ class DayBinder(
             isToday(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.colorAccent))
 
+                if (viewModel.lastSelectedDayView == null) {
+                    viewModel.lastSelectedDayView = container.calendarDayView
+                }
+                viewModel.lastSelectedDayView?.background =
+                    resources.getDrawable(R.drawable.bg_day_calendar_selected)
+
                 container.calendarDayView.setOnClickListener {
                     loadEvents(day)
-                    lastSelectedDayView?.background = null
+                    setNewEventDate(day)
+
+                    viewModel.lastSelectedDayView?.background = null
                     container.calendarDayView.background =
-                        resources.getDrawable(R.drawable.background_day_calendar_selected)
-                    lastSelectedDayView = container.calendarDayView
+                        resources.getDrawable(R.drawable.bg_day_calendar_selected)
+                    viewModel.lastSelectedDayView = container.calendarDayView
                 }
             }
             isCurrentMonth(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(android.R.color.black))
                 container.calendarDayView.background =
-                    resources.getDrawable(R.drawable.background_day_calendar_in_month)
+                    resources.getDrawable(R.drawable.bg_day_calendar_in_month)
+
+                viewModel.lastSelectedDayView?.background =
+                    resources.getDrawable(R.drawable.bg_day_calendar_selected)
+
                 container.calendarDayView.setOnClickListener {
                     loadEvents(day)
-                    lastSelectedDayView?.background = null
+                    setNewEventDate(day)
+                    viewModel.lastSelectedDayView?.background = null
                     container.calendarDayView.background =
-                        resources.getDrawable(R.drawable.background_day_calendar_selected)
-                    lastSelectedDayView = container.calendarDayView
+                        resources.getDrawable(R.drawable.bg_day_calendar_selected)
+                    viewModel.lastSelectedDayView = container.calendarDayView
                 }
             }
             else -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.silverChariot))
                 container.calendarDayView.background =
-                    resources.getDrawable(R.drawable.background_day_calendar_out_month)
+                    resources.getDrawable(R.drawable.bg_day_calendar_out_month)
             }
         }
     }
@@ -62,6 +73,13 @@ class DayBinder(
         val month = day.date.monthValue - 1
         val dayOfMonth = day.date.dayOfMonth
         viewModel.loadEvents(year, month, dayOfMonth)
+    }
+
+    private fun setNewEventDate(day: CalendarDay) {
+        val year = day.date.year
+        val month = day.date.monthValue - 1
+        val dayOfMonth = day.date.dayOfMonth
+        viewModel.setNewEventDate(year, month, dayOfMonth)
     }
 
     private fun provideEvents(container: DayViewContainer, day: CalendarDay) {

@@ -15,7 +15,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="12dp"
-        app:srcCompat="@drawable/background_day_calendar_selected" />
+        app:srcCompat="@drawable/bg_day_calendar_selected" />
 
     <LinearLayout
         android:layout_width="match_parent"
