@@ -29,7 +29,16 @@ class DayBinder(
 
         adapter = DotEventsAdapter()
         container.dotEventRecyclerView.adapter = adapter
-        container.dotEventRecyclerView.layoutManager = GridLayoutManager(container.dotEventRecyclerView.context, 5)
+
+        container.dotEventRecyclerView.layoutManager = object : GridLayoutManager(container.dotEventRecyclerView.context, 5) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+
+            override fun canScrollHorizontally(): Boolean {
+                return false
+            }
+        }
 
         when {
             isToday(day) -> {

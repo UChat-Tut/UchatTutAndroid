@@ -10,5 +10,5 @@ import kotlinx.android.synthetic.main.layout_calendar_day.view.*
 class DayViewContainer(view: View) : ViewContainer(view) {
     val calendarDayTextView: TextView = view.calendarDayTextView
     val calendarDayView: LinearLayout = view.calendarDayView
-    val dotEventRecyclerView: RecyclerView = view.dotEventRecycler
+    val dotEventRecyclerView: RecyclerView = view.dotEventRecyclerView
 }

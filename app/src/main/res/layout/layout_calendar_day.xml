@@ -22,13 +22,13 @@
         tools:text="22" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dotEventRecycler"
+        android:id="@+id/dotEventRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginTop="1dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"/>
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"/>
 
 
 </LinearLayout>

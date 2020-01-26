@@ -32,7 +32,6 @@ import com.tla.uchattut.presentation.schedule.calendar_containers.MonthHeaderBin
 import com.tla.uchattut.presentation.schedule.dialogs.NotificationSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.RepeatingSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorPickerDialog
-import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
 import org.threeten.bp.YearMonth
