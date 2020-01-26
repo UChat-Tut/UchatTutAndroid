@@ -16,7 +16,7 @@ class DialoguesModule {
 
     @Provides
     @DialoguesScope
-    fun provideViewModel(
+    fun provideViewModelFactory(
         dialoguesInteractor: DialoguesInteractor,
         searchInteractor: SearchInteractor
     ): ViewModelProvider.Factory =
