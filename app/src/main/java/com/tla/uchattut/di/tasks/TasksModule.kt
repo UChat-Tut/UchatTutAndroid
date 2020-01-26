@@ -1,21 +1,16 @@
 package com.tla.uchattut.di.tasks
 
+import androidx.lifecycle.ViewModelProvider
 import com.tla.uchattut.domain.tasks.TasksInteractor
-import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.tasks.view.TasksFragment
-import com.tla.uchattut.presentation.tasks.view_model.TasksViewModel
+import com.tla.uchattut.presentation._common.factory
+import com.tla.uchattut.presentation.tasks.TasksViewModel
 import dagger.Module
 import dagger.Provides
 
-@Module(includes = [TasksModule.TasksAbstractModule::class])
-class TasksModule(
-    private val fragment: TasksFragment
-) {
-
+@Module
+class TasksModule {
     @Provides
-    fun provideViewModel(tasksInteractor: TasksInteractor): TasksViewModel =
-        fragment.viewModel { TasksViewModel(tasksInteractor) }
-
-    @Module
-    interface TasksAbstractModule
+    @TasksScope
+    fun provideViewModel(tasksInteractor: TasksInteractor): ViewModelProvider.Factory =
+        factory { TasksViewModel(tasksInteractor) }
 }

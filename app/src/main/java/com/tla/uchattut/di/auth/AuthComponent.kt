@@ -1,14 +1,13 @@
 package com.tla.uchattut.di.auth
 
 import com.tla.uchattut.di.DaggerComponent
-import com.tla.uchattut.di.app.AppModule
-import com.tla.uchattut.presentation.auth.view.AuthActivity
-import com.tla.uchattut.presentation.auth.view.SignInFragment
-import com.tla.uchattut.presentation.auth.view.SignUpFragment
-import com.tla.uchattut.presentation.main.MainActivity
+import com.tla.uchattut.di.app.AppComponent
+import com.tla.uchattut.presentation.auth.AuthActivity
+import com.tla.uchattut.presentation.auth.SignInFragment
+import com.tla.uchattut.presentation.auth.SignUpFragment
 import dagger.Component
 
-@Component(modules = [AuthModule::class, AppModule::class])
+@Component(modules = [AuthModule::class], dependencies = [AppComponent::class])
 @AuthScope
 interface AuthComponent : DaggerComponent {
     fun inject(authActivity: AuthActivity)

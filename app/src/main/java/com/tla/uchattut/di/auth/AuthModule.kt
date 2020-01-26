@@ -1,21 +1,21 @@
 package com.tla.uchattut.di.auth
 
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.tla.uchattut.domain.auth.AuthInteractor
+import com.tla.uchattut.presentation._common.factory
 import com.tla.uchattut.presentation._common.resources.ResourceManager
-import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.auth.view_model.AuthViewModel
+import com.tla.uchattut.presentation.auth.AuthViewModel
 import dagger.Module
 import dagger.Provides
 
 @Module
-class AuthModule(
-    private val activity: FragmentActivity?
-) {
+class AuthModule {
+
     @Provides
-    fun provideViewModel(
+    @AuthScope
+    fun provideViewModelFactory(
         authInteractor: AuthInteractor,
         resourceManager: ResourceManager
-    ): AuthViewModel =
-        activity!!.viewModel { AuthViewModel(authInteractor, resourceManager) }
+    ): ViewModelProvider.Factory =
+        factory { AuthViewModel(authInteractor, resourceManager) }
 }

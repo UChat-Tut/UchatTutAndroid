@@ -3,11 +3,10 @@ package com.tla.uchattut.presentation.conversation.conversation
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation._common.BaseFragment
-import com.tla.uchattut.presentation.conversation.dialogues.view.DialoguesFragment
-import com.tla.uchattut.presentation.conversation.search_user.view.SearchUserFragment
+import com.tla.uchattut.presentation.conversation.dialogues.DialoguesFragment
+import com.tla.uchattut.presentation.conversation.search_user.SearchUserFragment
 
 class ConversationFragment : BaseFragment() {
 
@@ -27,10 +26,13 @@ class ConversationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dialoguesFragment = DialoguesFragment()
+        val dialoguesFragment =
+            DialoguesFragment()
 
         childFragmentManager.beginTransaction()
-            .add(R.id.fragmentConversationContainer, dialoguesFragment, DIALOGUES_FRAGMENT_TAG)
+            .add(R.id.fragmentConversationContainer, dialoguesFragment,
+                DIALOGUES_FRAGMENT_TAG
+            )
             .commit()
     }
 
@@ -66,9 +68,12 @@ class ConversationFragment : BaseFragment() {
     }
 
     private fun showSearchUserFragment() {
-        val searchUserFragment = SearchUserFragment()
+        val searchUserFragment =
+            SearchUserFragment()
         childFragmentManager.beginTransaction()
-            .add(R.id.fragmentConversationContainer, searchUserFragment, SEARCH_USER_FRAGMENT_TAG)
+            .add(R.id.fragmentConversationContainer, searchUserFragment,
+                SEARCH_USER_FRAGMENT_TAG
+            )
             .commit()
     }
 

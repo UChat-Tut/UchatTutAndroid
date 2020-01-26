@@ -3,14 +3,12 @@ package com.tla.uchattut.data.repositories.chat
 import com.tla.uchattut.data.repositories._common.UserRepository
 import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
 import com.tla.uchattut.data.repositories.chat.models.response.ResponseMessageRepoModel
-import com.tla.uchattut.di.chat.ChatScope
 import com.tla.uchattut.domain.chat.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 @Suppress("BlockingMethodInNonBlockingContext")
-@ChatScope
 class FakeChatRepository @Inject constructor(
     private val userRepository: UserRepository
 ) : ChatRepository {

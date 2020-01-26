@@ -2,7 +2,7 @@ package com.tla.uchattut.data.repositories.colors
 
 import android.content.Context
 import com.tla.uchattut.R
-import com.tla.uchattut.presentation.schedule.view.dialogs.color_picker.ColorDialogModel
+import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorDialogModel
 
 object ColorsRepository {
     fun getColors(context: Context): List<ColorDialogModel> {
