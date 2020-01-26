@@ -11,6 +11,6 @@ import dagger.Provides
 class SearchUserModule {
     @Provides
     @SearchUserScope
-    fun provideViewModel(searchInteractor: SearchInteractor): ViewModelProvider.Factory =
+    fun provideViewModelFactory(searchInteractor: SearchInteractor): ViewModelProvider.Factory =
         factory { SearchUserViewModel(searchInteractor) }
 }

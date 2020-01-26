@@ -11,6 +11,6 @@ class LibraryModule {
 
     @Provides
     @LibraryScope
-    fun provideViewModel(): ViewModelProvider.Factory =
+    fun provideViewModelFactory(): ViewModelProvider.Factory =
         factory { LibraryViewModel() }
 }

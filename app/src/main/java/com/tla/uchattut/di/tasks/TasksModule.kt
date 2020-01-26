@@ -11,6 +11,6 @@ import dagger.Provides
 class TasksModule {
     @Provides
     @TasksScope
-    fun provideViewModel(tasksInteractor: TasksInteractor): ViewModelProvider.Factory =
+    fun provideViewModelFactory(tasksInteractor: TasksInteractor): ViewModelProvider.Factory =
         factory { TasksViewModel(tasksInteractor) }
 }

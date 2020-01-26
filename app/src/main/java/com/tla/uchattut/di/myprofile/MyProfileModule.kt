@@ -16,7 +16,7 @@ class MyProfileModule {
 
     @Provides
     @MyProfileScope
-    fun provideViewModel(profileInteractor: ProfileInteractor): ViewModelProvider.Factory =
+    fun provideViewModelFactory(profileInteractor: ProfileInteractor): ViewModelProvider.Factory =
         factory { MyProfileViewModel(profileInteractor) }
 
     @Module

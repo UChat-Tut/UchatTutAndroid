@@ -48,7 +48,6 @@ class MainFragment : BaseFragment() {
             return@setOnNavigationItemSelectedListener true
         }
 
-
         selectBottomNavItem(R.id.navigation_conversation)
     }
 
@@ -82,8 +81,7 @@ class MainFragment : BaseFragment() {
     private fun replaceScreen(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.mainFragmentContainer, fragment)
-            .addToBackStack(MAIN_FRAGMENT_BACK_STACK)
-            .commit()
+            .commitNow()
     }
 
     override fun onBackPressed(): Boolean {
@@ -98,10 +96,4 @@ class MainFragment : BaseFragment() {
         }
         return isOnBackPressHandled
     }
-
-    companion object {
-        const val MAIN_FRAGMENT_BACK_STACK = "MainFragmentBackStack"
-    }
-
-
 }
