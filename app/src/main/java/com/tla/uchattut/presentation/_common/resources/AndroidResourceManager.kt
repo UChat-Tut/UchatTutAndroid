@@ -13,4 +13,7 @@ class AndroidResourceManager @Inject constructor(
 
     override fun getStringArray(resId: Int): Array<String> =
         context!!.resources.getStringArray(resId)
+
+    override fun getColor(colorId: Int): Int =
+        context!!.resources.getColor(colorId)
 }

@@ -19,7 +19,7 @@ class NewTaskBottomSheetDialog private constructor(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogStyle)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.BaseBottomSheetDialog)
     }
 
     override fun onCreateView(

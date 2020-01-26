@@ -78,4 +78,9 @@
     <string name="task_label_blue">Синий</string>
     <string name="task_label_lilac">Сиреневый</string>
     <string name="task_label_violet">Фиолетовый</string>
+
+    <string name="choose_student">Выбрать ученика</string>
+    <string name="hint_add_title">Добавьте название</string>
+    <string name="add_notification">Добавить уведмление</string>
+    <string name="not_repeatable">Не повторяется</string>
 </resources>

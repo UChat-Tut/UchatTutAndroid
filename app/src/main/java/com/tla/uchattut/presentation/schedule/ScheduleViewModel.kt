@@ -1,12 +1,13 @@
 package com.tla.uchattut.presentation.schedule
 
-import android.graphics.Color
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.data.repositories.events.EventsRepositoryImpl
 import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.domain.schedule.ScheduleInteractor
@@ -31,14 +32,25 @@ class ScheduleViewModel @Inject constructor(
     private val dateTextLiveData = MutableLiveData<String>()
     private val startTimeLiveData = MutableLiveData<String>()
     private val endTimeLiveData = MutableLiveData<String>()
-    private val eventColorLiveData = MutableLiveData<Int>()
+    private val selectedStudentLiveData = MutableLiveData<UserNetworkModel>(null)
+
+    var lastSelectedDayView: View? = null
 
     private var dayEvents = HashMap<String, MutableList<EventPresentationModel>>()
 
-    private var chosenCalendarDay = CalendarWrapper.getDefaultInstance()
-    private var chosenStartTime = CalendarWrapper.getDefaultInstance()
-    private var chosenEndTime = CalendarWrapper.getDefaultInstance()
-    private var chosenColor = Color.BLUE
+    private var selectedCalendarDay = CalendarWrapper.getDefaultInstance().apply {
+        val calendar = Calendar.getInstance()
+        set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+        set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+        set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
+    }
+
+    private var selectedStartTime = CalendarWrapper.getDefaultInstance()
+    private var selectedEndTime = CalendarWrapper.getDefaultInstance()
+
+    private val defaultSelectedColor = resources.getColor(R.color.task_label_red)
+
+    private val selectedColorLiveData = MutableLiveData<Int>(defaultSelectedColor)
 
     private val currentEventDate = CalendarWrapper.getDefaultInstance()
 
@@ -72,20 +84,20 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun setNewEventDate(year: Int, month: Int, dayOfMonth: Int) {
-        chosenCalendarDay.set(year, month, dayOfMonth, 0, 0, 0)
-        dateTextLiveData.postValue(formatCalendarDate(chosenCalendarDay))
+        selectedCalendarDay.set(year, month, dayOfMonth, 0, 0, 0)
+        dateTextLiveData.postValue(formatCalendarDate(selectedCalendarDay))
     }
 
-    fun getChosenCalendarDay(): Calendar {
-        return chosenCalendarDay
+    fun getSelectedCalendarDay(): Calendar {
+        return selectedCalendarDay
     }
 
     fun getChosenStartCalendarTime(): Calendar {
-        return chosenStartTime
+        return selectedStartTime
     }
 
     fun getChosenEndCalendarTime(): Calendar {
-        return chosenEndTime
+        return selectedEndTime
     }
 
     fun getStartTimeLiveData(): LiveData<String> {
@@ -186,22 +198,19 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun initBottomSheetData() {
-        val calendar = Calendar.getInstance()
-        chosenCalendarDay.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-        chosenCalendarDay.set(Calendar.MONTH, calendar.get(Calendar.MONTH))
-        chosenCalendarDay.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
-        dateTextLiveData.postValue(formatCalendarDate(chosenCalendarDay))
+
+        dateTextLiveData.postValue(formatCalendarDate(selectedCalendarDay))
 
         val startCalendar = Calendar.getInstance()
         startCalendar.roundTime(30)
-        chosenStartTime.set(Calendar.HOUR_OF_DAY, startCalendar.get(Calendar.HOUR_OF_DAY))
-        chosenStartTime.set(Calendar.MINUTE, startCalendar.get(Calendar.MINUTE))
+        selectedStartTime.set(Calendar.HOUR_OF_DAY, startCalendar.get(Calendar.HOUR_OF_DAY))
+        selectedStartTime.set(Calendar.MINUTE, startCalendar.get(Calendar.MINUTE))
 
         val endCalendar = Calendar.getInstance()
         endCalendar.add(Calendar.HOUR_OF_DAY, 1)
         endCalendar.roundTime(30)
-        chosenEndTime.set(Calendar.HOUR_OF_DAY, endCalendar.get(Calendar.HOUR_OF_DAY))
-        chosenEndTime.set(Calendar.MINUTE, endCalendar.get(Calendar.MINUTE))
+        selectedEndTime.set(Calendar.HOUR_OF_DAY, endCalendar.get(Calendar.HOUR_OF_DAY))
+        selectedEndTime.set(Calendar.MINUTE, endCalendar.get(Calendar.MINUTE))
 
         val startTime = startCalendar.stringifyTime()
         startTimeLiveData.postValue(startTime)
@@ -211,31 +220,34 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun updateStartTime(hours: Int, minutes: Int) {
-        chosenStartTime.set(Calendar.HOUR_OF_DAY, hours)
-        chosenStartTime.set(Calendar.MINUTE, minutes)
+        selectedStartTime.set(Calendar.HOUR_OF_DAY, hours)
+        selectedStartTime.set(Calendar.MINUTE, minutes)
 
-        val startTime = chosenStartTime.stringifyTime()
+        val startTime = selectedStartTime.stringifyTime()
         startTimeLiveData.postValue(startTime)
     }
 
     fun updateEndTime(hours: Int, minutes: Int) {
-        chosenEndTime.set(Calendar.HOUR_OF_DAY, hours)
-        chosenEndTime.set(Calendar.MINUTE, minutes)
+        selectedEndTime.set(Calendar.HOUR_OF_DAY, hours)
+        selectedEndTime.set(Calendar.MINUTE, minutes)
 
-        val endTime = chosenEndTime.stringifyTime()
+        val endTime = selectedEndTime.stringifyTime()
         endTimeLiveData.postValue(endTime)
     }
 
-    fun updateEventColor(color: Int) {
-        chosenColor = color
-        eventColorLiveData.postValue(chosenColor)
+    fun updateSelectedColor(color: Int) {
+        selectedColorLiveData.postValue(color)
     }
 
-    fun getChosenColor(): Int {
-        return chosenColor
+    fun getSelectedColor(): Int {
+        return selectedColorLiveData.value!!
     }
 
-    fun getEventColorLiveData(): LiveData<Int> {
-        return eventColorLiveData
+    fun getSelectedColorLiveData(): LiveData<Int> {
+        return selectedColorLiveData
+    }
+
+    fun getSelectedStudentLiveData(): LiveData<UserNetworkModel> {
+        return selectedStudentLiveData
     }
 }
