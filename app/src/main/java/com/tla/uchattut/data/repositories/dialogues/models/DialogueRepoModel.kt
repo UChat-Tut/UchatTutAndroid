@@ -2,7 +2,7 @@ package com.tla.uchattut.data.repositories.dialogues.models
 
 import com.google.gson.annotations.SerializedName
 
-data class DialogueRepoModel (
+data class DialogueRepoModel(
     @SerializedName("id")
     val id: Int?,
 

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.dialog_color_picker.*
 
 class ColorPickerDialog private constructor(
     private val onColorPicked: (color: Int) -> Unit
-): DialogFragment() {
+) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

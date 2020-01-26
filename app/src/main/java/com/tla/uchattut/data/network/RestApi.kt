@@ -16,5 +16,4 @@ interface RestApi {
 
     @GET("user/")
     suspend fun fetchUsers(@Query("q") query: String): List<MinimalUserNetworkModel>
-
 }

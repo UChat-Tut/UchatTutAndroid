@@ -12,7 +12,6 @@ import com.tla.uchattut.data.db.model.TaskDbModel
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.chat.ChatViewModel
 import com.tla.uchattut.presentation.tasks.dialogs.NewTaskBottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_tasks.*
 import javax.inject.Inject

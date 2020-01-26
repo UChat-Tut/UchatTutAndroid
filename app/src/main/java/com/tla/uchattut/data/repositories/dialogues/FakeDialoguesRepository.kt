@@ -7,7 +7,7 @@ import com.tla.uchattut.domain.dialogues.DialoguesRepository
 import javax.inject.Inject
 
 @DialoguesScope
-class FakeDialoguesRepository @Inject constructor(): DialoguesRepository {
+class FakeDialoguesRepository @Inject constructor() : DialoguesRepository {
 
     override suspend fun getChatList(): ResultWrapper<List<DialogueRepoModel>> {
         Thread.sleep(2000)

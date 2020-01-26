@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class SearchUserViewModel @Inject constructor(
     private val searchInteractor: SearchInteractor
-): ViewModel() {
+) : ViewModel() {
 
     private val usersLiveData = MutableLiveData<List<MinimalUserNetworkModel>>()
 
@@ -32,5 +32,4 @@ class SearchUserViewModel @Inject constructor(
     fun getUsersLiveData(): LiveData<List<MinimalUserNetworkModel>> {
         return usersLiveData
     }
-
 }

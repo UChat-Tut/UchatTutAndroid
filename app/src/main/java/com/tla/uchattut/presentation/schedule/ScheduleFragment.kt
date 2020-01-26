@@ -38,7 +38,6 @@ import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
-
 class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
     DatePickerDialog.OnDateSetListener {
 

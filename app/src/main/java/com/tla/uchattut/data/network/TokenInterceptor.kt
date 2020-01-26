@@ -9,7 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class TokenInterceptor @Inject constructor(): Interceptor {
+class TokenInterceptor @Inject constructor() : Interceptor {
 
     companion object {
         private const val TOKEN_HEADER = "Authorization"
@@ -32,5 +32,4 @@ class TokenInterceptor @Inject constructor(): Interceptor {
         }
         return chain.proceed(requestBuilder.build())
     }
-
 }

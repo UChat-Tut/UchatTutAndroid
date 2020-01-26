@@ -3,7 +3,6 @@ package com.tla.uchattut.presentation.auth
 import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tla.uchattut.R
 import com.tla.uchattut.data.network.ResultWrapper

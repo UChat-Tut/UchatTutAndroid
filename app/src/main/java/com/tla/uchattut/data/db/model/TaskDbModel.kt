@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tla.uchattut.data.db.model.TaskDbModel.Companion.TABLE_NAME
 
-
 @Entity(tableName = TABLE_NAME)
 data class TaskDbModel(
     @ColumnInfo(name = COLUMN_NAME_CONTENT)

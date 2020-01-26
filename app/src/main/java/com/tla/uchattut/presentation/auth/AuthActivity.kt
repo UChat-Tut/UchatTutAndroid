@@ -42,7 +42,7 @@ class AuthActivity : AppCompatActivity() {
         supportFragmentManager.popEntireBackStack()
         val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.authFragmentContainer, fragment)
-        if(addToBackStack) {
+        if (addToBackStack) {
             transaction.addToBackStack(null)
         }
         transaction.commit()

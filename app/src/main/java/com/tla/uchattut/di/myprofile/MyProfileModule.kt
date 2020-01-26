@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.tla.uchattut.data.repositories.profile.FakeProfileRepository
 import com.tla.uchattut.domain.profile.ProfileInteractor
 import com.tla.uchattut.domain.profile.ProfileRepository
-import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.factory
 import com.tla.uchattut.presentation.profile.myprofile.MyProfileViewModel
 import dagger.Binds

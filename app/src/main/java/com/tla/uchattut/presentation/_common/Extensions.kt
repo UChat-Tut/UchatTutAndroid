@@ -12,7 +12,6 @@ import android.view.Menu
 import androidx.fragment.app.FragmentManager
 import com.tla.uchattut.R
 
-
 fun Menu.setIconsColor(color: Int) {
     for (i in 0 until size()) {
         val drawable: Drawable = getItem(i).icon
