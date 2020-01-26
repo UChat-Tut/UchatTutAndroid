@@ -3,6 +3,7 @@ package com.tla.uchattut.presentation.schedule
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.main.MainFragment
+import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
 import com.tla.uchattut.presentation.schedule.calendar_containers.MonthHeaderBinder
@@ -208,7 +210,13 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         val lastMonth = currentMonth.plusMonths(MAX_MONTH_RANGE.toLong())
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
 
+        val displayMetrics = DisplayMetrics()
+        activity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val screenWidth = displayMetrics.widthPixels
+
         calendarView.run {
+            dayWidth = screenWidth / DAYS_IN_WEEK
+            dayHeight = resources.getDimension(R.dimen.calendar_view_day_height).toInt()
             inDateStyle = InDateStyle.ALL_MONTHS
             outDateStyle = OutDateStyle.END_OF_GRID
             scrollMode = ScrollMode.PAGED
@@ -318,5 +326,6 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     companion object {
         private const val MAX_MONTH_RANGE = 5
+        private const val DAYS_IN_WEEK = 7
     }
 }
