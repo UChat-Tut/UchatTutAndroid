@@ -11,7 +11,6 @@ import com.tla.uchattut.R
 import com.tla.uchattut.data.db.model.TaskDbModel
 import kotlinx.android.synthetic.main.bottom_sheet_new_task.*
 
-
 class NewTaskBottomSheetDialog private constructor(
     private val onNewTask: (task: TaskDbModel) -> Unit,
     private val task: TaskDbModel?

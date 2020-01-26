@@ -22,7 +22,6 @@ class DialoguesRecyclerAdapter(
     private val chatsList = arrayListOf<DialogueRepoModel>()
     private val chatsFilteredList = arrayListOf<DialogueRepoModel>()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_chat_list, parent, false)

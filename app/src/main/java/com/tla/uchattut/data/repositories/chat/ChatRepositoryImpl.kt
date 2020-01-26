@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-
 class ChatRepositoryImpl @Inject constructor(
     private val networkApi: RestApi
 ) : ChatRepository {
@@ -23,7 +22,6 @@ class ChatRepositoryImpl @Inject constructor(
     }
 
     override fun removeMessages(messages: List<ResponseMessageRepoModel>) {
-
     }
 
     override fun sendMessage(senderId: String, message: String) {

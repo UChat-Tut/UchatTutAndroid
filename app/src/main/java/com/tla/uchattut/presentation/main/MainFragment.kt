@@ -16,7 +16,6 @@ import com.tla.uchattut.presentation.schedule.ScheduleFragment
 import com.tla.uchattut.presentation.tasks.TasksFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
-
 class MainFragment : BaseFragment() {
 
     private val tabsQueue = UniqueQueue<Int>()

@@ -20,5 +20,4 @@ interface EventDao {
 
     @Query("SELECT * FROM ${EventDbModel.TABLE_NAME} WHERE ${EventDbModel.COLUMN_NAME_DATE} = :date")
     suspend fun getByDate(date: String): List<EventDbModel>
-
 }

@@ -12,7 +12,6 @@ import com.tla.uchattut.data.repositories.profile.models.ProfileRepoModel
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.chat.ChatViewModel
 import kotlinx.android.synthetic.main.fragment_student_profile.*
 import javax.inject.Inject
 

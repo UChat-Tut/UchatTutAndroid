@@ -1,26 +1,22 @@
 package com.tla.uchattut.data.network
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import kotlin.coroutines.CoroutineContext
 
-
 object WebSocketApi : CoroutineScope {
 
     private const val LOG_WEB_SOCKET = "WebsocketUchatTut"
     // private const val WS_URL = "wss://uchattut.herokuapp.com/ws/chat/1/"
-
 
     override val coroutineContext: CoroutineContext
         get() = SupervisorJob() + Dispatchers.IO

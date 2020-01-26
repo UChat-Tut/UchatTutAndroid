@@ -6,7 +6,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.tla.uchattut.data.db.model.EventDbModel.Companion.TABLE_NAME
 
-
 @Entity(tableName = TABLE_NAME)
 data class EventDbModel(
     @PrimaryKey(autoGenerate = true)

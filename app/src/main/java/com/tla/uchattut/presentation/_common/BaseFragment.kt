@@ -15,5 +15,4 @@ open class BaseFragment : Fragment() {
         }
         return false
     }
-
 }

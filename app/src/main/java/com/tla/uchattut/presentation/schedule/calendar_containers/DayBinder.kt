@@ -1,6 +1,5 @@
 package com.tla.uchattut.presentation.schedule.calendar_containers
 
-import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -31,7 +30,7 @@ class DayBinder(
 
         adapter = DotEventsAdapter()
         container.dotEventRecyclerView.adapter = adapter
-        container.dotEventRecyclerView.layoutManager = GridLayoutManager(container.dotEventRecyclerView.context,5)
+        container.dotEventRecyclerView.layoutManager = GridLayoutManager(container.dotEventRecyclerView.context, 5)
 
         when {
             isToday(day) -> {

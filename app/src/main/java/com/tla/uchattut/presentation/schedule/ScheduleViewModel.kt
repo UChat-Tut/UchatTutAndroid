@@ -20,7 +20,6 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
 class ScheduleViewModel @Inject constructor(
     private val resources: ResourceManager
 ) : ViewModel() {

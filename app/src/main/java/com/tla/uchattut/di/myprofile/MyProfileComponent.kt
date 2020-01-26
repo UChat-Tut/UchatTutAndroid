@@ -7,6 +7,6 @@ import dagger.Component
 
 @MyProfileScope
 @Component(modules = [MyProfileModule::class], dependencies = [AppComponent::class])
-interface MyProfileComponent: DaggerComponent {
+interface MyProfileComponent : DaggerComponent {
     fun inject(myProfileFragment: MyProfileFragment)
 }

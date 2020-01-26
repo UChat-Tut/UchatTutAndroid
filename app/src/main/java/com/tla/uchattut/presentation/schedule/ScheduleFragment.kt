@@ -21,10 +21,8 @@ import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.presentation._common.BaseFragment
-import com.tla.uchattut.presentation._common.resources.AndroidResourceManager
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.chat.ChatViewModel
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
@@ -38,7 +36,6 @@ import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
-
 
 class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
     DatePickerDialog.OnDateSetListener {
@@ -91,7 +88,6 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
                     BottomSheetBehavior.STATE_COLLAPSED -> addEventButton.show()
                 }
             }
-
         })
 
         addEventButton.setOnClickListener {

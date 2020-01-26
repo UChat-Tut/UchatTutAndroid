@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.tla.uchattut.R
 
-class RepeatingSelectorDialog private constructor(): DialogFragment() {
+class RepeatingSelectorDialog private constructor() : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

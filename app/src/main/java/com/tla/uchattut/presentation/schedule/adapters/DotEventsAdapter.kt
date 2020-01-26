@@ -10,9 +10,10 @@ import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_event_dot.*
 
-class DotEventsAdapter: RecyclerView.Adapter<DotEventsAdapter.DotViewHolder>() {
+class DotEventsAdapter : RecyclerView.Adapter<DotEventsAdapter.DotViewHolder>() {
 
     private var events = listOf<EventPresentationModel>()
+    private var isDotOverflowed = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DotViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,24 +24,30 @@ class DotEventsAdapter: RecyclerView.Adapter<DotEventsAdapter.DotViewHolder>() {
     override fun getItemCount(): Int = events.size
 
     override fun onBindViewHolder(holder: DotViewHolder, position: Int) {
-        when{
-            position < 9 -> holder.bind(events[position])
-            position == 9 -> holder.setPlusIcon()
+        when {
+            position == MAX_DOT_COUNT - 1 && isDotOverflowed -> holder.setPlusIcon()
+            position <= MAX_DOT_COUNT - 1 -> holder.bind(events[position])
         }
-
     }
 
-    class DotViewHolder(override val containerView: View): RecyclerView.ViewHolder(containerView), LayoutContainer {
+    class DotViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+        LayoutContainer {
         fun bind(event: EventPresentationModel) {
             dotView.backgroundTintList = ColorStateList.valueOf(event.color)
         }
-        fun setPlusIcon(){
+
+        fun setPlusIcon() {
             dotView.background = containerView.resources.getDrawable(R.drawable.ic_plus)
         }
     }
 
-    fun setDots(events: List<EventPresentationModel>){
-        this.events = events.take(10)
+    fun setDots(events: List<EventPresentationModel>) {
+        isDotOverflowed = events.size > MAX_DOT_COUNT
+        this.events = events.take(MAX_DOT_COUNT)
         notifyDataSetChanged()
+    }
+
+    companion object {
+        const val MAX_DOT_COUNT = 10
     }
 }
