@@ -82,7 +82,6 @@ class ConversationFragment : BaseFragment() {
         childFragmentManager.beginTransaction()
             .remove(searchUserFragment)
             .commit()
-
     }
 
     companion object {

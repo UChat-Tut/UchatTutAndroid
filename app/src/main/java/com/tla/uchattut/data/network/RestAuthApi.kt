@@ -2,7 +2,6 @@ package com.tla.uchattut.data.network
 
 import com.tla.uchattut.data.network.model.auth.RegisterNetworkModel
 import com.tla.uchattut.data.network.model.auth.TokenResponseNetworkModel
-import com.tla.uchattut.data.repositories.chat.models.ChatRepoModel
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

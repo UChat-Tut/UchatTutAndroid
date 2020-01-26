@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class ChatViewModel @Inject constructor(
     private val chatInteractor: ChatInteractor
 ) : ScopeViewModel(ChatComponent::class) {

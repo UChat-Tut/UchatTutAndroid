@@ -12,7 +12,6 @@ import com.tla.uchattut.data.db.model.TaskDbModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_task.*
 
-
 class TasksRecyclerAdapter(
     private val itemClickListener: OnTaskItemClickListener? = null
 ) : RecyclerView.Adapter<TasksRecyclerAdapter.TaskViewHolder>() {
@@ -79,7 +78,7 @@ class TasksRecyclerAdapter(
         }
 
         private fun onTaskMenuClick(item: MenuItem, task: TaskDbModel) {
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.removeItem -> {
                     itemClickListener?.onRemoveTask(task.id)
                 }

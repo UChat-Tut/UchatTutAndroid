@@ -2,7 +2,6 @@ package com.tla.uchattut.data.network
 
 import android.util.Log
 
-
 suspend fun <T> safeApiCall(apiCall: suspend () -> T): ResultWrapper<T> {
     return try {
         ResultWrapper.Success(apiCall())

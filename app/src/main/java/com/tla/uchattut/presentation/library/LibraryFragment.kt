@@ -9,7 +9,6 @@ import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.chat.ChatViewModel
 import javax.inject.Inject
 
 class LibraryFragment : BaseFragment() {

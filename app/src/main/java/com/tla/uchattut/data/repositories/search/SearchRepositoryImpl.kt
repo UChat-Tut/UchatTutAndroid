@@ -13,5 +13,4 @@ class SearchRepositoryImpl @Inject constructor(
     suspend fun fetchUsers(query: String): ResultWrapper<List<MinimalUserNetworkModel>> {
         return safeApiCall { networkApi.fetchUsers(query) }
     }
-
 }

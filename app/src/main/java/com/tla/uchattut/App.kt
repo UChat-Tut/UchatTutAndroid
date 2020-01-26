@@ -5,7 +5,6 @@ import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
 import leakcanary.LeakCanary
 
-
 class App : Application() {
 
     override fun onCreate() {
