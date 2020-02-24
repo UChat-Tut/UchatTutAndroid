@@ -1,7 +1,10 @@
 package com.tla.uchattut.presentation.schedule.calendar_containers
 
+import android.graphics.Typeface
+import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
@@ -21,7 +24,7 @@ class DayBinder(
     override fun bind(container: DayViewContainer, day: CalendarDay) {
         container.calendarDayTextView.text = day.date.dayOfMonth.toString()
         paintDatCard(container, day)
-        provideEvents(container, day)
+        provideEvents(day)
     }
 
     private fun paintDatCard(container: DayViewContainer, day: CalendarDay) {
@@ -30,19 +33,21 @@ class DayBinder(
         adapter = DotEventsAdapter()
         container.dotEventRecyclerView.adapter = adapter
 
-        container.dotEventRecyclerView.layoutManager = object : GridLayoutManager(container.dotEventRecyclerView.context, 5) {
-            override fun canScrollVertically(): Boolean {
-                return false
-            }
+        container.dotEventRecyclerView.layoutManager =
+            object : GridLayoutManager(container.calendarDayView.context, 5) {
+                override fun canScrollVertically(): Boolean {
+                    return false
+                }
 
-            override fun canScrollHorizontally(): Boolean {
-                return false
+                override fun canScrollHorizontally(): Boolean {
+                    return false
+                }
             }
-        }
 
         when {
             isToday(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.colorAccent))
+                container.calendarDayTextView.setTypeface(null, Typeface.BOLD)
 
                 if (viewModel.lastSelectedDayView == null) {
                     viewModel.lastSelectedDayView = container.calendarDayView
@@ -50,15 +55,7 @@ class DayBinder(
                 viewModel.lastSelectedDayView?.background =
                     resources.getDrawable(R.drawable.bg_day_calendar_selected)
 
-                container.calendarDayView.setOnClickListener {
-                    loadEvents(day)
-                    setNewEventDate(day)
-
-                    viewModel.lastSelectedDayView?.background = null
-                    container.calendarDayView.background =
-                        resources.getDrawable(R.drawable.bg_day_calendar_selected)
-                    viewModel.lastSelectedDayView = container.calendarDayView
-                }
+                onDaySelected(container, day)
             }
             isCurrentMonth(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(android.R.color.black))
@@ -68,20 +65,45 @@ class DayBinder(
                 viewModel.lastSelectedDayView?.background =
                     resources.getDrawable(R.drawable.bg_day_calendar_selected)
 
-                container.calendarDayView.setOnClickListener {
-                    loadEvents(day)
-                    setNewEventDate(day)
-                    viewModel.lastSelectedDayView?.background = null
-                    container.calendarDayView.background =
-                        resources.getDrawable(R.drawable.bg_day_calendar_selected)
-                    viewModel.lastSelectedDayView = container.calendarDayView
-                }
+                onDaySelected(container, day)
             }
             else -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.silverChariot))
                 container.calendarDayView.background =
                     resources.getDrawable(R.drawable.bg_day_calendar_out_month)
             }
+        }
+    }
+
+    private fun onDaySelected(container: DayViewContainer, day: CalendarDay) {
+        val resources = container.calendarDayView.resources
+
+        container.dotEventRecyclerView.addOnItemTouchListener(object :
+            RecyclerView.OnItemTouchListener {
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+            }
+
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                if (e.action == MotionEvent.ACTION_UP ||
+                    e.action == MotionEvent.ACTION_POINTER_UP
+                ) {
+                    container.calendarDayView.performClick()
+                    return true
+                }
+                return false
+            }
+        })
+
+        container.calendarDayView.setOnClickListener {
+            loadEvents(day)
+            setNewEventDate(day)
+            viewModel.lastSelectedDayView?.background = null
+            container.calendarDayView.background =
+                resources.getDrawable(R.drawable.bg_day_calendar_selected)
+            viewModel.lastSelectedDayView = container.calendarDayView
         }
     }
 
@@ -99,7 +121,7 @@ class DayBinder(
         viewModel.setNewEventDate(year, month, dayOfMonth)
     }
 
-    private fun provideEvents(container: DayViewContainer, day: CalendarDay) {
+    private fun provideEvents(day: CalendarDay) {
         val dayEvents = viewModel.getEventsForCalendarDay(day)
         if (dayEvents != null) {
             adapter?.setDots(dayEvents)

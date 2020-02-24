@@ -70,9 +70,9 @@ class AuthViewModel(
     ) = viewModelScope.launch(Dispatchers.IO) {
         when (val result = authInteractor.createUserWithEmailAndPasswordAtServer(name, email, password)) {
             is ResultWrapper.Success -> {
-                navigateToMainScreenLiveEvent.postCall()
                 authInteractor.saveAuthToken(result.value.token)
                 sendEmail()
+                navigateToMainScreenLiveEvent.postCall()
             }
             is ResultWrapper.Error -> {
                 println()
@@ -109,7 +109,7 @@ class AuthViewModel(
                     val message = resourceManager.getString(R.string.success_sign_in)
                     toastLiveEvent.postValue(message)
                     if (authInteractor.isEmailVerified()) {
-                        navigateToMainScreenLiveEvent.call()
+                        navigateToMainScreenLiveEvent.postCall()
                     } else {
                         toastLiveEvent.postValue("Email не подтвержден")
                     }

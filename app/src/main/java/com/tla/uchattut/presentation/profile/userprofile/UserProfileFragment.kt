@@ -11,7 +11,7 @@ import com.tla.uchattut.R
 import com.tla.uchattut.data.repositories.profile.models.ProfileRepoModel
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
-import kotlinx.android.synthetic.main.fragment_student_profile.*
+import kotlinx.android.synthetic.main.fragment_user_profile.*
 import javax.inject.Inject
 
 class UserProfileFragment : BaseFragment() {
@@ -28,7 +28,7 @@ class UserProfileFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_student_profile, container, false)
+        return inflater.inflate(R.layout.fragment_user_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
