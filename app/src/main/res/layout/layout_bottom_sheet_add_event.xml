@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottomSheet"
-    android:background="@color/white"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="180dp"
+    android:background="@color/white"
     android:elevation="4dp"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="164dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,195 +52,320 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/expandedLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:visibility="gone">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/titleEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="56dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="start|top"
+                        android:hint="@string/hint_add_title"
+                        android:inputType="textMultiLine"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+
+                    <View
+                        android:id="@+id/view7"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/silverChariot" />
+
+                    <LinearLayout
+                        android:id="@+id/addStudentLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_person_add" />
+
+                        <TextView
+                            android:id="@+id/studentTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:padding="2dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="Выбрать ученика" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_time" />
+
+                        <TextView
+                            android:id="@+id/dateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:padding="2dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="Чт, 16 янв. 2020 г." />
+
+                        <TextView
+                            android:id="@+id/startTimeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="3:00" />
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="-"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:id="@+id/endTimeTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="4:00" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/notificationLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_notifications"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/notificationTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/add_notification"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/repeatLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/ic_replay"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/repeatTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/not_repeatable"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/colorLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/colorView"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginEnd="8dp"
+                            app:cardCornerRadius="8dp"
+                            tools:cardBackgroundColor="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/colorTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp"
+                            tools:text="Цвет по умолчанию" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/collapsedLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/titleEditText"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="56dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="56dp"
-                android:layout_marginBottom="20dp"
-                android:background="@android:color/transparent"
-                android:gravity="start|top"
-                android:hint="@string/hint_add_title"
-                android:inputType="textMultiLine"
-                android:textColor="@android:color/black"
-                android:textSize="24sp" />
-
-            <View
-                android:id="@+id/view7"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/silverChariot" />
+            tools:visibility="visible">
 
             <LinearLayout
-                android:id="@+id/addStudentLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_person_add" />
-
-                <TextView
-                    android:id="@+id/studentTextView"
+                <EditText
+                    android:id="@+id/collapsedEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:padding="2dp"
-                    tools:text="Выбрать ученика"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="56dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="56dp"
+                    android:background="@android:color/transparent"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:gravity="start|top"
+                    android:hint="@string/hint_add_title"
+                    android:inputType="none"
+                    android:maxLines="1"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:textSize="24sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_time" />
-
-                <TextView
-                    android:id="@+id/dateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:padding="2dp"
-                    tools:text="Чт, 16 янв. 2020 г."
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-                <TextView
-                    android:id="@+id/startTimeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    tools:text="3:00"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/collapsedDateTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="Чт, 16 янв. 2020 г." />
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:text="-"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/collapsedStartTimeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="3:00" />
 
-                <TextView
-                    android:id="@+id/endTimeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    tools:text="4:00"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/collapsedTextView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text="-"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:ignore="HardcodedText" />
 
-            <LinearLayout
-                android:id="@+id/notificationLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                    <TextView
+                        android:id="@+id/collapsedEndTimeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:text="4:00" />
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_notifications"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/notificationTextView"
+                <LinearLayout
+                    android:id="@+id/collapsedAddStudentLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/add_notification"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp">
 
-            <LinearLayout
-                android:id="@+id/repeatLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                    <ImageView
+                        android:id="@+id/collapsedImageView10"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:srcCompat="@drawable/ic_person_add" />
 
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/ic_replay"
-                    tools:ignore="ContentDescription" />
-
-                <TextView
-                    android:id="@+id/repeatTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/not_repeatable"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/colorLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/colorView"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginEnd="8dp"
-                    tools:cardBackgroundColor="@color/colorAccent"
-                    app:cardCornerRadius="8dp" />
-
-                <TextView
-                    android:id="@+id/colorTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    tools:text="Цвет по умолчанию"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/collapsedStudentTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:padding="2dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:text="@string/choose_student" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+
+    </FrameLayout>
+
+
 
 </LinearLayout>

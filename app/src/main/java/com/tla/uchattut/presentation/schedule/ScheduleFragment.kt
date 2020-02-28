@@ -2,12 +2,15 @@ package com.tla.uchattut.presentation.schedule
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +28,7 @@ import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.main.MainFragment
+import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
 import com.tla.uchattut.presentation.schedule.calendar_containers.MonthHeaderBinder
@@ -32,6 +36,7 @@ import com.tla.uchattut.presentation.schedule.dialogs.NotificationSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.RepeatingSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorPickerDialog
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
+import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
 import org.threeten.bp.YearMonth
@@ -53,14 +58,45 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private val bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            transitionBottomSheetBackgroundColor(slideOffset)
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {
+            val imm = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+
+            when (newState) {
+                BottomSheetBehavior.STATE_EXPANDED -> {
+                    expandedLayout.visibility = View.VISIBLE
+                    collapsedLayout.visibility = View.GONE
+
+                    imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+                }
+                BottomSheetBehavior.STATE_COLLAPSED -> {
+                    expandedLayout.visibility = View.GONE
+                    collapsedLayout.visibility = View.VISIBLE
+
+                    imm?.hideSoftInputFromWindow(bottomSheet.windowToken, 0)
+                }
+                else -> {
+                    expandedLayout.visibility = View.VISIBLE
+                    collapsedLayout.visibility = View.VISIBLE
+
+                    imm?.hideSoftInputFromWindow(bottomSheet.windowToken, 0)
+                }
+            }
+
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 addEventButton.show()
             } else {
                 addEventButton.hide()
             }
+        }
+    }
+
+    fun transitionBottomSheetBackgroundColor(slideOffset: Float) {
+        if (slideOffset > 0) {
+            expandedLayout.alpha = slideOffset
+            collapsedLayout.alpha = 1 - slideOffset
         }
     }
 
@@ -79,8 +115,12 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
+    @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        scheduleToolbar?.title = resources.getString(R.string.nav_title_schedule)
+        (activity as AppCompatActivity).setSupportActionBar(scheduleToolbar)
 
         setupCalendarView()
 
@@ -112,7 +152,15 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
             addNewEvent()
         }
 
+        collapsedEditText.setOnClickListener {
+            openBottomSheet()
+        }
+
         dateTextView.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        collapsedDateTextView.setOnClickListener {
             showDatePickerDialog()
         }
 
@@ -124,11 +172,23 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
             showEndTimePickerDialog()
         }
 
+        collapsedStartTimeTextView.setOnClickListener {
+            showStartTimePickerDialog()
+        }
+
+        collapsedEndTimeTextView.setOnClickListener {
+            showEndTimePickerDialog()
+        }
+
         repeatLayout.setOnClickListener {
             openRepeatingSelectorDialog()
         }
 
         addStudentLayout.setOnClickListener {
+            openSearchStudentFragment()
+        }
+
+        collapsedAddStudentLayout.setOnClickListener {
             openSearchStudentFragment()
         }
 
@@ -142,14 +202,17 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
         viewModel.getDateTextLiveData().observe(viewLifecycleOwner, Observer {
             dateTextView.text = it
+            collapsedDateTextView.text = it
         })
 
         viewModel.getStartTimeLiveData().observe(viewLifecycleOwner, Observer {
             startTimeTextView.text = it
+            collapsedStartTimeTextView.text = it
         })
 
         viewModel.getEndTimeLiveData().observe(viewLifecycleOwner, Observer {
             endTimeTextView.text = it
+            collapsedEndTimeTextView.text = it
         })
 
         viewModel.getSelectedColorLiveData().observe(viewLifecycleOwner, Observer {
@@ -231,6 +294,8 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         viewModel.initBottomSheetData()
         addEventButton.hide()
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+        titleEditText.requestFocus()
     }
 
     private val startTimeCallback = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
@@ -309,7 +374,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     private fun cancelBottomSheet() {
         titleEditText.text.clear()
         addEventButton.show()
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     override fun onEventItemClick(id: Int) {
