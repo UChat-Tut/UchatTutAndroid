@@ -7,7 +7,7 @@ class SearchContactedUsersRepositoryImpl @Inject constructor() {
 
     suspend fun fetchContactedUsers(query: String): List<UserNetworkModel> {
         return mockedUsers.filter {
-           it.name.contains(query, ignoreCase = true) || it.email.contains(query, ignoreCase = true)
+           it.name.contains(query, ignoreCase = true)
         }
     }
 
