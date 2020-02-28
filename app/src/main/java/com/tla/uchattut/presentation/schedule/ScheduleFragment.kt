@@ -28,7 +28,6 @@ import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.main.MainFragment
-import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
 import com.tla.uchattut.presentation.schedule.calendar_containers.MonthHeaderBinder
@@ -36,7 +35,6 @@ import com.tla.uchattut.presentation.schedule.dialogs.NotificationSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.RepeatingSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorPickerDialog
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
-import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
 import org.threeten.bp.YearMonth
