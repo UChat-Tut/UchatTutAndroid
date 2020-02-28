@@ -16,6 +16,8 @@ import com.tla.uchattut.di.myprofile.DaggerMyProfileComponent
 import com.tla.uchattut.di.myprofile.MyProfileComponent
 import com.tla.uchattut.di.schedule.DaggerScheduleComponent
 import com.tla.uchattut.di.schedule.ScheduleComponent
+import com.tla.uchattut.di.search_contacted_user.DaggerSearchContactedUserComponent
+import com.tla.uchattut.di.search_contacted_user.SearchContactedUserComponent
 import com.tla.uchattut.di.search_user.DaggerSearchUserComponent
 import com.tla.uchattut.di.search_user.SearchUserComponent
 import com.tla.uchattut.di.tasks.DaggerTasksComponent
@@ -26,6 +28,7 @@ import com.tla.uchattut.presentation.conversation.search_user.SearchUserFragment
 import com.tla.uchattut.presentation.library.LibraryFragment
 import com.tla.uchattut.presentation.profile.myprofile.MyProfileFragment
 import com.tla.uchattut.presentation.schedule.ScheduleFragment
+import com.tla.uchattut.presentation.schedule.SearchContactedUserFragment
 import com.tla.uchattut.presentation.tasks.TasksFragment
 import kotlin.reflect.KClass
 
@@ -104,6 +107,13 @@ object DaggerContainer {
     fun scheduleComponent(fragment: ScheduleFragment): ScheduleComponent =
         provide(ScheduleComponent::class) {
             DaggerScheduleComponent.builder()
+                .appComponent(appComponent(fragment.context))
+                .build()
+        }
+
+    fun searchContactedUserComponent(fragment: SearchContactedUserFragment): SearchContactedUserComponent =
+        provide(SearchContactedUserComponent::class) {
+            DaggerSearchContactedUserComponent.builder()
                 .appComponent(appComponent(fragment.context))
                 .build()
         }

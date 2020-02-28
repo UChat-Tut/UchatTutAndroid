@@ -25,13 +25,13 @@ import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
 import com.tla.uchattut.presentation.main.MainFragment
-import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
 import com.tla.uchattut.presentation.schedule.calendar_containers.MonthHeaderBinder
 import com.tla.uchattut.presentation.schedule.dialogs.NotificationSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.RepeatingSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorPickerDialog
+import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
 import org.threeten.bp.YearMonth
@@ -182,7 +182,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     override fun onBackPressed(): Boolean {
         val searchStudentFragment =
-            parentFragment!!.childFragmentManager.findFragmentByTag(SearchStudentFragment.TAG)
+            parentFragment!!.childFragmentManager.findFragmentByTag(SearchContactedUserFragment.TAG)
         if (searchStudentFragment != null && searchStudentFragment.isAdded) {
             parentFragment!!.childFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
             return true
@@ -318,8 +318,8 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     private fun openSearchStudentFragment() {
         (parentFragment as MainFragment).addScreen(
-            SearchStudentFragment(),
-            SearchStudentFragment.TAG
+            SearchContactedUserFragment(),
+            SearchContactedUserFragment.TAG
         )
     }
 
