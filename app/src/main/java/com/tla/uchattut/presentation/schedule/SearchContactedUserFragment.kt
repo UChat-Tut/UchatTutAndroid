@@ -49,6 +49,7 @@ class SearchContactedUserFragment : BaseFragment() {
             adapter.setStudents(it)
         })
 
+        searchViewModel.requestContactedUsers()
         searchInput.addTextChangedListener {
             searchViewModel.requestContactedUsers(it.toString())
         }
