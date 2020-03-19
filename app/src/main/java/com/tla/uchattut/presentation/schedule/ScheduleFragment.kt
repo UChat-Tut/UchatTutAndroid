@@ -35,11 +35,11 @@ import com.tla.uchattut.presentation.schedule.dialogs.NotificationSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.RepeatingSelectorDialog
 import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorPickerDialog
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
-import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
+import java.lang.IllegalArgumentException
 import java.util.*
 import javax.inject.Inject
 
@@ -354,18 +354,27 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     }
 
     private fun addNewEvent() {
-        val newEvent = buildNewEvent()
+        val newEvent = try {
+            buildNewEvent()
+        } catch (e: IllegalArgumentException){
+            toast("Заголовок не может быть пуст")
+            return
+        }
         viewModel.addEvent(newEvent)
         cancelBottomSheet()
     }
 
-    private fun buildNewEvent(): EventPresentationModel = EventPresentationModel(
-        title = titleEditText.text.toString(),
-        date = viewModel.getSelectedCalendarDay().time,
-        startCalendarTime = viewModel.getChosenStartCalendarTime(),
-        endCalendarTime = viewModel.getChosenEndCalendarTime(),
-        color = viewModel.getSelectedColor()
-    )
+    private fun buildNewEvent(): EventPresentationModel {
+        val title = titleEditText.text.toString()
+        if(title == "") throw IllegalArgumentException("Title is empty")
+        return EventPresentationModel(
+            title = title,
+            date = viewModel.getSelectedCalendarDay().time,
+            startCalendarTime = viewModel.getChosenStartCalendarTime(),
+            endCalendarTime = viewModel.getChosenEndCalendarTime(),
+            color = viewModel.getSelectedColor()
+        )
+    }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.setNewEventDate(year, month, dayOfMonth)
