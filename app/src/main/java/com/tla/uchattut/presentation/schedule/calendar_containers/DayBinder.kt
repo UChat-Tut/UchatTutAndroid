@@ -56,6 +56,7 @@ class DayBinder(
                     resources.getDrawable(R.drawable.bg_day_calendar_selected)
 
                 onDaySelected(container, day)
+                loadEvents(day)
             }
             isCurrentMonth(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(android.R.color.black))
