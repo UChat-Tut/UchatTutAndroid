@@ -83,4 +83,6 @@
     <string name="hint_add_title">Добавьте название</string>
     <string name="add_notification">Добавить уведмление</string>
     <string name="not_repeatable">Не повторяется</string>
+
+    <string name="empty_title_error">Заголовок не может быть пуст</string>
 </resources>

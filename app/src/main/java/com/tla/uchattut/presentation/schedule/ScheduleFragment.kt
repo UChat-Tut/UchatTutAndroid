@@ -3,6 +3,7 @@ package com.tla.uchattut.presentation.schedule
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -39,7 +40,6 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
-import java.lang.IllegalArgumentException
 import java.util.*
 import javax.inject.Inject
 
@@ -131,6 +131,9 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        startTimeTextView.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        endTimeTextView.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         addEventButton.setOnClickListener {
             openBottomSheet()
@@ -357,7 +360,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         val newEvent = try {
             buildNewEvent()
         } catch (e: IllegalArgumentException){
-            toast("Заголовок не может быть пуст")
+            toast(resources.getString(R.string.empty_title_error))
             return
         }
         viewModel.addEvent(newEvent)
