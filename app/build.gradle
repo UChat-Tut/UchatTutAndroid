@@ -33,7 +33,7 @@ android {
         }
 
         debug {
-            applicationIdSuffix ".debug"
+           // applicationIdSuffix ".debug"
             debuggable true
         }
     }
@@ -42,7 +42,7 @@ android {
     productFlavors {
         mock {
             dimension "version"
-            applicationIdSuffix ".mock"
+           // applicationIdSuffix ".mock"
             versionNameSuffix "-mock"
         }
         prod {

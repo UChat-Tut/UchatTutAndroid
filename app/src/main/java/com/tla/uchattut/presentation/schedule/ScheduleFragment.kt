@@ -43,7 +43,6 @@ import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
-
 class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
     DatePickerDialog.OnDateSetListener {
 
@@ -248,7 +247,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     override fun onBackPressed(): Boolean {
         val searchStudentFragment =
-            parentFragment!!.childFragmentManager.findFragmentByTag(SearchStudentFragment.TAG)
+            parentFragment!!.childFragmentManager.findFragmentByTag(SearchContactedUserFragment.TAG)
         if (searchStudentFragment != null && searchStudentFragment.isAdded) {
             parentFragment!!.childFragmentManager.popBackStack(null, POP_BACK_STACK_INCLUSIVE)
             return true
@@ -406,8 +405,8 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     private fun openSearchStudentFragment() {
         (parentFragment as MainFragment).addScreen(
-            SearchStudentFragment(),
-            SearchStudentFragment.TAG
+            SearchContactedUserFragment(),
+            SearchContactedUserFragment.TAG
         )
     }
 

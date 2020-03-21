@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:494460818672:android:17e3d2105f9c6784a7de35",
         "android_client_info": {
-          "package_name": "com.tla.uchattut.mock.debug"
+          "package_name": "com.tla.uchattut"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "494460818672-fmrs91pfd6rlbqot8ojalq6rabovoot0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tla.uchattut.mock.debug",
+            "package_name": "com.tla.uchattut",
             "certificate_hash": "65bb70e375ad53423ee63038c13051d352038ffe"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "494460818672-ck5m6ua2vmrga69mmoqfm7k6h6vbv06o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tla.uchattut.mock.debug",
+            "package_name": "com.tla.uchattut",
             "certificate_hash": "a4accbe27ec4195cd1ebf29de57c310fcd1399fb"
           }
         },
