@@ -5,35 +5,36 @@
     android:orientation="vertical">
 
     <RadioGroup
+        android:id="@+id/rGroupRepeating"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioBtnNotRepeating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Не повторяется" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioBtnEveryDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Каждый день" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioBtnEveryWeek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Каждую неделю" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/radioBtnEveryMonth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Каждый месяц" />
 
         <RadioButton
-            android:id="@+id/radioButton5"
+            android:id="@+id/radioBtnEveryYear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Каждый год" />

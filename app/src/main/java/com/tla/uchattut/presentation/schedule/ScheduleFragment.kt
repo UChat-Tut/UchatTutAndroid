@@ -299,6 +299,9 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         titleEditText.requestFocus()
+
+        notificationTextView.text = resources.getString(R.string.add_notification)
+        repeatTextView.text = resources.getString(R.string.not_repeatable)
     }
 
     private val startTimeCallback = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
@@ -327,6 +330,14 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         timePickerDialog.show()
     }
 
+    private fun onNotificationSelected(notifyBefore: String){
+        notificationTextView.text = notifyBefore
+    }
+
+    private fun onRepeatSelected(repeat: String){
+        repeatTextView.text = repeat
+    }
+
     private fun onColorPicked(color: Int) {
         viewModel.updateSelectedColor(color)
     }
@@ -345,11 +356,11 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     }
 
     private fun openNotificationSelectorDialog() {
-        NotificationSelectorDialog.show(childFragmentManager)
+        NotificationSelectorDialog.show(childFragmentManager, ::onNotificationSelected)
     }
 
     private fun openRepeatingSelectorDialog() {
-        RepeatingSelectorDialog.show(childFragmentManager)
+        RepeatingSelectorDialog.show(childFragmentManager, ::onRepeatSelected)
     }
 
     private fun openColorPickerDialog() {
