@@ -367,19 +367,19 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     }
 
     private fun addNewEvent() {
-        val newEvent = try {
-            buildNewEvent()
+        try {
+            val newEvent = buildNewEvent()
+            viewModel.addEvent(newEvent)
+            cancelBottomSheet()
         } catch (e: IllegalArgumentException) {
             toast(resources.getString(R.string.empty_title_error))
             return
         }
-        viewModel.addEvent(newEvent)
-        cancelBottomSheet()
     }
 
     private fun buildNewEvent(): EventPresentationModel {
         val title = titleEditText.text.toString()
-        if (title == "") throw IllegalArgumentException("Title is empty")
+        if (title.isBlank()) throw IllegalArgumentException("Title is empty")
         return EventPresentationModel(
             title = title,
             date = viewModel.getSelectedCalendarDay().time,

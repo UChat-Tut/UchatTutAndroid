@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentManager
 import com.tla.uchattut.R
 import kotlinx.android.synthetic.main.dialog_notification_selector.*
 
-class NotificationSelectorDialog private constructor(
-    private val onNotificationSelected: (notifyBefore: String) -> Unit
-) : DialogFragment() {
+class NotificationSelectorDialog private constructor() : DialogFragment() {
+
+    private lateinit var onNotificationSelected: (notifyBefore: String) -> Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +28,23 @@ class NotificationSelectorDialog private constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val notificationStringArray = resources.getStringArray(R.array.notifications)
         rGroupNotification.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radioBtn5min -> onNotificationSelected("За 5 минут")
-                R.id.radioBtn10min -> onNotificationSelected("За 10 минут")
-                R.id.radioBtn30min -> onNotificationSelected("За 30 минут")
-                R.id.radioBtn1h -> onNotificationSelected("За час")
-                R.id.radioBtn2h -> onNotificationSelected("За 2 часа")
+                R.id.radioBtn5min -> onNotificationSelected(notificationStringArray[0])
+                R.id.radioBtn10min -> onNotificationSelected(notificationStringArray[1])
+                R.id.radioBtn30min -> onNotificationSelected(notificationStringArray[2])
+                R.id.radioBtn1h -> onNotificationSelected(notificationStringArray[3])
+                R.id.radioBtn2h -> onNotificationSelected(notificationStringArray[4])
                 }
         }
     }
 
     companion object {
         fun show(fragmentManager: FragmentManager, onNotificationSelected: (notifyBefore: String) -> Unit) {
-            val notificationSelectorDialog = NotificationSelectorDialog(onNotificationSelected)
+            val notificationSelectorDialog = NotificationSelectorDialog()
+            notificationSelectorDialog.onNotificationSelected = onNotificationSelected
             notificationSelectorDialog.show(fragmentManager, NotificationSelectorDialog::class.java.toString())
         }
     }

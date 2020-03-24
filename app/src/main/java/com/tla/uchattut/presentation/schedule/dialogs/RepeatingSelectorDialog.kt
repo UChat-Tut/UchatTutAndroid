@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentManager
 import com.tla.uchattut.R
 import kotlinx.android.synthetic.main.dialog_repeating_selector.*
 
-class RepeatingSelectorDialog private constructor(
-    private val onRepeatSelected: (repeat: String) -> Unit
-) : DialogFragment() {
+class RepeatingSelectorDialog private constructor() : DialogFragment() {
+
+    private lateinit var onRepeatSelected: (repeat: String) -> Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +28,23 @@ class RepeatingSelectorDialog private constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val repeatStringArray = resources.getStringArray(R.array.repeating)
         rGroupRepeating.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radioBtnNotRepeating -> onRepeatSelected("Не повторяется")
-                R.id.radioBtnEveryDay -> onRepeatSelected("Каждый день")
-                R.id.radioBtnEveryWeek -> onRepeatSelected("Каждую неделю")
-                R.id.radioBtnEveryMonth -> onRepeatSelected("Каждый месяц")
-                R.id.radioBtnEveryYear -> onRepeatSelected("Каждый год")
+                R.id.radioBtnNotRepeating -> onRepeatSelected(repeatStringArray[0])
+                R.id.radioBtnEveryDay -> onRepeatSelected(repeatStringArray[1])
+                R.id.radioBtnEveryWeek -> onRepeatSelected(repeatStringArray[2])
+                R.id.radioBtnEveryMonth -> onRepeatSelected(repeatStringArray[3])
+                R.id.radioBtnEveryYear -> onRepeatSelected(repeatStringArray[4])
             }
         }
     }
 
     companion object {
         fun show(fragmentManager: FragmentManager, onRepeatSelected: (repeat: String) -> Unit) {
-            val repeatingSelectorDialog = RepeatingSelectorDialog(onRepeatSelected)
+            val repeatingSelectorDialog = RepeatingSelectorDialog()
+            repeatingSelectorDialog.onRepeatSelected = onRepeatSelected
             repeatingSelectorDialog.show(fragmentManager, RepeatingSelectorDialog::class.java.toString())
         }
     }
