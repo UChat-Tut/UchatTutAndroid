@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.dialog_repeating_selector.*
 
 class RepeatingSelectorDialog private constructor(
     private val onRepeatSelected: (repeat: String) -> Unit
-) : DialogFragment(){
+) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +28,8 @@ class RepeatingSelectorDialog private constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rGroupRepeating.setOnCheckedChangeListener{ _, checkedId ->
-            when(checkedId){
+        rGroupRepeating.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
                 R.id.radioBtnNotRepeating -> onRepeatSelected("Не повторяется")
                 R.id.radioBtnEveryDay -> onRepeatSelected("Каждый день")
                 R.id.radioBtnEveryWeek -> onRepeatSelected("Каждую неделю")

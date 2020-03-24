@@ -28,15 +28,14 @@ class NotificationSelectorDialog private constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rGroupNotification.setOnCheckedChangeListener{_, checkedId ->
-           when(checkedId) {
-               R.id.radioBtn5min -> onNotificationSelected("За 5 минут")
-               R.id.radioBtn10min -> onNotificationSelected("За 10 минут")
-               R.id.radioBtn30min -> onNotificationSelected("За 30 минут")
-               R.id.radioBtn1h -> onNotificationSelected("За час")
-               R.id.radioBtn2h -> onNotificationSelected("За 2 часа")
-
-           }
+        rGroupNotification.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioBtn5min -> onNotificationSelected("За 5 минут")
+                R.id.radioBtn10min -> onNotificationSelected("За 10 минут")
+                R.id.radioBtn30min -> onNotificationSelected("За 30 минут")
+                R.id.radioBtn1h -> onNotificationSelected("За час")
+                R.id.radioBtn2h -> onNotificationSelected("За 2 часа")
+                }
         }
     }
 

@@ -12,8 +12,6 @@ import com.tla.uchattut.R
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.main.MainActivity
-import com.tla.uchattut.presentation.main.MainFragment
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import javax.inject.Inject
 

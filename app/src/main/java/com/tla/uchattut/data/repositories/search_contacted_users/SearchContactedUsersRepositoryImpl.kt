@@ -7,7 +7,7 @@ class SearchContactedUsersRepositoryImpl @Inject constructor() {
 
     suspend fun fetchContactedUsers(query: String): List<UserNetworkModel> {
         return mockedUsers.filter {
-           it.name.contains(query, ignoreCase = true)
+            it.name.contains(query, ignoreCase = true)
         }
     }
 
@@ -16,7 +16,8 @@ class SearchContactedUsersRepositoryImpl @Inject constructor() {
         private val mockedUsers = listOf(
             UserNetworkModel(1, "Алексей Алексеевич Алексеев", "alexeev@gmail.com", mutualUrl),
             UserNetworkModel(2, "Олег Самсонов", "samsonov@ya.ru", mutualUrl),
-            UserNetworkModel(3, "Алёна Арсеньева", "arsenieva@mail.ru", mutualUrl)
+            UserNetworkModel(3, "Алёна Арсеньева", "arsenieva@mail.ru", mutualUrl),
+            UserNetworkModel(4, "Jotaro Kujo", "oraoraora@jarejaredaze.com", mutualUrl)
         )
     }
 }

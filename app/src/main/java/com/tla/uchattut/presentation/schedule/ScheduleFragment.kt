@@ -329,11 +329,11 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         timePickerDialog.show()
     }
 
-    private fun onNotificationSelected(notifyBefore: String){
+    private fun onNotificationSelected(notifyBefore: String) {
         notificationTextView.text = notifyBefore
     }
 
-    private fun onRepeatSelected(repeat: String){
+    private fun onRepeatSelected(repeat: String) {
         repeatTextView.text = repeat
     }
 
@@ -369,7 +369,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     private fun addNewEvent() {
         val newEvent = try {
             buildNewEvent()
-        } catch (e: IllegalArgumentException){
+        } catch (e: IllegalArgumentException) {
             toast(resources.getString(R.string.empty_title_error))
             return
         }
@@ -379,7 +379,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     private fun buildNewEvent(): EventPresentationModel {
         val title = titleEditText.text.toString()
-        if(title == "") throw IllegalArgumentException("Title is empty")
+        if (title == "") throw IllegalArgumentException("Title is empty")
         return EventPresentationModel(
             title = title,
             date = viewModel.getSelectedCalendarDay().time,
