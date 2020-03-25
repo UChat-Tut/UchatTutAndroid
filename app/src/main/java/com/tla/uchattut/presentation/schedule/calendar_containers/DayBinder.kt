@@ -49,13 +49,22 @@ class DayBinder(
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.colorAccent))
                 container.calendarDayTextView.setTypeface(null, Typeface.BOLD)
 
+                if (!isCurrentMonth(day)) {
+                    container.calendarDayView.background =
+                        resources.getDrawable(R.drawable.bg_day_calendar_out_month)
+                }
+
+                var needToLoadCurrentDayEvents = false
+
                 if (viewModel.lastSelectedDayView == null) {
+                    needToLoadCurrentDayEvents = true
                     viewModel.lastSelectedDayView = container.calendarDayView
                 }
                 viewModel.lastSelectedDayView?.background =
                     resources.getDrawable(R.drawable.bg_day_calendar_selected)
 
                 onDaySelected(container, day)
+                if (needToLoadCurrentDayEvents) loadEvents(day)
             }
             isCurrentMonth(day) -> {
                 container.calendarDayTextView.setTextColor(resources.getColor(android.R.color.black))
@@ -98,6 +107,7 @@ class DayBinder(
         })
 
         container.calendarDayView.setOnClickListener {
+            if (isToday(day) && !isCurrentMonth(day)) return@setOnClickListener // TODO"Убрать при выполнении UT_38, или не убирать, короче учесть"
             loadEvents(day)
             setNewEventDate(day)
             viewModel.lastSelectedDayView?.background = null

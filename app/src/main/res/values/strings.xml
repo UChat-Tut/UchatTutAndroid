@@ -68,6 +68,22 @@
         <item>дек</item>
     </string-array>
 
+    <string-array name="notifications">
+        <item>За 5 минут</item>
+        <item>За 10 минут</item>
+        <item>За 30 минут</item>
+        <item>За час</item>
+        <item>За 2 часа</item>
+    </string-array>
+
+    <string-array name="repeating">
+        <item>Не повторяется</item>
+        <item>Каждый день</item>
+        <item>Каждую неделю</item>
+        <item>Каждый месяц</item>
+        <item>Каждый год</item>
+    </string-array>
+
     <string name="task_label_red">Красный</string>
     <string name="task_label_pink">Розовый</string>
     <string name="task_label_orange">Оранжевый</string>
@@ -81,6 +97,10 @@
 
     <string name="choose_student">Выбрать ученика</string>
     <string name="hint_add_title">Добавьте название</string>
-    <string name="add_notification">Добавить уведмление</string>
+    <string name="add_notification">Добавить уведомление</string>
     <string name="not_repeatable">Не повторяется</string>
+
+    <string name="empty_title_error">Заголовок не может быть пуст</string>
+
+
 </resources>
