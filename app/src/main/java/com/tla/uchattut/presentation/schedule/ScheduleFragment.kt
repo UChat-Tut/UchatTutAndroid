@@ -43,7 +43,7 @@ import java.util.*
 import javax.inject.Inject
 
 class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
-    DatePickerDialog.OnDateSetListener {
+    DatePickerDialog.OnDateSetListener, SearchContactedUserFragment.OnFragmentInteractionListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -379,11 +379,19 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         toast("Элемент с id: $id")
     }
 
+    override fun onStudentFound(name: String, email: String) {
+        collapsedStudentTextView.text = name
+    }
+
     private fun openSearchStudentFragment() {
         (parentFragment as MainFragment).addScreen(
             SearchContactedUserFragment(),
             SearchContactedUserFragment.TAG
         )
+/*        childFragmentManager.beginTransaction()
+            .add(R.id.mainFragmentContainer, SearchContactedUserFragment(), SearchContactedUserFragment.TAG)
+            .addToBackStack(null) // TODO Уюрать null
+            .commit()*/
     }
 
     companion object {

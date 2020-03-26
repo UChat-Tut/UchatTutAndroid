@@ -1,5 +1,6 @@
 package com.tla.uchattut.presentation.schedule
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
@@ -23,6 +25,18 @@ class SearchContactedUserFragment : BaseFragment() {
 
     private val searchViewModel by lazy {
         viewModel<SearchContactedUserViewModel>(viewModelFactory)
+    }
+
+    private lateinit var listener: OnFragmentInteractionListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val parent = parentFragment
+        if(parent is OnFragmentInteractionListener){
+            listener = parent
+        } else throw ClassCastException(
+            "${parent.toString()} must implement OnFragmentInteractionListener"
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +55,7 @@ class SearchContactedUserFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FoundStudentsAdapter()
+        val adapter = FoundStudentsAdapter(::onStudentClicked)
         foundStudentRecyclerView.adapter = adapter
         foundStudentRecyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -53,6 +67,14 @@ class SearchContactedUserFragment : BaseFragment() {
         searchInput.addTextChangedListener {
             searchViewModel.requestContactedUsers(it.toString())
         }
+    }
+
+    private fun onStudentClicked(student: UserNetworkModel){
+        listener.onStudentFound(student.name, student.email)
+    }
+
+    interface OnFragmentInteractionListener {
+        fun onStudentFound(name: String, email: String)
     }
 
     companion object {

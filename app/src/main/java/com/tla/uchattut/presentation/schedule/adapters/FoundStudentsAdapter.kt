@@ -10,7 +10,9 @@ import com.tla.uchattut.data.network.model.UserNetworkModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_found_student.*
 
-class FoundStudentsAdapter : RecyclerView.Adapter<FoundStudentsAdapter.StudentViewHolder>() {
+class FoundStudentsAdapter(
+    val onStudentClicked: (student: UserNetworkModel) -> Unit
+) : RecyclerView.Adapter<FoundStudentsAdapter.StudentViewHolder>() {
 
     private var students = listOf<UserNetworkModel>()
 
@@ -26,7 +28,7 @@ class FoundStudentsAdapter : RecyclerView.Adapter<FoundStudentsAdapter.StudentVi
         holder.bind(students[position])
     }
 
-    class StudentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    inner class StudentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
         fun bind(student: UserNetworkModel) {
             Glide
@@ -35,6 +37,9 @@ class FoundStudentsAdapter : RecyclerView.Adapter<FoundStudentsAdapter.StudentVi
                 .into(foundStudentImage)
             foundStudentName.text = student.name
             foundStudentEmail.text = student.email
+            containerView.setOnClickListener {
+                onStudentClicked(student)
+            }
         }
     }
 
