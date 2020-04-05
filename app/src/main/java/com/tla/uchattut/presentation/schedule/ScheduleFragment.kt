@@ -27,6 +27,7 @@ import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
+import com.tla.uchattut.presentation.main.MainActivity
 import com.tla.uchattut.presentation.main.MainFragment
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
@@ -43,7 +44,7 @@ import java.util.*
 import javax.inject.Inject
 
 class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
-    DatePickerDialog.OnDateSetListener, SearchContactedUserFragment.OnFragmentInteractionListener {
+    DatePickerDialog.OnDateSetListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -133,6 +134,10 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         addEventButton.setOnClickListener {
             openBottomSheet()
         }
+
+        (activity as MainActivity).foundStudentLiveData.observe(viewLifecycleOwner, Observer {
+            studentTextView.text = it.name
+        })
 
         viewModel.getEventsLiveData().observe(viewLifecycleOwner, Observer {
             eventsAdapter.addEvents(it)
@@ -379,19 +384,11 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         toast("Элемент с id: $id")
     }
 
-    override fun onStudentFound(name: String, email: String) {
-        collapsedStudentTextView.text = name
-    }
-
     private fun openSearchStudentFragment() {
         (parentFragment as MainFragment).addScreen(
             SearchContactedUserFragment(),
             SearchContactedUserFragment.TAG
         )
-/*        childFragmentManager.beginTransaction()
-            .add(R.id.mainFragmentContainer, SearchContactedUserFragment(), SearchContactedUserFragment.TAG)
-            .addToBackStack(null) // TODO Уюрать null
-            .commit()*/
     }
 
     companion object {

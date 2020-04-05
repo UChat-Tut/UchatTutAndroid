@@ -6,7 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.domain.auth.AuthInteractor
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.popEntireBackStack
@@ -17,6 +20,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var authInteractor: AuthInteractor
+
+    val _foundStudentLiveData = MutableLiveData<UserNetworkModel>()
+    val foundStudentLiveData: LiveData<UserNetworkModel> = _foundStudentLiveData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
