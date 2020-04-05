@@ -5,35 +5,36 @@
     android:orientation="vertical">
 
     <RadioGroup
+        android:id="@+id/rGroupNotification"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radioBtn5min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="За 5 минут" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioBtn10min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="За 10 минут" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/radioBtn30min"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="За 30 минут" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/radioBtn1h"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="За час" />
 
         <RadioButton
-            android:id="@+id/radioButton5"
+            android:id="@+id/radioBtn2h"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="За 2 часа" />

@@ -3,6 +3,7 @@ package com.tla.uchattut.presentation.schedule
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -130,6 +131,9 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(bottomSheetCallback)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        startTimeTextView.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        endTimeTextView.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         addEventButton.setOnClickListener {
             openBottomSheet()
@@ -299,6 +303,9 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         titleEditText.requestFocus()
+
+        notificationTextView.text = resources.getString(R.string.add_notification)
+        repeatTextView.text = resources.getString(R.string.not_repeatable)
     }
 
     private val startTimeCallback = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
@@ -327,6 +334,14 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         timePickerDialog.show()
     }
 
+    private fun onNotificationSelected(notifyBefore: String) {
+        notificationTextView.text = notifyBefore
+    }
+
+    private fun onRepeatSelected(repeat: String) {
+        repeatTextView.text = repeat
+    }
+
     private fun onColorPicked(color: Int) {
         viewModel.updateSelectedColor(color)
     }
@@ -345,11 +360,11 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     }
 
     private fun openNotificationSelectorDialog() {
-        NotificationSelectorDialog.show(childFragmentManager)
+        NotificationSelectorDialog.show(childFragmentManager, ::onNotificationSelected)
     }
 
     private fun openRepeatingSelectorDialog() {
-        RepeatingSelectorDialog.show(childFragmentManager)
+        RepeatingSelectorDialog.show(childFragmentManager, ::onRepeatSelected)
     }
 
     private fun openColorPickerDialog() {
@@ -357,18 +372,27 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     }
 
     private fun addNewEvent() {
-        val newEvent = buildNewEvent()
-        viewModel.addEvent(newEvent)
-        cancelBottomSheet()
+        try {
+            val newEvent = buildNewEvent()
+            viewModel.addEvent(newEvent)
+            cancelBottomSheet()
+        } catch (e: IllegalArgumentException) {
+            toast(resources.getString(R.string.empty_title_error))
+            return
+        }
     }
 
-    private fun buildNewEvent(): EventPresentationModel = EventPresentationModel(
-        title = titleEditText.text.toString(),
-        date = viewModel.getSelectedCalendarDay().time,
-        startCalendarTime = viewModel.getChosenStartCalendarTime(),
-        endCalendarTime = viewModel.getChosenEndCalendarTime(),
-        color = viewModel.getSelectedColor()
-    )
+    private fun buildNewEvent(): EventPresentationModel {
+        val title = titleEditText.text.toString()
+        if (title.isBlank()) throw IllegalArgumentException("Title is empty")
+        return EventPresentationModel(
+            title = title,
+            date = viewModel.getSelectedCalendarDay().time,
+            startCalendarTime = viewModel.getChosenStartCalendarTime(),
+            endCalendarTime = viewModel.getChosenEndCalendarTime(),
+            color = viewModel.getSelectedColor()
+        )
+    }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.setNewEventDate(year, month, dayOfMonth)

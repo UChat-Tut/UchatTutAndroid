@@ -67,5 +67,3 @@ class SearchContactedUserFragment : BaseFragment() {
         const val TAG = "SearchStudentFragmentTag"
     }
 }
-
-
