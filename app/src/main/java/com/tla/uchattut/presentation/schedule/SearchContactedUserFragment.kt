@@ -1,11 +1,11 @@
 package com.tla.uchattut.presentation.schedule
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +14,6 @@ import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.main.MainActivity
 import com.tla.uchattut.presentation.schedule.adapters.FoundStudentsAdapter
 import kotlinx.android.synthetic.main.fragment_search_student.*
 import javax.inject.Inject
@@ -26,6 +25,17 @@ class SearchContactedUserFragment : BaseFragment(), FoundStudentsAdapter.OnClick
 
     private val searchViewModel by lazy {
         viewModel<SearchContactedUserViewModel>(viewModelFactory)
+    }
+
+    private lateinit var listener: OnFragmentInteractionListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            listener = context as OnFragmentInteractionListener
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement interface OnFragmentInteractionListener")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,8 +69,15 @@ class SearchContactedUserFragment : BaseFragment(), FoundStudentsAdapter.OnClick
     }
 
     override fun onStudentClick(student: UserNetworkModel){
-        (activity as MainActivity)._foundStudentLiveData.postValue(student)
-        (activity as FragmentActivity).onBackPressed()
+        listener.onFragmentInteraction(student)
+        parentFragment?.childFragmentManager
+            ?.beginTransaction()
+            ?.remove(this)
+            ?.commit()
+    }
+
+    interface OnFragmentInteractionListener {
+        fun onFragmentInteraction(student: UserNetworkModel)
     }
 
     companion object {

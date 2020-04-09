@@ -22,13 +22,13 @@ import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
 import com.kizitonwose.calendarview.model.ScrollMode
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.data.repositories.colors.ColorsRepository
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain._common.CalendarWrapper
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.toast
 import com.tla.uchattut.presentation._common.viewModel
-import com.tla.uchattut.presentation.main.MainActivity
 import com.tla.uchattut.presentation.main.MainFragment
 import com.tla.uchattut.presentation.schedule.adapters.EventsRecyclerAdapter
 import com.tla.uchattut.presentation.schedule.calendar_containers.DayBinder
@@ -138,10 +138,6 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         addEventButton.setOnClickListener {
             openBottomSheet()
         }
-
-        (activity as MainActivity).foundStudentLiveData.observe(viewLifecycleOwner, Observer {
-            studentTextView.text = it.name
-        })
 
         viewModel.getEventsLiveData().observe(viewLifecycleOwner, Observer {
             eventsAdapter.addEvents(it)
@@ -415,8 +411,13 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         )
     }
 
+    fun setSelectedStudent(student: UserNetworkModel) {
+        studentTextView.text = student.name
+    }
+
     companion object {
         private const val MAX_MONTH_RANGE = 5
         private const val DAYS_IN_WEEK = 7
+        const val TAG = "ScheduleFragment"
     }
 }

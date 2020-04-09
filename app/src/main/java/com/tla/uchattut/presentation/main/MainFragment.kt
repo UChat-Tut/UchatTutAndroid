@@ -61,7 +61,9 @@ class MainFragment : BaseFragment() {
                 replaceScreen(LibraryFragment())
             }
             R.id.navigation_schedule -> {
-                replaceScreen(ScheduleFragment())
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragmentContainer, ScheduleFragment(), ScheduleFragment.TAG)
+                    .commitNow()
             }
             R.id.navigation_tasks -> {
                 replaceScreen(TasksFragment())
