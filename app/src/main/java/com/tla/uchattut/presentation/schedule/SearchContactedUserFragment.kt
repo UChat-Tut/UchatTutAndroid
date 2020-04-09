@@ -19,7 +19,7 @@ import com.tla.uchattut.presentation.schedule.adapters.FoundStudentsAdapter
 import kotlinx.android.synthetic.main.fragment_search_student.*
 import javax.inject.Inject
 
-class SearchContactedUserFragment : BaseFragment() {
+class SearchContactedUserFragment : BaseFragment(), FoundStudentsAdapter.OnClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -44,7 +44,7 @@ class SearchContactedUserFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = FoundStudentsAdapter(::onStudentClicked)
+        val adapter = FoundStudentsAdapter(this)
         foundStudentRecyclerView.adapter = adapter
         foundStudentRecyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -58,7 +58,7 @@ class SearchContactedUserFragment : BaseFragment() {
         }
     }
 
-    private fun onStudentClicked(student: UserNetworkModel){
+    override fun onStudentClick(student: UserNetworkModel){
         (activity as MainActivity)._foundStudentLiveData.postValue(student)
         (activity as FragmentActivity).onBackPressed()
     }

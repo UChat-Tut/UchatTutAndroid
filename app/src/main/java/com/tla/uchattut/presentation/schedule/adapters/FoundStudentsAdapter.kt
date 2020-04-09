@@ -11,7 +11,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_found_student.*
 
 class FoundStudentsAdapter(
-    val onStudentClicked: (student: UserNetworkModel) -> Unit
+    private val onClickListener: OnClickListener
 ) : RecyclerView.Adapter<FoundStudentsAdapter.StudentViewHolder>() {
 
     private var students = listOf<UserNetworkModel>()
@@ -25,12 +25,12 @@ class FoundStudentsAdapter(
     override fun getItemCount(): Int = students.size
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        holder.bind(students[position])
+        holder.bind(students[position], onClickListener)
     }
 
-    inner class StudentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    class StudentViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-        fun bind(student: UserNetworkModel) {
+        fun bind(student: UserNetworkModel, onClickListener: OnClickListener) {
             Glide
                 .with(containerView.context)
                 .load(student.photoUrl)
@@ -38,7 +38,7 @@ class FoundStudentsAdapter(
             foundStudentName.text = student.name
             foundStudentEmail.text = student.email
             containerView.setOnClickListener {
-                onStudentClicked(student)
+                onClickListener.onStudentClick(student)
             }
         }
     }
@@ -46,5 +46,9 @@ class FoundStudentsAdapter(
     fun setStudents(students: List<UserNetworkModel>) {
         this.students = students
         notifyDataSetChanged()
+    }
+
+    interface OnClickListener {
+        fun onStudentClick(student: UserNetworkModel)
     }
 }
