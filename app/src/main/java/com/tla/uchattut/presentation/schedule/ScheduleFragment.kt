@@ -39,13 +39,14 @@ import com.tla.uchattut.presentation.schedule.dialogs.color_picker.ColorPickerDi
 import com.tla.uchattut.presentation.schedule.model.EventPresentationModel
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.layout_bottom_sheet_add_event.*
+import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
 class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickListener,
-    DatePickerDialog.OnDateSetListener {
+    DatePickerDialog.OnDateSetListener, DayBinder.OnOtherMonthDayClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -267,7 +268,7 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
     }
 
     private fun setupCalendarView() {
-        calendarView.dayBinder = DayBinder(viewModel)
+        calendarView.dayBinder = DayBinder(viewModel, this)
         calendarView.monthHeaderBinder = MonthHeaderBinder(calendarView)
 
         val currentMonth = YearMonth.now()
@@ -392,6 +393,10 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         viewModel.setNewEventDate(year, month, dayOfMonth)
+    }
+
+    override fun onOtherMonthDayClick(date: LocalDate) {
+        calendarView.smoothScrollToMonth(YearMonth.of(date.year, date.monthValue))
     }
 
     private fun cancelBottomSheet() {
