@@ -7,13 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.domain.auth.AuthInteractor
 import com.tla.uchattut.presentation._common.BaseFragment
 import com.tla.uchattut.presentation._common.popEntireBackStack
+import com.tla.uchattut.presentation.schedule.ScheduleFragment
+import com.tla.uchattut.presentation.schedule.SearchContactedUserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchContactedUserFragment.OnFragmentInteractionListener {
 
     @Inject
     lateinit var authInteractor: AuthInteractor
@@ -54,6 +57,15 @@ class MainActivity : AppCompatActivity() {
             transaction.addToBackStack(null)
         }
         transaction.commit()
+    }
+
+    override fun onFragmentInteraction(student: UserNetworkModel) {
+        val mainFragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer)
+        val childFragmentManager = mainFragment?.childFragmentManager
+        val fragment: Fragment? = childFragmentManager?.findFragmentByTag(ScheduleFragment.TAG)
+        if (fragment != null) {
+            (fragment as ScheduleFragment).setSelectedStudent(student)
+        }
     }
 
     override fun onBackPressed() {
