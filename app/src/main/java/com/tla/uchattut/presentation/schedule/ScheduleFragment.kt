@@ -22,6 +22,7 @@ import com.kizitonwose.calendarview.model.InDateStyle
 import com.kizitonwose.calendarview.model.OutDateStyle
 import com.kizitonwose.calendarview.model.ScrollMode
 import com.tla.uchattut.R
+import com.tla.uchattut.data.network.model.UserNetworkModel
 import com.tla.uchattut.data.repositories.colors.ColorsRepository
 import com.tla.uchattut.di.DaggerContainer
 import com.tla.uchattut.domain._common.CalendarWrapper
@@ -410,8 +411,13 @@ class ScheduleFragment : BaseFragment(), EventsRecyclerAdapter.OnEventItemClickL
         )
     }
 
+    fun setSelectedStudent(student: UserNetworkModel) {
+        studentTextView.text = student.name
+    }
+
     companion object {
         private const val MAX_MONTH_RANGE = 5
         private const val DAYS_IN_WEEK = 7
+        const val TAG = "ScheduleFragment"
     }
 }
