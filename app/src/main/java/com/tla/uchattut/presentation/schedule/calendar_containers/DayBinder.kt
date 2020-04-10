@@ -11,10 +11,12 @@ import com.kizitonwose.calendarview.ui.DayBinder
 import com.tla.uchattut.R
 import com.tla.uchattut.presentation.schedule.ScheduleViewModel
 import com.tla.uchattut.presentation.schedule.adapters.DotEventsAdapter
+import org.threeten.bp.LocalDate
 import org.threeten.bp.ZonedDateTime
 
 class DayBinder(
-    private val viewModel: ScheduleViewModel
+    private val viewModel: ScheduleViewModel,
+    private val otherMonthDayClickListener: OnOtherMonthDayClickListener
 ) : DayBinder<DayViewContainer> {
 
     private var adapter: DotEventsAdapter? = null
@@ -80,6 +82,7 @@ class DayBinder(
                 container.calendarDayTextView.setTextColor(resources.getColor(R.color.silverChariot))
                 container.calendarDayView.background =
                     resources.getDrawable(R.drawable.bg_day_calendar_out_month)
+                onDaySelected(container, day)
             }
         }
     }
@@ -107,7 +110,10 @@ class DayBinder(
         })
 
         container.calendarDayView.setOnClickListener {
-            if (isToday(day) && !isCurrentMonth(day)) return@setOnClickListener // TODO"Убрать при выполнении UT_38, или не убирать, короче учесть"
+            if (!isCurrentMonth(day)) {
+                otherMonthDayClickListener.onOtherMonthDayClick(day.date)
+                return@setOnClickListener
+            }
             loadEvents(day)
             setNewEventDate(day)
             viewModel.lastSelectedDayView?.background = null
@@ -143,4 +149,8 @@ class DayBinder(
 
     private fun isCurrentMonth(day: CalendarDay): Boolean =
         day.owner == DayOwner.THIS_MONTH
+
+    interface OnOtherMonthDayClickListener {
+        fun onOtherMonthDayClick(date: LocalDate)
+    }
 }
